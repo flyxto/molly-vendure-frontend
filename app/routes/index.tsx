@@ -5,6 +5,10 @@ import { BookOpenIcon } from '@heroicons/react/24/solid';
 import { LoaderArgs } from '@remix-run/server-runtime';
 import { useTranslation } from 'react-i18next';
 import Hero from '~/components/home/Hero';
+import StylesSection from '~/components/home/StylesSection';
+import TimeDeals from '~/components/home/TimeDeals';
+import LatestArrivals from '~/components/home/LatestArrivals';
+import CategorySection from '~/components/home/CategorySection';
 
 export async function loader({ request }: LoaderArgs) {
   const collections = await getCollections(request, { take: 20 });
@@ -20,60 +24,14 @@ export default function Index() {
 
   return (
     <>
-      <Hero />
-      <div className="relative">
-        {/* Decorative image and overlay */}
-        <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
-          {headerImage && (
-            <img
-              className="absolute inset-0 w-full"
-              src={headerImage + '?w=800'}
-              alt="header"
-            />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-br from-zinc-400 to-black mix-blend-darken" />
-        </div>
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gray-900 opacity-50"
-        />
-        <div className="relative max-w-3xl mx-auto py-32 px-6 flex flex-col items-center text-center sm:py-64 lg:px-0">
-          <div className="relative bg-zinc-800 bg-opacity-0 rounded-lg p-0">
-            <h1 className="text-6xl text-transparent bg-clip-text font-extrabold tracking-normal lg:text-6xl bg-gradient-to-r from-yellow-600 via-red-500 to-blue-600">
-              {t('vendure.title')}
-            </h1>
-          </div>
-
-          <p className="mt-4 text-2xl text-white">
-            {t('vendure.intro')}{' '}
-            <a
-              href="https://www.vendure.io"
-              className="text-blue-300 hover:text-blue-500"
-            >
-              Vendure
-            </a>{' '}
-            &{' '}
-            <a
-              href="~/routes/__cart/index"
-              className="text-red-300 hover:text-red-500"
-            >
-              Remix
-            </a>
-          </p>
-          <p className="mt-4 text-gray-300 space-x-1">
-            <BookOpenIcon className="w-5 h-5 inline" />
-            <span>{t('common.readMore')}</span>
-            <a
-              className="text-primary-200 hover:text-primary-400"
-              href="https://www.vendure.io/blog/2022/05/lightning-fast-headless-commerce-with-vendure-and-remix"
-            >
-              {t('vendure.link')}
-            </a>
-          </p>
-        </div>
+      <div className="flex flex-col min-h-screen gap-20 overflow-x-hidden w-full">
+        <Hero />
+        <StylesSection />
+        <LatestArrivals />
+        <CategorySection />
+        <TimeDeals />
       </div>
-
-      <section
+      {/* <section
         aria-labelledby="category-heading"
         className="pt-24 sm:pt-32 xl:max-w-7xl xl:mx-auto xl:px-8"
       >
@@ -107,7 +65,7 @@ export default function Index() {
             <span aria-hidden="true"> &rarr;</span>
           </a>
         </div>
-      </section>
+      </section> */}
     </>
   );
 }
