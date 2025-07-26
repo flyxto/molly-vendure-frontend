@@ -79,12 +79,17 @@ export default function CollectionSlug() {
   const submit = useSubmit();
   const { t } = useTranslation();
 
+  // console.log('result:', result);
+
   return (
-    <div className="max-w-6xl mx-auto px-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl sm:text-5xl font-light tracking-tight text-gray-900 my-8">
-          {collection.name}
-        </h2>
+    <div className="max-w-7xl mx-auto px-4 mt-24">
+      <div className="flex justify-between items-center mb-12">
+        <div className="flex flex-col gap-2 items-baseline ">
+          <Breadcrumbs items={collection.breadcrumbs}></Breadcrumbs>
+          <h2 className="text-3xl sm:text-5xl font-light tracking-tight  text-gray-900">
+            {collection.name}
+          </h2>
+        </div>
 
         <FiltersButton
           filterCount={facetValueIds.length}
@@ -92,8 +97,7 @@ export default function CollectionSlug() {
         />
       </div>
 
-      <Breadcrumbs items={collection.breadcrumbs}></Breadcrumbs>
-      {collection.children?.length ? (
+      {/* {collection.children?.length ? (
         <div className="max-w-2xl mx-auto py-16 sm:py-16 lg:max-w-none border-b mb-16">
           <h2 className="text-2xl font-light text-gray-900">
             {t('product.collections')}
@@ -109,7 +113,7 @@ export default function CollectionSlug() {
         </div>
       ) : (
         ''
-      )}
+      )} */}
 
       <ValidatedForm
         validator={withZod(validator)}

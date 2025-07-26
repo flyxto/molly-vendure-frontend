@@ -3,9 +3,9 @@ import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import { SearchBar } from '~/components/header/SearchBar';
 import { useRootLoader } from '~/utils/use-root-loader';
 import { UserIcon } from '@heroicons/react/24/solid';
-import { useScrollingUp } from '~/utils/use-scrolling-up';
-import { classNames } from '~/utils/class-names';
 import { useTranslation } from 'react-i18next';
+import { ScrollNavbar } from '~/components/header/ScrollNavbar';
+import { MobileNavigation } from '~/components/header/MobileNavigation';
 
 export function Header({
   onCartIconClick,
@@ -16,86 +16,93 @@ export function Header({
 }) {
   const data = useRootLoader();
   const isSignedIn = !!data.activeCustomer.activeCustomer?.id;
-  const isScrollingUp = useScrollingUp();
   const { t } = useTranslation();
 
+  // Define navigation links similar to Medusa structure
+  const navLinks = [
+    { href: '/', label: 'HOME' },
+    { href: '/collections', label: 'STORE' },
+    ...data.collections.map((collection) => ({
+      href: `/collections/${collection.slug}`,
+      label: collection.name.toUpperCase(),
+    })),
+    { href: '/contact', label: 'CONTACT US' },
+  ];
+
   return (
-    <header
-      className={classNames(
-        isScrollingUp ? 'sticky top-0 z-10 animate-dropIn' : '',
-        'bg-gradient-to-r from-zinc-700 to-gray-900 shadow-lg transform shadow-xl',
-      )}
-    >
-      <div className="bg-zinc-100 text-gray-600 shadow-inner text-center text-sm py-2 px-2 xl:px-0">
-        <div className="max-w-6xl mx-2 md:mx-auto flex items-center justify-between">
-          <div>
-            <p className="hidden sm:block">
-              {t('vendure.exclusive')}{' '}
-              <a
-                href="https://github.com/vendure-ecommerce/storefront-remix-starter"
-                target="_blank"
-                className="underline"
-              >
-                {t('vendure.repoLinkLabel')}
-              </a>
-            </p>
+    <ScrollNavbar>
+      <div className="max-w-7xl mx-auto container px-4">
+        {/* Mobile Navigation */}
+        <MobileNavigation
+          navLinks={navLinks}
+          onCartIconClick={onCartIconClick}
+          cartQuantity={cartQuantity}
+          isSignedIn={isSignedIn}
+        />
+
+        {/* Desktop View */}
+        <div className="hidden lg:flex justify-between items-center">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="flex items-center">
+              <img
+                src="/images/nav-and-footer/navbar-molly_logo.png"
+                width={140}
+                height={40}
+                alt={t('common.logoAlt')}
+                className="max-w-[120px] sm:max-w-full"
+              />
+            </Link>
           </div>
-          <div>
+
+          {/* Navigation Items */}
+          <div className="flex items-center justify-center space-x-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                prefetch="intent"
+                className="py-2 px-3 text-gray-700 hover:text-primary-600 transition-colors duration-200"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Right side actions */}
+          <div className="flex items-center justify-center space-x-4">
+            {/* Search Bar */}
+            <div className="w-64">
+              <SearchBar />
+            </div>
+
+            {/* Shopping Bag */}
+            <button
+              className="relative p-1 text-gray-700 hover:text-primary-600 transition-colors duration-200"
+              onClick={onCartIconClick}
+              aria-label="Open cart tray"
+            >
+              <ShoppingBagIcon className="w-6 h-6" />
+              {cartQuantity ? (
+                <div className="absolute rounded-full -top-2 -right-2 bg-primary-600 min-w-6 min-h-6 flex items-center justify-center text-xs text-white p-1">
+                  {cartQuantity}
+                </div>
+              ) : null}
+            </button>
+
+            {/* User Account */}
             <Link
               to={isSignedIn ? '/account' : '/sign-in'}
-              className="flex space-x-1"
+              className="flex items-center space-x-1 p-1 text-gray-700 hover:text-primary-600 transition-colors duration-200"
             >
-              <UserIcon className="w-4 h-4"></UserIcon>
-              <span>
+              <UserIcon className="w-5 h-5" />
+              <span className="hidden sm:inline">
                 {isSignedIn ? t('account.myAccount') : t('account.signIn')}
               </span>
             </Link>
           </div>
         </div>
       </div>
-      <div className="max-w-6xl mx-auto p-4 flex items-center space-x-4">
-        <h1 className="text-white w-10">
-          <Link to="/">
-            <img
-              src="/cube-logo-small.webp"
-              width={40}
-              height={31}
-              alt={t('commmon.logoAlt')}
-            />
-          </Link>
-        </h1>
-        <div className="flex space-x-4 hidden sm:block">
-          {data.collections.map((collection) => (
-            <Link
-              className="text-sm md:text-base text-gray-200 hover:text-white"
-              to={'/collections/' + collection.slug}
-              prefetch="intent"
-              key={collection.id}
-            >
-              {collection.name}
-            </Link>
-          ))}
-        </div>
-        <div className="flex-1 md:pr-8">
-          <SearchBar></SearchBar>
-        </div>
-        <div className="">
-          <button
-            className="relative w-9 h-9 bg-white bg-opacity-20 rounded text-white p-1"
-            onClick={onCartIconClick}
-            aria-label="Open cart tray"
-          >
-            <ShoppingBagIcon></ShoppingBagIcon>
-            {cartQuantity ? (
-              <div className="absolute rounded-full -top-2 -right-2 bg-primary-600 min-w-6 min-h-6 flex items-center justify-center text-xs p-1">
-                {cartQuantity}
-              </div>
-            ) : (
-              ''
-            )}
-          </button>
-        </div>
-      </div>
-    </header>
+    </ScrollNavbar>
   );
 }

@@ -1,19 +1,17 @@
 import { RootLoaderData } from '~/root';
 import { Link } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
+import { useState, useEffect } from 'react';
 
 const navigation = {
-  support: [
-    { page: 'help', href: '#' },
-    { page: 'trackOrder', href: '#' },
-    { page: 'shipping', href: '#' },
-    { page: 'returns', href: '#' },
-  ],
-  company: [
-    { page: 'about', href: '#' },
-    { page: 'blog', href: '#' },
-    { page: 'responsibility', href: '#' },
-    { page: 'press', href: '#' },
+  store: [
+    { page: 'store', href: '/collections', label: 'Store' },
+    {
+      page: 'new-arrivals',
+      href: '/collections/new-arrivals',
+      label: 'New Arrivals',
+    },
+    { page: 'contact', href: '/contact', label: 'Contact' },
   ],
 };
 
@@ -23,86 +21,275 @@ export default function Footer({
   collections: RootLoaderData['collections'];
 }) {
   const { t } = useTranslation();
+  const [shouldRender, setShouldRender] = useState(true);
+
+  useEffect(() => {
+    // Check if the current URL contains /pages/coming-soon
+    const currentUrl = window.location.href;
+    if (currentUrl.includes('/pages/coming-soon')) {
+      setShouldRender(false);
+    } else {
+      setShouldRender(true);
+    }
+  }, []);
+
+  // Return null if on the coming-soon page
+  if (!shouldRender) {
+    return null;
+  }
 
   return (
-    <footer
-      className="mt-24 border-t bg-gray-50"
-      aria-labelledby="footer-heading"
-    >
-      <h2 id="footer-heading" className="sr-only">
-        {t('footer.title')}
-      </h2>
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 ">
-        <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          <div className="grid grid-cols-2 gap-8 xl:col-span-2">
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="text-sm font-semibold text-gray-500 tracking-wider uppercase">
-                  {t('footer.shop')}
-                </h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {collections.map((collection) => (
-                    <li key={collection.id}>
-                      <Link
-                        className="text-base text-gray-500 hover:text-gray-600"
-                        to={'/collections/' + collection.slug}
-                        prefetch="intent"
-                        key={collection.id}
-                      >
-                        {collection.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-12 md:mt-0">
-                <h3 className="text-sm font-semibold text-gray-500 tracking-wider uppercase">
-                  {t('footer.support')}
-                </h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {navigation.support.map(({ page, href }) => (
-                    <li key={page}>
-                      <a
-                        href={href}
-                        className="text-base text-gray-500 hover:text-gray-600"
-                      >
-                        {t(`navigation.support.${page}`)}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+    <>
+      <style>{`
+        @keyframes marquee {
+          0% {
+            transform: translateX(100%);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
+        }
+        .animate-marquee {
+          animation: marquee 40s linear infinite;
+        }
+      `}</style>
+      <footer
+        className="bg-[#AC8537] rounded-t-3xl mt-20"
+        aria-labelledby="footer-heading"
+      >
+        <h2 id="footer-heading" className="sr-only">
+          Footer
+        </h2>
+
+        {/* Desktop View */}
+        <div className="hidden md:block max-w-7xl mx-auto container h-[350px] pt-5 md:px-4">
+          <div className="h-[30%] flex">
+            <div className="w-[20%] items-center flex border-r-white border-r border-b border-b-white">
+              {/* Logo */}
+              <img
+                src="/images/nav-and-footer/footer-molly_logo.png"
+                alt="MOLLY FASHION CIRCLE"
+                className="max-w-full max-h-full object-contain"
+              />
             </div>
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="text-sm font-semibold text-gray-500 tracking-wider uppercase">
-                  {t('account.company')}
-                </h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {navigation.company.map(({ page, href }) => (
-                    <li key={page}>
-                      <a
-                        href={href}
-                        className="text-base text-gray-500 hover:text-gray-600"
-                      >
-                        {t(`navigation.company.${page}`)}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+            <div className="w-[80%] border-b border-b-white flex justify-end items-center relative">
+              <div className="relative">
+                <img
+                  src="/images/nav-and-footer/footer-payment_methods.png"
+                  alt="Payment methods accepted"
+                  width={250}
+                  height={100}
+                />
               </div>
             </div>
           </div>
-          <div className="mt-8 xl:mt-0">
-            <h3 className="text-sm font-semibold text-gray-500 tracking-wider uppercase">
-              {t('footer.subscribeHeader')}
+
+          <div className="h-[80%] flex">
+            <div className="w-[80%] uppercase text-white mt-4">
+              <p className="text-xs block">
+                Premium fashion and lifestyle products
+              </p>
+              <p className="text-xs block">curated for the modern consumer.</p>
+              <p className="text-xs block">
+                Discover quality, style, and comfort
+              </p>
+              <p className="text-xs block">in every piece we offer.</p>
+
+              <div className="mt-14 w-fit">
+                <a
+                  href="#"
+                  className="text-white hover:text-[#201b11] transition flex items-center gap-3"
+                >
+                  <svg
+                    className="h-6 w-6"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M12.017 2.04c3.291 0 3.68.012 4.975.072 1.2.055 1.85.249 2.284.413.574.223.983.49 1.413.92.43.43.697.839.92 1.413.164.434.358 1.084.413 2.284.06 1.295.072 1.684.072 4.975s-.012 3.68-.072 4.975c-.055 1.2-.249 1.85-.413 2.284-.223.574-.49.983-.92 1.413-.43.43-.839.697-1.413.92-.434.164-1.084.358-2.284.413-1.295.06-1.684.072-4.975.072s-3.68-.012-4.975-.072c-1.2-.055-1.85-.249-2.284-.413-.574-.223-.983-.49-1.413-.92-.43-.43-.697-.839-.92-1.413-.164-.434-.358-1.084-.413-2.284-.06-1.295-.072-1.684-.072-4.975s.012-3.68.072-4.975c.055-1.2.249-1.85.413-2.284.223-.574.49-.983.92-1.413.43-.43.839-.697 1.413-.92.434-.164 1.084-.358 2.284-.413 1.295-.06 1.684-.072 4.975-.072zm0-2.04c-3.347 0-3.768.014-5.085.074-1.318.061-2.218.275-3.008.586-.815.317-1.507.742-2.196 1.43-.688.689-1.113 1.381-1.43 2.196-.311.79-.525 1.69-.586 3.008C.014 8.271 0 8.692 0 12.017s.014 3.746.074 5.063c.061 1.318.275 2.218.586 3.008.317.815.742 1.507 1.43 2.196.689.688 1.381 1.113 2.196 1.43.79.311 1.69.525 3.008.586 1.317.06 1.738.074 5.085.074s3.768-.014 5.085-.074c1.318-.061 2.218-.275 3.008-.586.815-.317 1.507-.742 2.196-1.43.688-.689 1.113-1.381 1.43-2.196.311-.79.525-1.69.586-3.008.06-1.317.074-1.738.074-5.063s-.014-3.746-.074-5.063c-.061-1.318-.275-2.218-.586-3.008-.317-.815-.742-1.507-1.43-2.196-.689-.688-1.381-1.113-2.196-1.43-.79-.311-1.69-.525-3.008-.586C15.785.014 15.364 0 12.017 0z"
+                      clipRule="evenodd"
+                    />
+                    <path
+                      fillRule="evenodd"
+                      d="M12.017 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.76 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <p className="text-xs">INSTAGRAM</p>
+                </a>
+              </div>
+              <div className="mt-4 w-fit">
+                <a
+                  href="#"
+                  className="text-white hover:text-[#201b11] transition flex items-center gap-3"
+                >
+                  <svg
+                    className="h-6 w-6"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.630.771-1.630 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <p className="text-xs">FACEBOOK</p>
+                </a>
+              </div>
+            </div>
+
+            <div className="w-[20%] border-l border-l-white pl-8 flex flex-col space-y-4">
+              <Link
+                to="/"
+                className="text-white hover:text-[#201b11] mt-4 uppercase text-sm"
+              >
+                Home
+              </Link>
+
+              {/* Collections */}
+              {collections.slice(0, 4).map((collection) => (
+                <Link
+                  key={collection.id}
+                  to={'/collections/' + collection.slug}
+                  className="text-white hover:text-[#201b11] uppercase text-sm"
+                  prefetch="intent"
+                >
+                  {collection.name}
+                </Link>
+              ))}
+
+              {/* Store Links - Now showing all store links */}
+              {navigation.store.map(({ page, href, label }) => (
+                <a
+                  key={page}
+                  href={href}
+                  className="text-white hover:text-[#201b11] uppercase text-sm"
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile View */}
+        <div className="md:hidden w-full flex flex-col items-center text-white px-4 pt-6">
+          {/* Logo */}
+          <div className="w-full flex justify-center border-b border-white pb-4">
+            <img
+              src="/images/nav-and-footer/footer-molly_logo.png"
+              alt="MOLLY FASHION CIRCLE"
+              className="max-h-16 object-contain"
+            />
+          </div>
+
+          {/* Navigation Links */}
+          <div className="w-full flex flex-col items-center space-y-3 mt-6 border-b border-white pb-6">
+            <Link to="/" className="text-white hover:text-[#201b11] uppercase">
+              Home
+            </Link>
+
+            {collections.slice(0, 4).map((collection) => (
+              <Link
+                key={collection.id}
+                to={'/collections/' + collection.slug}
+                className="text-white hover:text-[#201b11] uppercase"
+                prefetch="intent"
+              >
+                {collection.name}
+              </Link>
+            ))}
+
+            {/* Store Links Only - Removed company links */}
+            {navigation.store.map(({ page, href, label }) => (
+              <a
+                key={page}
+                href={href}
+                className="text-white hover:text-[#201b11] uppercase"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+
+          {/* Social Media */}
+          <div className="flex justify-center space-x-6 my-4">
+            <a href="#" className="text-white hover:text-[#201b11]">
+              <svg
+                className="h-8 w-8"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M12.017 2.04c3.291 0 3.68.012 4.975.072 1.2.055 1.85.249 2.284.413.574.223.983.49 1.413.92.43.43.697.839.92 1.413.164.434.358 1.084.413 2.284.06 1.295.072 1.684.072 4.975s-.012 3.68-.072 4.975c-.055 1.2-.249 1.85-.413 2.284-.223.574-.49.983-.92 1.413-.43.43-.839.697-1.413.92-.434.164-1.084.358-2.284.413-1.295.06-1.684.072-4.975.072s-3.68-.012-4.975-.072c-1.2-.055-1.85-.249-2.284-.413-.574-.223-.983-.49-1.413-.92-.43-.43-.697-.839-.92-1.413-.164-.434-.358-1.084-.413-2.284-.06-1.295-.072-1.684-.072-4.975s.012-3.68.072-4.975c.055-1.2.249-1.85.413-2.284.223-.574.49-.983.92-1.413.43-.43.839-.697 1.413-.92.434-.164 1.084-.358 2.284-.413 1.295-.06 1.684-.072 4.975-.072zm0-2.04c-3.347 0-3.768.014-5.085.074-1.318.061-2.218.275-3.008.586-.815.317-1.507.742-2.196 1.43-.688.689-1.113 1.381-1.43 2.196-.311.79-.525 1.69-.586 3.008C.014 8.271 0 8.692 0 12.017s.014 3.746.074 5.063c.061 1.318.275 2.218.586 3.008.317.815.742 1.507 1.43 2.196.689.688 1.381 1.113 2.196 1.43.79.311 1.69.525 3.008.586 1.317.06 1.738.074 5.085.074s3.768-.014 5.085-.074c1.318-.061 2.218-.275 3.008-.586.815-.317 1.507-.742 2.196-1.43.688-.689 1.113-1.381 1.43-2.196.311-.79.525-1.69.586-3.008.06-1.317.074-1.738.074-5.063s-.014-3.746-.074-5.063c-.061-1.318-.275-2.218-.586-3.008-.317-.815-.742-1.507-1.43-2.196-.689-.688-1.381-1.113-2.196-1.43-.79-.311-1.69-.525-3.008-.586C15.785.014 15.364 0 12.017 0z"
+                  clipRule="evenodd"
+                />
+                <path
+                  fillRule="evenodd"
+                  d="M12.017 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.76 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </a>
+            <div className="border-r border-white h-8"></div>
+            <a href="#" className="text-white hover:text-[#201b11]">
+              <svg
+                className="h-8 w-8"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.630.771-1.630 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        {/* Marquee */}
+        <div className="w-full text-white py-6 border-t border-t-white mt-4 md:mt-10 border-b border-b-white">
+          <div className="overflow-hidden">
+            <div className="animate-marquee whitespace-nowrap py-2">
+              <span className="inline-flex items-center text-3xl md:text-5xl mx-4">
+                MOLLY FASHION CIRCLE ✱ MOLLY FASHION CIRCLE ✱ MOLLY FASHION
+                CIRCLE ✱ MOLLY FASHION CIRCLE ✱ MOLLY FASHION CIRCLE ✱ MOLLY
+                FASHION CIRCLE ✱ MOLLY FASHION CIRCLE ✱ MOLLY FASHION CIRCLE ✱
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Payment methods for mobile */}
+        <div className="md:hidden flex justify-center my-4">
+          <img
+            src="/images/nav-and-footer/footer-payment_methods.png"
+            alt="Payment methods accepted"
+            width={200}
+            height={80}
+          />
+        </div>
+
+        {/* Newsletter Subscription - keeping from original Vendure footer */}
+        {/* <div className="max-w-7xl mx-auto px-4 py-6 border-b border-white">
+          <div className="max-w-md mx-auto">
+            <h3 className="text-sm font-semibold text-white tracking-wider uppercase text-center mb-4">
+              Subscribe to our newsletter
             </h3>
-            <p className="mt-4 text-base text-gray-500">
-              {t('footer.subscribeIntro')}
+            <p className="text-base text-white text-center mb-4 text-sm">
+              Get the latest updates on new products and upcoming sales
             </p>
-            <form className="mt-4 sm:flex sm:max-w-md">
+            <form className="sm:flex sm:max-w-md mx-auto">
               <label htmlFor="email-address" className="sr-only">
-                {t('acount.emailAddress')}
+                Email Address
               </label>
               <input
                 type="email"
@@ -110,41 +297,37 @@ export default function Footer({
                 id="email-address"
                 autoComplete="email"
                 required
-                className="appearance-none min-w-0 w-full bg-white border border-gray-300 rounded-md py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white focus:border-white focus:placeholder-gray-400"
-                placeholder={t('footer.emailPlaceholder')}
+                className="appearance-none min-w-0 w-full bg-white border border-gray-300 rounded-md py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#AC8537] focus:ring-white focus:border-white focus:placeholder-gray-400"
+                placeholder="Enter your email"
               />
               <div className="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
                 <button
                   type="submit"
-                  className="w-full bg-primary-500 border border-transparent rounded-md py-2 px-4 flex items-center justify-center text-base font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-primary-500"
+                  className="w-full bg-white text-[#AC8537] border border-transparent rounded-md py-2 px-4 flex items-center justify-center text-base font-medium hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#AC8537] focus:ring-white transition"
                 >
-                  {t('footer.subscribe')}
+                  Subscribe
                 </button>
               </div>
             </form>
           </div>
+        </div> */}
+
+        {/* Copyright & Links */}
+        <div className="text-white py-4 px-4 flex flex-col md:flex-row md:justify-between text-center md:text-left text-xs max-w-7xl mx-auto">
+          <div className="mb-2 md:mb-0">
+            © {new Date().getFullYear()} MOLLY FASHION CIRCLE. ALL RIGHTS
+            RESERVED
+          </div>
+          <div className="flex justify-center md:justify-end gap-4">
+            <a href="/privacy-policy" className="hover:underline uppercase">
+              Privacy Policy
+            </a>
+            <a href="/terms-conditions" className="hover:underline uppercase">
+              Terms & Conditions
+            </a>
+          </div>
         </div>
-        <div className="mt-8 border-t pt-8">
-          <a
-            className="flex items-center space-x-4 font-medium text-gray-500 hover:text-gray-700"
-            href="https://github.com/vendure-ecommerce/storefront-remix-starter"
-          >
-            <svg
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              className="h-6 w-6"
-              aria-hidden="true"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <span>github.com/vendure-ecommerce/storefront-remix-starter</span>
-          </a>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }

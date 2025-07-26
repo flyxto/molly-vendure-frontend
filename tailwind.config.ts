@@ -13,6 +13,8 @@ export default {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          500: '#AC8537', // Your brand color
+          600: '#9A7631', // Hover state
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
