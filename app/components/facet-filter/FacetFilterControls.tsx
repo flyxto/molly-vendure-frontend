@@ -6,7 +6,7 @@ import { useSearchParams } from '@remix-run/react';
 import { FacetFilterTracker } from '~/components/facet-filter/facet-filter-tracker';
 import { useTranslation } from 'react-i18next';
 
-export default function FacetFilterControls({
+export default function FacetFilterControlsHorizontal({
   facetFilterTracker,
   mobileFiltersOpen,
   setMobileFiltersOpen,
@@ -138,61 +138,67 @@ export default function FacetFilterControls({
         </Dialog>
       </Transition.Root>
 
+      {/* Horizontal desktop filters with checkboxes */}
       <div className="hidden lg:block">
         <input type="hidden" name="q" value={q} />
-        {facetFilterTracker.facetsWithValues.map((facet) => (
-          <Disclosure
-            as="div"
-            key={facet.id}
-            defaultOpen={true}
-            className="border-b border-gray-200 py-6"
-          >
-            {({ open }) => (
-              <>
-                <h3 className="-my-3 flow-root">
-                  <Disclosure.Button className="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500">
-                    <span className="font-medium text-gray-900 uppercase">
-                      {facet.name}
-                    </span>
-                    <span className="ml-6 flex items-center">
-                      {open ? (
-                        <MinusSmallIcon
-                          className="h-5 w-5"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <PlusSmallIcon className="h-5 w-5" aria-hidden="true" />
-                      )}
-                    </span>
-                  </Disclosure.Button>
-                </h3>
-                <Disclosure.Panel className="pt-6">
-                  <div className="space-y-4">
-                    {facet.values.map((value, optionIdx) => (
-                      <div key={value.id} className="flex items-center">
-                        <input
-                          id={`filter-${facet.id}-${optionIdx}`}
-                          name={`fvid`}
-                          defaultValue={value.id}
-                          type="checkbox"
-                          checked={value.selected}
-                          onChange={() => {}}
-                          className="h-4 w-4 border-gray-300 rounded text-primary-600 focus:ring-primary-500"
-                        />
-                        <label
-                          htmlFor={`filter-${facet.id}-${optionIdx}`}
-                          className="ml-3 text-sm text-gray-600"
-                        >
-                          {value.name}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </Disclosure.Panel>
-              </>
-            )}
-          </Disclosure>
-        ))}
+        <div className="space-y-4">
+          {facetFilterTracker.facetsWithValues.map((facet) => (
+            <Disclosure
+              as="div"
+              key={facet.id}
+              defaultOpen={true}
+              className="border border-gray-200 rounded-lg p-4"
+            >
+              {({ open }) => (
+                <>
+                  <h3 className="flow-root">
+                    <Disclosure.Button className="bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500">
+                      <span className="font-medium text-gray-900 uppercase">
+                        {facet.name}
+                      </span>
+                      <span className="ml-4 flex items-center">
+                        {open ? (
+                          <MinusSmallIcon
+                            className="h-5 w-5"
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <PlusSmallIcon
+                            className="h-5 w-5"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </span>
+                    </Disclosure.Button>
+                  </h3>
+                  <Disclosure.Panel className="pt-4">
+                    <div className="flex flex-wrap gap-x-6 gap-y-3">
+                      {facet.values.map((value, optionIdx) => (
+                        <div key={value.id} className="flex items-center">
+                          <input
+                            id={`filter-${facet.id}-${optionIdx}`}
+                            name={`fvid`}
+                            defaultValue={value.id}
+                            type="checkbox"
+                            checked={value.selected}
+                            onChange={() => {}}
+                            className="h-4 w-4 border-gray-300 rounded text-primary-600 focus:ring-primary-500"
+                          />
+                          <label
+                            htmlFor={`filter-${facet.id}-${optionIdx}`}
+                            className="ml-2 text-sm text-gray-600 whitespace-nowrap"
+                          >
+                            {value.name}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </Disclosure.Panel>
+                </>
+              )}
+            </Disclosure>
+          ))}
+        </div>
       </div>
     </>
   );
