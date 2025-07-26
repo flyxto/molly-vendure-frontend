@@ -50,7 +50,7 @@ export default function Footer({
           }
         }
         .animate-marquee {
-          animation: marquee 20s linear infinite;
+          animation: marquee 40s linear infinite;
         }
       `}</style>
       <footer
@@ -279,7 +279,7 @@ export default function Footer({
         </div>
 
         {/* Newsletter Subscription - keeping from original Vendure footer */}
-        <div className="max-w-7xl mx-auto px-4 py-6 border-b border-white">
+        {/* <div className="max-w-7xl mx-auto px-4 py-6 border-b border-white">
           <div className="max-w-md mx-auto">
             <h3 className="text-sm font-semibold text-white tracking-wider uppercase text-center mb-4">
               Subscribe to our newsletter
@@ -310,7 +310,7 @@ export default function Footer({
               </div>
             </form>
           </div>
-        </div>
+        </div> */}
 
         {/* Copyright & Links */}
         <div className="text-white py-4 px-4 flex flex-col md:flex-row md:justify-between text-center md:text-left text-xs max-w-7xl mx-auto">
