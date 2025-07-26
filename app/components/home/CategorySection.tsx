@@ -237,14 +237,14 @@ export default function CategorySection() {
       <div className="grid lg:hidden grid-cols-2">
         {categories.map((category, index) => (
           <a key={index} href={category.link}>
-            <div className="aspect-[3/4] sm:aspect-square relative flex justify-center items-center active:opacity-80 overflow-hidden">
+            <div className="aspect-[3/4] sm:aspect-square relative flex justify-center items-center active:opacity-80 overflow-hidden ">
               <img
                 src={category.images}
                 alt={`${category.displayName} category`}
-                className="object-cover object-top"
+                className="w-full h-full object-cover object-top"
               />
               <div
-                className={`relative text-white px-4 z-10 ${
+                className={`absolute text-white px-4 z-10 ${
                   category.name === 'homeNlifestyle' ? 'flex-col' : 'flex'
                 } flex smooth-shadow w-full text-center justify-center items-center`}
               >
