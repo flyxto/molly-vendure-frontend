@@ -53,6 +53,7 @@ export async function loader({ request }: DataFunctionArgs) {
 }
 
 export default function CheckoutShipping() {
+console.log('🚢 Shipping component is rendering');
   const { availableCountries, eligibleShippingMethods, activeCustomer, error } =
     useLoaderData<typeof loader>();
   const { activeOrderFetcher, activeOrder } = useOutletContext<OutletContext>();
