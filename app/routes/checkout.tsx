@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 const steps = ['shipping', 'payment', 'confirmation'];
 
 export default function Checkout() {
+console.log('🏗️ Checkout layout is rendering');
   const outletContext = useOutletContext<OutletContext>();
   const { activeOrder, adjustOrderLine, removeItem } = outletContext;
   console.log('Checkout layout - activeOrder:', activeOrder);
