@@ -11,6 +11,7 @@ const steps = ['shipping', 'payment', 'confirmation'];
 export default function Checkout() {
   const outletContext = useOutletContext<OutletContext>();
   const { activeOrder, adjustOrderLine, removeItem } = outletContext;
+  console.log('Checkout layout - activeOrder:', activeOrder);
   const location = useLocation();
   const { t } = useTranslation();
 
