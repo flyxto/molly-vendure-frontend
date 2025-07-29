@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from '@remix-run/react';
 import { ShoppingBagIcon, UserIcon } from '@heroicons/react/24/outline';
 import {
@@ -8,6 +7,9 @@ import {
 } from '@heroicons/react/24/outline';
 import { SearchBar } from '~/components/header/SearchBar';
 import { useTranslation } from 'react-i18next';
+import { Button } from '../ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { ShoppingBag } from 'lucide-react';
 
 interface NavLink {
   href: string;
@@ -19,6 +21,10 @@ interface MobileNavigationProps {
   onCartIconClick: () => void;
   cartQuantity: number;
   isSignedIn: boolean;
+  mobileMenuOpen: boolean;
+  setMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  showMobileSearch: boolean;
+  setShowMobileSearch: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function MobileNavigation({
@@ -26,9 +32,11 @@ export function MobileNavigation({
   onCartIconClick,
   cartQuantity,
   isSignedIn,
+  mobileMenuOpen,
+  setMobileMenuOpen,
+  showMobileSearch,
+  setShowMobileSearch,
 }: MobileNavigationProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const { t } = useTranslation();
 
   return (
@@ -73,7 +81,7 @@ export function MobileNavigation({
             onClick={onCartIconClick}
             aria-label="Open cart tray"
           >
-            <ShoppingBagIcon className="w-5 h-5" />
+            <ShoppingBag className="w-5 h-5" />
             {cartQuantity ? (
               <div className="absolute rounded-full -top-1 -right-1 bg-primary-600 min-w-4 min-h-4 flex items-center justify-center text-xs text-white">
                 {cartQuantity}
@@ -85,7 +93,7 @@ export function MobileNavigation({
 
       {/* Mobile Search Bar */}
       {showMobileSearch && (
-        <div className="lg:hidden bg-white border-t border-gray-100 px-4 py-3">
+        <div className="lg:hidden bg-white w-full border-t border-gray-100 px-4 py-5 rounded-b-lg">
           <SearchBar />
         </div>
       )}
@@ -109,13 +117,19 @@ export function MobileNavigation({
             {/* User Account Link */}
             <Link
               to={isSignedIn ? '/account' : '/sign-in'}
-              className="flex items-center space-x-2 py-2 text-gray-800 hover:text-primary-600 border-b border-gray-100 transition-colors duration-200"
-              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center space-x-1 p-1 text-gray-700 hover:text-primary-600 transition-colors duration-200"
             >
-              <UserIcon className="w-4 h-4" />
-              <span>
-                {isSignedIn ? t('account.myAccount') : t('account.signIn')}
-              </span>
+              {isSignedIn ? (
+                <div className="flex gap-2 items-center w-full justify-between">
+                  <p className="text-lg uppercase">Profile</p>
+                  <Avatar className="w-6 h-6">
+                    <AvatarImage src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                </div>
+              ) : (
+                <Button className="w-full py-4">Sign In</Button>
+              )}
             </Link>
           </div>
         </div>
