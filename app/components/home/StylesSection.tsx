@@ -2,8 +2,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 export default function StylesSection() {
+  const [imageOneHover, setImageOneHover] = useState(false);
+  const [imageTwoHover, setImageTwoHover] = useState(false);
+  const [imageThreeHover, setImageThreeHover] = useState(false);
+
   // Animation variants for staggered children
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -82,153 +87,6 @@ export default function StylesSection() {
         />
       </div>
 
-      {/* Mobile View */}
-      <div className="md:hidden relative flex flex-col w-full px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <p className="text-4xl uppercase font-semibold">
-            Shop the <br />
-            Latest Trends
-          </p>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, rotate: -10 }}
-          animate={{ opacity: 1, rotate: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          <img
-            src="/images/home-page/styles-mobile-image_1.png"
-            alt="img1"
-            width={120}
-            height={120}
-            className="absolute right-0 -top-20 z-10"
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 0.8, scale: 1 }}
-          transition={{ duration: 1.2 }}
-        >
-          <img
-            src="/images/home-page/styles-mobile-shadow_blob.png"
-            alt="img1"
-            width={600}
-            height={600}
-            className="absolute -right-30 -top-20 -z-10"
-          />
-        </motion.div>
-        <div className="h-80 flex mx-auto max-w-7xl justify-center items-center container my-4">
-          <motion.div
-            className="w-px h-full bg-black"
-            initial={{ height: 0 }}
-            animate={{ height: '100%' }}
-            transition={{ duration: 1.5, delay: 0.8 }}
-          />
-        </div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, amount: 0.6 }}
-          className="flex justify-center"
-        >
-          <p className="ml-12 text-4xl uppercase font-light">
-            Find Your
-            <br />
-            Perfect Look
-          </p>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, rotate: 10 }}
-          whileInView={{ opacity: 1, rotate: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          viewport={{ once: true, amount: 0.6 }}
-        >
-          <img
-            src="/images/home-page/styles-mobile-image_2.png"
-            alt="img1"
-            width={120}
-            height={120}
-            className="absolute left-0 top-30 z-10"
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 0.8, scale: 1 }}
-          transition={{ duration: 1.2 }}
-          viewport={{ once: true, amount: 0.6 }}
-        >
-          <img
-            src="/images/home-page/styles-mobile-shadow_blob.png"
-            alt="img1"
-            width={600}
-            height={600}
-            className="absolute -left-40 top-50 -z-10"
-          />
-        </motion.div>
-        <div className="h-52 flex mx-auto max-w-7xl justify-center items-center container my-4">
-          <motion.div
-            className="w-px h-full bg-black"
-            initial={{ height: 0 }}
-            whileInView={{ height: '100%' }}
-            transition={{ duration: 1.5, delay: 0.8 }}
-            viewport={{ once: true, amount: 0.6 }}
-          />
-        </div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, amount: 0.6 }}
-          className="flex items-start"
-        >
-          <p className="ml-12 text-4xl text-right uppercase font-semibold">
-            Fresh Fits <br />
-            Await
-          </p>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, rotate: -5 }}
-          whileInView={{ opacity: 1, rotate: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          viewport={{ once: true, amount: 0.6 }}
-        >
-          <img
-            src="/images/home-page/styles-mobile-image_3.png"
-            alt="img1"
-            width={210}
-            height={210}
-            className="absolute right-0 bottom-0"
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 0.8, scale: 1 }}
-          transition={{ duration: 1.2 }}
-          viewport={{ once: true, amount: 0.6 }}
-        >
-          <img
-            src="/images/home-page/styles-mobile-shadow_blob.png"
-            alt="img1"
-            width={600}
-            height={600}
-            className="absolute -right-25 bottom-10 scale-150 -z-10"
-          />
-        </motion.div>
-        <div className="h-52 flex mx-auto max-w-7xl justify-center items-center container my-4">
-          <motion.div
-            className="w-px h-full bg-black"
-            initial={{ height: 0 }}
-            whileInView={{ height: '100%' }}
-            transition={{ duration: 1.5, delay: 0.8 }}
-            viewport={{ once: true, amount: 0.6 }}
-          />
-        </div>
-      </div>
-
       {/* Desktop View */}
       <motion.div
         className="hidden md:flex container h-fit max-w-7xl mx-auto items-end justify-between relative md:gap-4"
@@ -253,15 +111,15 @@ export default function StylesSection() {
             // viewport={{ once: true, amount: 0.8 }}
           />
           <motion.p
-            className="max-w-xs uppercase text-justify leading-tight text-sm"
+            className="max-w-xs uppercase text-justify leading-tight text-xs lg:text-sm"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.6 }}
             viewport={{ once: true, amount: 0.8 }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam
+            Discover curated styles that suit every mood and moment. From
+            timeless classics to bold new trends, find looks that define you.
+            Express yourself effortlessly.
           </motion.p>
           <motion.div
             className="h-px bg-black w-full"
@@ -287,13 +145,21 @@ export default function StylesSection() {
             Shop the
             <br /> Latest Trends
           </motion.h1>
-          <motion.div>
-            <img
-              src="/images/home-page/new_arrivals-img_6.png"
+          <motion.div
+            className="w-full max-w-[31.25rem] aspect-[5/7] overflow-hidden"
+            onMouseEnter={() => setImageOneHover(true)}
+            onMouseLeave={() => setImageOneHover(false)}
+          >
+            <motion.img
+              src={
+                imageOneHover
+                  ? '/images/home-page/styles-img-1-2.jpg'
+                  : '/images/home-page/styles-img-1-1.jpg'
+              }
               alt="img1"
               width={560}
               height={650}
-              className="border border-black rounded-md"
+              className="w-full h-full object-cover rounded-md"
             />
           </motion.div>
         </motion.div>
@@ -313,13 +179,21 @@ export default function StylesSection() {
             Find Your
             <br /> Perfect Look
           </motion.h1>
-          <motion.div>
-            <img
-              src="/images/home-page/new_arrivals-img_4.png"
+          <motion.div
+            className="w-full max-w-[27.813rem] aspect-[27.813/36.25] overflow-hidden"
+            onMouseEnter={() => setImageTwoHover(true)}
+            onMouseLeave={() => setImageTwoHover(false)}
+          >
+            <motion.img
+              src={
+                imageTwoHover
+                  ? '/images/home-page/styles-img-2-2.jpg'
+                  : '/images/home-page/styles-img-2-1.jpg'
+              }
               alt="img2"
-              width={460}
+              width={500}
               height={500}
-              className="border border-black rounded-md"
+              className="w-full h-full object-cover rounded-md"
             />
           </motion.div>
         </motion.div>
@@ -339,13 +213,21 @@ export default function StylesSection() {
             Fresh Fits
             <br /> Await
           </motion.h1>
-          <motion.div>
+          <motion.div
+            className="w-full max-w-[19.5rem] aspect-[39/53] overflow-hidden"
+            onMouseEnter={() => setImageThreeHover(true)}
+            onMouseLeave={() => setImageThreeHover(false)}
+          >
             <img
-              src="/images/home-page/new_arrivals-img_5.png"
+              src={
+                imageThreeHover
+                  ? '/images/home-page/styles-img-3-1.jpg'
+                  : '/images/home-page/styles-img-3-2.jpg'
+              }
               alt="img3"
               width={340}
               height={400}
-              className="border border-black rounded-md"
+              className="w-full h-full object-cover rounded-md"
             />
           </motion.div>
         </motion.div>
