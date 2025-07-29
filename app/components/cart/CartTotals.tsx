@@ -27,7 +27,7 @@ export function CartTotals({ order }: { order?: OrderDetailFragment | null }) {
       </div>
       <div className="flex items-center justify-between border-t border-gray-200 pt-6">
         <dt className="text-base font-medium">{t('common.total')}</dt>
-        <dd className="text-base font-medium text-gray-900">
+        <dd className="text-xl font-medium text-gray-900">
           <Price
             priceWithTax={order?.totalWithTax}
             currencyCode={order?.currencyCode}

@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 const steps = ['shipping', 'payment', 'confirmation'];
 
 export default function Checkout() {
-console.log('🏗️ Checkout layout is rendering');
+  console.log('🏗️ Checkout layout is rendering');
   const outletContext = useOutletContext<OutletContext>();
   const { activeOrder, adjustOrderLine, removeItem } = outletContext;
   console.log('Checkout layout - activeOrder:', activeOrder);
@@ -25,7 +25,7 @@ console.log('🏗️ Checkout layout is rendering');
   let isConfirmationPage = state === 'confirmation';
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 mt-28">
       <div
         className={classNames(
           isConfirmationPage ? 'lg:max-w-3xl mx-auto' : 'lg:max-w-7xl',
@@ -39,13 +39,18 @@ console.log('🏗️ Checkout layout is rendering');
         >
           <ol role="list" className="flex space-x-4 justify-center">
             {steps.map((step, stepIdx) => (
-              <li key={step} className="flex items-center">
+              <li
+                key={step}
+                className="flex items-center text-xl font-semibold"
+              >
                 {step === state ? (
                   <span aria-current="page" className="text-primary-600">
                     {t(`checkout.steps.${step}`)}
                   </span>
                 ) : (
-                  <span>{t(`checkout.steps.${step}`)}</span>
+                  <span className="text-gray-400">
+                    {t(`checkout.steps.${step}`)}
+                  </span>
                 )}
 
                 {stepIdx !== steps.length - 1 ? (
