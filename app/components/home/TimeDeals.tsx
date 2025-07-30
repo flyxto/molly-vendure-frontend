@@ -93,16 +93,11 @@ export default function TimeDeals() {
         <div className="relative w-full h-[280px] sm:h-[320px] mb-4 rounded-r-md sm:rounded-lg  bg-[#B3C5C7] group">
           <div className="absolute inset-0 p-8 z-10 flex flex-col justify-center">
             <div className="flex flex-col items-start">
-              <h2 className="text-4xl sm:text-5xl text-white mb-2">
-                FEMININE, <br className="sm:hidden" />
-                FLOWY
-              </h2>
-              <div className="flex items-center gap-4">
-                <h2 className="text-5xl text-white hidden sm:block">
-                  &amp; ON SALE!
-                </h2>
-                <div className="inline-block bg-white text-[#AF803C] font-medium px-6 py-2 rounded-full">
-                  50% OFF
+              <h2 className="text-4xl sm:text-5xl text-white mb-2">DENIM</h2>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                <h2 className="text-5xl text-white">REFRESH</h2>
+                <div className="inline-block bg-white text-[#AF803C] w-fit font-medium px-6 py-2 rounded-full">
+                  25% OFF
                 </div>
               </div>
             </div>
@@ -111,13 +106,22 @@ export default function TimeDeals() {
               <div className="h-px bg-white flex-grow ml-4"></div>
             </div>
           </div>
-          <div className="absolute right-0 h-full w-1/2 z-20">
+          <div className="absolute hidden md:block right-0 h-full w-full z-20">
             <img
-              src="/images/home-page/deals-img_1.png"
+              src="/images/home-page/deals-img-2.png"
+              alt="Denim refresh collection"
+              width={300}
+              height={300}
+              className="pt-5 absolute bottom-0 right-5 md:group-hover:scale-110 md:group-hover:translate-y-[-1.2rem] transition-transform duration-700 w-64 sm:w-[34rem]"
+            />
+          </div>
+          <div className=" md:hidden absolute right-0 h-full w-1/2 z-20">
+            <img
+              src="/images/home-page/deals-img-1-mobile.png"
               alt="Feminine flowy fashion"
               width={220}
               height={220}
-              className="pt-5 absolute bottom-0 right-0 sm:right-20 md:group-hover:scale-150 md:group-hover:translate-y-[-4.9rem] transition-transform duration-700"
+              className="pt-5 absolute bottom-0 right-0 sm:right-20 md:group-hover:scale-150 md:group-hover:translate-y-[-5rem] transition-transform duration-700 w-[11rem]"
             />
           </div>
         </div>
@@ -134,13 +138,20 @@ export default function TimeDeals() {
           <div className="relative h-[280px] sm:h-[400px] rounded-l-md sm:rounded-lg bg-[#DCDCDC] group">
             <div className="absolute h-full w-full right-0 text-right sm:text-left sm:inset-0 p-8 z-10 flex flex-col">
               <div>
-                <h2 className="text-4xl sm:text-5xl text-white mb-2">
-                  DENIM
+                <h2 className="text-4xl sm:text-5xl text-white">
+                  {/* DENIM
                   <br />
-                  REFRESH
+                  REFRESH */}
+                  FEMININE, <br />
+                  FLOWY
                 </h2>
-                <div className="inline-block bg-white text-[#AF803C] font-medium px-6 py-2 rounded-full">
-                  25% OFF
+                <div className="flex flex-col gap-4">
+                  <h2 className="text-5xl text-white hidden sm:block">
+                    &amp; ON SALE!
+                  </h2>
+                  <div className="inline-block bg-white w-fit text-[#AF803C] font-medium px-6 py-2 rounded-full">
+                    50% OFF
+                  </div>
                 </div>
               </div>
               <div className="flex sm:flex-row flex-row-reverse  items-center mt-auto">
@@ -148,13 +159,13 @@ export default function TimeDeals() {
                 <div className="h-px bg-white flex-grow ml-4"></div>
               </div>
             </div>
-            <div className="absolute right-0 h-full w-[460px] z-20">
+            <div className="absolute right-0 h-full w-[15rem] sm:w-[18rem] z-20">
               <img
-                src="/images/home-page/deals-img_2.png"
-                alt="Denim refresh collection"
-                width={300}
-                height={300}
-                className="pt-5 absolute bottom-0 right-50 sm:right-0 md:group-hover:scale-125 md:group-hover:translate-y-[-3.4rem] transition-transform duration-700 w-64 sm:w-[300px]"
+                src="/images/home-page/deals-img-1.png"
+                alt="Feminine flowy fashion"
+                width={220}
+                height={220}
+                className="pt-5 absolute bottom-0 right-40 sm:right-2 md:group-hover:scale-125 md:group-hover:translate-y-[-3.18rem] transition-transform duration-700 w-[25rem] sm:w-[20rem]"
               />
             </div>
           </div>
@@ -188,11 +199,11 @@ export default function TimeDeals() {
               {/* Image takes the full left side */}
               <div className="absolute w-[280px] bottom-0 right-0 sm:inset-0 z-20">
                 <img
-                  src="/images/home-page/deals-img_3.png"
+                  src="/images/home-page/deals-img-3.png"
                   alt="Cool styles collection"
                   width={400}
                   height={400}
-                  className="pt-5 absolute bottom-0 right-0 md:md:group-hover:scale-125 md:md:group-hover:translate-y-[-3.2rem] transition-transform duration-700 sm:ml-10 w-60 sm:w-[300px]"
+                  className="pt-5 absolute bottom-0 right-0 md:md:group-hover:scale-125 md:md:group-hover:translate-y-[-3.2rem] transition-transform duration-700 sm:ml-10 w-[12rem] sm:w-[14rem]"
                 />
               </div>
             </div>
