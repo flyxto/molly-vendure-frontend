@@ -106,7 +106,7 @@ export default function TimeDeals() {
               <div className="h-px bg-white flex-grow ml-4"></div>
             </div>
           </div>
-          <div className="absolute hidden md:block right-0 h-full w-full z-20">
+          <div className="absolute hidden md:block right-0 h-full w-full z-10">
             <img
               src="/images/home-page/deals-img-2.png"
               alt="Denim refresh collection"
