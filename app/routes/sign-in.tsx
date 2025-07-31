@@ -6,6 +6,7 @@ import { XCircleIcon } from '@heroicons/react/24/solid';
 import { Button } from '~/components/Button';
 import { ArrowPathIcon } from '@heroicons/react/24/solid';
 import { useTranslation } from 'react-i18next';
+import ImageShuffles from '~/components/signin/ImageShuffle';
 
 export async function action({ params, request }: DataFunctionArgs) {
   const body = await request.formData();
@@ -32,25 +33,39 @@ export default function SignInPage() {
 
   return (
     <>
-      <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl text-gray-900">
-            {t('account.signInTitle')}
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            {t('common.or')}{' '}
-            <Link
-              to="/sign-up"
-              className="font-medium text-primary-600 hover:text-primary-500"
-            >
-              {t('account.register')}
-            </Link>
-          </p>
+      <div className="flex flex-col justify-center sm:px-6 lg:px-8 h-svh relative overflow-hidden">
+        <img
+          src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920804/Ellipse_8_o819io.png"
+          alt="Form background shadow"
+          width={800}
+          height={800}
+          className="absolute -top-50 -right-44 md:right-0 "
+        />
+        <img
+          src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920804/Ellipse_8_o819io.png"
+          alt="Form background shadow"
+          width={600}
+          height={600}
+          className="rotate-180 absolute left-0 top-[25rem] "
+        />
+
+        <div className="absolute hidden md:block lg:-left-[10rem] xl:-left-[5rem] 2xl:-left-[10rem]  bottom-0 2xl:-bottom-[16rem] lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] lg:h-[50rem] xl:h-[50rem] 2xl:h-[70rem] z-20 ">
+          <ImageShuffles side="left" />
+        </div>
+        <div className="absolute hidden md:block lg:-right-[10rem] xl:-right-[5rem] 2xl:-right-[10rem]  bottom-0 2xl:-bottom-[16rem] lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] lg:h-[50rem] xl:h-[50rem] 2xl:h-[70rem] z-20 ">
+          <ImageShuffles side="right" />
         </div>
 
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <div className="bg-yellow-50 border border-yellow-400 text-yellow-800 rounded p-4 text-center text-sm">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <h2 className="mt-6 text-center text-6xl tracking-tight text-gray-900 font-semibold">
+            Sign In
+          </h2>
+          <p className="text-gray-300 text-center mt-4">Welcome Back</p>
+        </div>
+
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-30">
+          <div className="bg-white py-8 px-4 sm:px-10">
+            {/* <div className="bg-yellow-50 border border-yellow-400 text-yellow-800 rounded p-4 text-center text-sm">
               <p>{t('vendure.demoCredentials')}</p>
               <p>
                 {t('account.emailAddress')}
@@ -60,7 +75,7 @@ export default function SignInPage() {
               <p>
                 {t('account.password')}: <span className="font-bold">test</span>
               </p>
-            </div>
+            </div> */}
             <login.Form method="post">
               <fieldset disabled={login.state !== 'idle'} className="space-y-6">
                 <input
@@ -173,6 +188,12 @@ export default function SignInPage() {
                 </div>
               </fieldset>
             </login.Form>
+            <p className="text-gray-400 text-center mt-4">
+              Do not have an account?{' '}
+              <span className="text-primary-600 font-medium">
+                <Link to={'/sign-up'}>Sign up</Link>
+              </span>
+            </p>
           </div>
         </div>
       </div>

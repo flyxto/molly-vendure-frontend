@@ -11,10 +11,18 @@ import {
   MapPinIcon,
   PrinterIcon,
 } from '@heroicons/react/24/outline';
+import { FaPhone } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
+import { FaFax } from 'react-icons/fa';
+import { Card, CardContent } from '~/components/ui/card';
+import { Label } from '~/components/ui/label';
+import { Input } from '~/components/ui/input';
+import { Button } from '~/components/ui/button';
+import { Textarea } from '~/components/ui/textarea';
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Contact Us | Vendure Store' },
+    { title: 'Contact Us' },
     {
       name: 'description',
       content: "Get in touch with us. We'd love to hear from you!",
@@ -219,7 +227,7 @@ function LocationSection() {
   );
 
   return (
-    <div className="max-w-7xl mx-auto container mt-12 relative overflow-y-hidden">
+    <div className="max-w-7xl mx-auto container mt-12 relative overflow-y-hidden px-4">
       {/* shadow blob */}
       <img
         src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920804/Ellipse_8_o819io.png"
@@ -232,16 +240,18 @@ function LocationSection() {
       {/* Mobile View */}
       {isMobile ? (
         <div className="relative z-10">
-          <div className="flex flex-col items-center px-4">
+          <div className="flex flex-col items-center">
             {/* Branch Selector */}
-            <div className="relative flex items-center justify-between bg-gray-200 rounded-full p-0.5 w-full">
+            <div className="relative flex items-center justify-between bg-gray-200 rounded-full p-1 w-full">
               {/* Sliding Indicator */}
               <div
-                className="absolute h-8 bg-white rounded-full shadow-md transition-all duration-300 z-10"
+                className="absolute h-10 bg-white rounded-full shadow-md transition-all duration-300 z-10"
                 style={{
-                  width: `${100 / branches.length}%`,
-                  left: `${(activeBranch - 1) * (100 / branches.length)}%`,
-                  transform: 'translateX(1px)',
+                  width: `calc(${100 / branches.length}% - 5px)`,
+                  left: `calc(${
+                    (activeBranch - 1) * (100 / branches.length)
+                  }% + 2px)`,
+                  transform: 'translateY(0)',
                 }}
               ></div>
 
@@ -250,10 +260,10 @@ function LocationSection() {
                 <button
                   key={branch.id}
                   onClick={() => handleBranchChange(branch.id)}
-                  className={`py-2 text-sm font-medium z-20 flex-1 text-center transition-colors duration-300 ${
+                  className={`py-2.5 px-4 text-sm font-medium z-20 flex-1 text-center transition-colors duration-300 rounded-full ${
                     activeBranch === branch.id
                       ? 'text-[#2671F7]'
-                      : 'text-gray-600 opacity-70'
+                      : 'text-gray-600 opacity-70 hover:opacity-100'
                   }`}
                 >
                   Branch {branch.branchNumber}
@@ -340,33 +350,49 @@ export default function Contact() {
   const isSubmitting = navigation.state === 'submitting';
 
   return (
-    <div>
+    <div className="min-h-screen relative">
+      <img
+        src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920804/Ellipse_8_o819io.png"
+        alt="Form background shadow"
+        width={800}
+        height={800}
+        className="absolute -top-50 right-0 "
+      />
+
+      <img
+        src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920804/Ellipse_8_o819io.png"
+        alt="Form background shadow"
+        width={600}
+        height={600}
+        className="rotate-180 absolute left-0 top-[25rem] "
+      />
+
+      <img
+        src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920804/Ellipse_8_o819io.png"
+        alt="Form background shadow"
+        width={500}
+        height={500}
+        className="absolute bottom-0 right-0 hidden lg:block "
+      />
       {/* Contact Hero Section */}
       <div className="mx-auto max-w-7xl container px-4 relative z-40">
         {/* Model image positioned at the top right */}
-        <div className="absolute top-24 right-0 w-[45%] h-full z-20 hidden lg:block">
-          <img
-            src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920806/model-2_ztprvs.png"
-            alt="Fashion model"
-            height={550}
-            width={450}
-            className="object-contain border border-transparent"
-            style={{
-              position: 'absolute',
-              top: '0',
-              right: '0',
-            }}
-          />
-        </div>
+        <img
+          src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920806/model-2_ztprvs.png"
+          alt="Fashion model"
+          height={550}
+          width={450}
+          className="absolute w-[30rem] right-0 z-20 hidden lg:block"
+        />
 
         {/* Heading */}
-        <div className="flex flex-row lg:mt-32 mt-20 relative z-10">
-          <div className="w-full lg:w-[40%]">
-            <h1 className="uppercase text-4xl sm:text-5xl lg:text-7xl">
+        <div className="flex flex-row gap-12 lg:mt-32 mt-20 relative z-10">
+          <div className="">
+            <h1 className="uppercase text-4xl sm:text-6xl xl:text-7xl">
               contact us
             </h1>
           </div>
-          <div className="hidden lg:flex w-[60%] items-center">
+          <div className="hidden sm:flex flex-1 items-center">
             <hr className="border-[#888888] border-1 w-full relative z-10" />
           </div>
         </div>
@@ -376,23 +402,24 @@ export default function Contact() {
           <div className="w-full lg:w-[60%] relative z-10">
             {/* content-para*/}
             <div className="mt-2 lg:w-[80%] w-full">
-              <p className="uppercase hidden lg:block text-xs max-w-md text-[#888888]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam
+              <p className="uppercase text-xs max-w-md hidden sm:block text-[#888888]">
+                We&apos;d love to hear from you! Whether you have questions,
+                feedback, or need assistance, our team is here to help. Fill out
+                the form below or reach out to us directly — we&apos;re happy to
+                connect.
               </p>
-              <p className="uppercase block lg:hidden text-xs max-w-md text-[#888888]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod
+              <p className="uppercase text-xs max-w-md sm:hidden text-[#888888]">
+                Have questions or need support? Reach out to us — we&apos;re
+                here to help!
               </p>
             </div>
 
-            {/* contact info */}
-            <div className="mt-20 relative pl-8">
+            {/* contact info desktop (lg:) */}
+            <div className="mt-20 relative pl-8 hidden lg:block">
               {/* Phone section */}
               <div className="flex relative">
                 <div className="absolute -left-8">
-                  <PhoneIcon className="rotate-90 text-[#A27D2A] w-4 h-4" />
+                  <FaPhone className="rotate-90 text-[#A27D2A]" />
                 </div>
                 <div>
                   <div className="uppercase text-xs text-[#A27D2A] mb-1">
@@ -411,7 +438,7 @@ export default function Contact() {
               {/* Email section */}
               <div className="flex relative">
                 <div className="absolute -left-8">
-                  <EnvelopeIcon className="text-[#A27D2A] w-4 h-4" />
+                  <MdEmail className="text-[#A27D2A]" />
                 </div>
                 <div>
                   <div className="uppercase text-xs text-[#A27D2A] mb-1">
@@ -429,7 +456,7 @@ export default function Contact() {
               {/* Fax section */}
               <div className="flex relative mt-1">
                 <div className="absolute -left-8">
-                  <PrinterIcon className="text-[#A27D2A] w-4 h-4" />
+                  <FaFax className="text-[#A27D2A]" />
                 </div>
                 <div>
                   <div className="uppercase text-xs text-[#A27D2A] mb-1">
@@ -441,117 +468,106 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Question section  */}
-            <div className="mt-20 pb-16">
-              <h2 className="text-3xl lg:text-5xl">Got Style Questions?</h2>
-              <h2 className="text-3xl lg:text-5xl mb-6">Drop Us a Hello!</h2>
-
-              <div className="lg:mt-16 mt-10">
-                <div className="max-w-md border-0 lg:shadow-none">
-                  <div className="p-0 space-y-6">
-                    {actionData?.success && (
-                      <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
-                        <p className="text-green-700">
-                          Thank you for your message! We'll get back to you
-                          soon.
-                        </p>
-                      </div>
-                    )}
-
-                    <Form method="post" className="space-y-4">
-                      <div className="space-y-2">
-                        <label
-                          htmlFor="name"
-                          className="text-xs uppercase font-medium block"
-                        >
-                          NAME
-                        </label>
-                        <input
-                          id="name"
-                          name="name"
-                          type="text"
-                          required
-                          className="w-full px-3 py-2 bg-gray-100 border-2 border-gray-300 rounded-md focus:outline-none focus:border-primary-500"
-                        />
-                        {actionData?.errors?.name && (
-                          <p className="text-sm text-red-600">
-                            {actionData.errors.name}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="space-y-2">
-                        <label
-                          htmlFor="email"
-                          className="text-xs uppercase font-medium block"
-                        >
-                          EMAIL
-                        </label>
-                        <input
-                          id="email"
-                          name="email"
-                          type="email"
-                          required
-                          className="w-full px-3 py-2 bg-gray-100 border-2 border-gray-300 rounded-md focus:outline-none focus:border-primary-500"
-                        />
-                        {actionData?.errors?.email && (
-                          <p className="text-sm text-red-600">
-                            {actionData.errors.email}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="space-y-2">
-                        <label
-                          htmlFor="phone"
-                          className="text-xs uppercase font-medium block"
-                        >
-                          PHONE NUMBER
-                        </label>
-                        <input
-                          id="phone"
-                          name="phone"
-                          type="tel"
-                          className="w-full px-3 py-2 bg-gray-100 border-2 border-gray-300 rounded-md focus:outline-none focus:border-primary-500"
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <label
-                          htmlFor="message"
-                          className="text-xs uppercase font-medium block"
-                        >
-                          MESSAGE
-                        </label>
-                        <textarea
-                          id="message"
-                          name="message"
-                          required
-                          className="w-full px-3 py-2 bg-gray-100 border-2 border-gray-300 rounded-md h-32 focus:outline-none focus:border-primary-500"
-                        />
-                        {actionData?.errors?.message && (
-                          <p className="text-sm text-red-600">
-                            {actionData.errors.message}
-                          </p>
-                        )}
-                      </div>
-
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition-colors disabled:opacity-50"
-                      >
-                        {isSubmitting ? 'Sending...' : 'Send'}
-                      </button>
-
-                      {/* Vertical line only on desktop */}
-                      <div className="relative hidden lg:block">
-                        <div className="absolute left-10 h-24 border-l border-[#DDDDDD]"></div>
-                      </div>
-                    </Form>
-                  </div>
+            {/* contact infor mobile and tablet */}
+            <div className="flex flex-col md:flex-row justify-between h-[25rem] md:h-fit w-full mt-20 px-20 lg:hidden">
+              <div className="flex flex-col items-center">
+                <div className="uppercase font-medium text-[#A27D2A] mb-1">
+                  PHONE
                 </div>
+                <div className="text-lg">0912345678</div>
+                <div className="text-lg">0917654321</div>
               </div>
+              <div className="flex flex-col items-center">
+                <div className="uppercase font-medium text-[#A27D2A] mb-1">
+                  EMAIL
+                </div>
+                <div className="text-lg">mollyfashioncircle@gmail.com</div>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="uppercase font-medium text-[#A27D2A] mb-1">
+                  FAX
+                </div>
+                <div className="text-lg">0912345678</div>
+                <div className="text-lg">0912345678</div>
+              </div>
+            </div>
+
+            {/* Question section  */}
+            <div className="mt-20 pb-16 mb-8 flex flex-col items-center lg:items-start w-full">
+              <h2 className="text-center lg:text-left text-4xl lg:text-5xl">
+                Got Style Questions? <br />
+                Drop Us a Hello!
+              </h2>
+
+              <Card className="max-w-md border-0 shadow-none bg-transparent w-full mt-12">
+                <CardContent className="p-0 space-y-6">
+                  <form className="space-y-4">
+                    <div className="space-y-2">
+                      <Label
+                        htmlFor="name"
+                        className="text-xs uppercase font-medium"
+                      >
+                        NAME
+                      </Label>
+                      <Input
+                        id="name"
+                        type="text"
+                        className="bg-gray-100 border-2"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label
+                        htmlFor="email"
+                        className="text-xs uppercase font-medium"
+                      >
+                        EMAIL
+                      </Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        className="bg-gray-100 border-2"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label
+                        htmlFor="phone"
+                        className="text-xs uppercase font-medium"
+                      >
+                        PHONE NUMBER
+                      </Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        className="bg-gray-100 border-2"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label
+                        htmlFor="message"
+                        className="text-xs uppercase font-medium"
+                      >
+                        MESSAGE
+                      </Label>
+                      <Textarea
+                        id="message"
+                        className="bg-gray-100 border-2 h-32"
+                      />
+                    </div>
+
+                    <Button className="w-full md:w-fit py-6 md:py-4">
+                      Send
+                    </Button>
+
+                    {/* Vertical line only on desktop */}
+                    <div className="relative hidden lg:block">
+                      <div className="absolute left-10 h-24 border-l border-[#DDDDDD]"></div>
+                    </div>
+                  </form>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
