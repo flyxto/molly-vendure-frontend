@@ -220,7 +220,7 @@ export default function CategorySection() {
         </motion.div>
         {/* 3d card - right side */}
         <motion.div
-          className="absolute hidden lg:block right-0"
+          className="absolute hidden lg:block right-0 mt-20"
           initial={{ opacity: 0, x: 200 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
