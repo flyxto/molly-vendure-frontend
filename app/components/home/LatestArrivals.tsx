@@ -25,10 +25,10 @@ function LatestArrivalsTitle() {
   const isButtonInView = useInView(buttonRef, { once: true, amount: 0.5 });
 
   return (
-    <div className="w-full">
+    <div className="w-full translate-y-12 md:translate-y-0">
       <div>
         {/* H2 in the center with line to the left */}
-        <div className="flex items-center justify-center w-full overflow-hidden py-4 md:py-0">
+        <div className="flex items-center justify-center w-full overflow-hidden ">
           <motion.hr
             ref={leftLineRef}
             className="border-[#655656] flex-grow hidden md:block"
