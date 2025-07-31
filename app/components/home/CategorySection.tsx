@@ -24,24 +24,24 @@ export default function CategorySection() {
   // Define category images mapping
   const categoriesImages: Record<CategoryType, string[]> = {
     mens: [
-      '/Images/home-page/mens-img-2.jpg',
-      '/Images/home-page/mens-img-1.jpg',
-      '/Images/home-page/mens-img-3.jpg',
+      '/images/home-page/mens-img-2.jpg',
+      '/images/home-page/mens-img-1.jpg',
+      '/images/home-page/mens-img-3.jpg',
     ],
     womens: [
-      '/Images/home-page/womens-img-2.jpg',
-      '/Images/home-page/womens-img-1.jpg',
-      '/Images/home-page/womens-img-3.jpg',
+      '/images/home-page/womens-img-2.jpg',
+      '/images/home-page/womens-img-1.jpg',
+      '/images/home-page/womens-img-3.jpg',
     ],
     kids: [
-      '/Images/home-page/new_arrivals-img_3.png',
-      '/Images/home-page/new_arrivals-img_1.png',
-      '/Images/home-page/new_arrivals-img_2.png',
+      '/images/home-page/new_arrivals-img_3.png',
+      '/images/home-page/new_arrivals-img_1.png',
+      '/images/home-page/new_arrivals-img_2.png',
     ],
     homeNlifestyle: [
-      '/Images/home-page/new_arrivals-img_6.png',
-      '/Images/home-page/new_arrivals-img_4.png',
-      '/Images/home-page/new_arrivals-img_5.png',
+      '/images/home-page/new_arrivals-img_6.png',
+      '/images/home-page/new_arrivals-img_4.png',
+      '/images/home-page/new_arrivals-img_5.png',
     ],
   };
 
