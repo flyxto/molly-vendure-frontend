@@ -2,6 +2,8 @@ import { RootLoaderData } from '~/root';
 import { Link } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
+import { FaFacebookSquare } from 'react-icons/fa';
+import { AiFillInstagram } from 'react-icons/ai';
 
 const navigation = {
   store: [
@@ -12,6 +14,16 @@ const navigation = {
       label: 'New Arrivals',
     },
     { page: 'contact', href: '/contact', label: 'Contact' },
+    {
+      page: 'Privacy Policy',
+      href: '/privacy-policy',
+      label: 'Privacy Policy',
+    },
+    {
+      page: 'Terms & Conditions',
+      href: '/terms-conditions',
+      label: 'Terms & Conditions',
+    },
   ],
 };
 
@@ -54,7 +66,7 @@ export default function Footer({
         }
       `}</style>
       <footer
-        className="bg-[#AC8537] rounded-t-3xl mt-20"
+        className="bg-[#AC8537] rounded-t-3xl"
         aria-labelledby="footer-heading"
       >
         <h2 id="footer-heading" className="sr-only">
@@ -62,7 +74,7 @@ export default function Footer({
         </h2>
 
         {/* Desktop View */}
-        <div className="hidden md:block max-w-7xl mx-auto container h-[350px] pt-5 md:px-4">
+        <div className="hidden md:block max-w-7xl mx-auto container pt-5 md:px-4">
           <div className="h-[30%] flex">
             <div className="w-[20%] items-center flex border-r-white border-r border-b border-b-white">
               {/* Logo */}
@@ -100,23 +112,7 @@ export default function Footer({
                   href="#"
                   className="text-white hover:text-[#201b11] transition flex items-center gap-3"
                 >
-                  <svg
-                    className="h-6 w-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12.017 2.04c3.291 0 3.68.012 4.975.072 1.2.055 1.85.249 2.284.413.574.223.983.49 1.413.92.43.43.697.839.92 1.413.164.434.358 1.084.413 2.284.06 1.295.072 1.684.072 4.975s-.012 3.68-.072 4.975c-.055 1.2-.249 1.85-.413 2.284-.223.574-.49.983-.92 1.413-.43.43-.839.697-1.413.92-.434.164-1.084.358-2.284.413-1.295.06-1.684.072-4.975.072s-3.68-.012-4.975-.072c-1.2-.055-1.85-.249-2.284-.413-.574-.223-.983-.49-1.413-.92-.43-.43-.697-.839-.92-1.413-.164-.434-.358-1.084-.413-2.284-.06-1.295-.072-1.684-.072-4.975s.012-3.68.072-4.975c.055-1.2.249-1.85.413-2.284.223-.574.49-.983.92-1.413.43-.43.839-.697 1.413-.92.434-.164 1.084-.358 2.284-.413 1.295-.06 1.684-.072 4.975-.072zm0-2.04c-3.347 0-3.768.014-5.085.074-1.318.061-2.218.275-3.008.586-.815.317-1.507.742-2.196 1.43-.688.689-1.113 1.381-1.43 2.196-.311.79-.525 1.69-.586 3.008C.014 8.271 0 8.692 0 12.017s.014 3.746.074 5.063c.061 1.318.275 2.218.586 3.008.317.815.742 1.507 1.43 2.196.689.688 1.381 1.113 2.196 1.43.79.311 1.69.525 3.008.586 1.317.06 1.738.074 5.085.074s3.768-.014 5.085-.074c1.318-.061 2.218-.275 3.008-.586.815-.317 1.507-.742 2.196-1.43.688-.689 1.113-1.381 1.43-2.196.311-.79.525-1.69.586-3.008.06-1.317.074-1.738.074-5.063s-.014-3.746-.074-5.063c-.061-1.318-.275-2.218-.586-3.008-.317-.815-.742-1.507-1.43-2.196-.689-.688-1.381-1.113-2.196-1.43-.79-.311-1.69-.525-3.008-.586C15.785.014 15.364 0 12.017 0z"
-                      clipRule="evenodd"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      d="M12.017 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.76 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  <AiFillInstagram size={28} />
                   <p className="text-xs">INSTAGRAM</p>
                 </a>
               </div>
@@ -125,18 +121,8 @@ export default function Footer({
                   href="#"
                   className="text-white hover:text-[#201b11] transition flex items-center gap-3"
                 >
-                  <svg
-                    className="h-6 w-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.630.771-1.630 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  <FaFacebookSquare size={24} />
+
                   <p className="text-xs">FACEBOOK</p>
                 </a>
               </div>
@@ -174,6 +160,10 @@ export default function Footer({
               ))}
             </div>
           </div>
+        </div>
+
+        <div className="container mx-auto px-28 py-6">
+          <div className="py-3 w-full bg-white rounded-full"></div>
         </div>
 
         {/* Mobile View */}
@@ -256,7 +246,7 @@ export default function Footer({
         </div>
 
         {/* Marquee */}
-        <div className="w-full text-white py-6 border-t border-t-white mt-4 md:mt-10 border-b border-b-white">
+        <div className="w-full text-white py-6 border-t border-t-white  border-b border-b-white">
           <div className="overflow-hidden">
             <div className="animate-marquee whitespace-nowrap py-2">
               <span className="inline-flex items-center text-3xl md:text-5xl mx-4">
@@ -319,12 +309,12 @@ export default function Footer({
             RESERVED
           </div>
           <div className="flex justify-center md:justify-end gap-4">
-            <a href="/privacy-policy" className="hover:underline uppercase">
+            {/* <a href="/privacy-policy" className="hover:underline uppercase">
               Privacy Policy
             </a>
             <a href="/terms-conditions" className="hover:underline uppercase">
               Terms & Conditions
-            </a>
+            </a> */}
           </div>
         </div>
       </footer>
