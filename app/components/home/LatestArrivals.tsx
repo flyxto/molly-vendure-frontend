@@ -127,7 +127,7 @@ query GetLatestProducts($options: ProductListOptions) {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/shop-api', {
+      const response = await fetch(process.env.VENDURE_API_URL as string, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
