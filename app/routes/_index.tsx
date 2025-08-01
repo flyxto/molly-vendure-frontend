@@ -14,11 +14,12 @@ export async function loader({ request }: LoaderArgs) {
   const collections = await getCollections(request, { take: 20 });
   return {
     collections,
+    vendureApiUrl: process.env.VENDURE_API_URL,
   };
 }
 
 export default function Index() {
-  const { collections } = useLoaderData<typeof loader>();
+  const { collections, vendureApiUrl } = useLoaderData<typeof loader>();
   const { t } = useTranslation();
   const headerImage = collections[0]?.featuredAsset?.preview;
 
@@ -27,7 +28,7 @@ export default function Index() {
       <div className="flex flex-col min-h-screen gap-20 overflow-x-hidden w-full">
         <Hero />
         <StylesSection />
-        <LatestArrivals />
+        <LatestArrivals vendureApiUrl={vendureApiUrl} />
         <CategorySection />
         <TimeDeals />
       </div>

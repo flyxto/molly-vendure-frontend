@@ -86,7 +86,12 @@ function LatestArrivalsTitle() {
   );
 }
 
-export default function LatestArrivals() {
+// Add props interface
+interface LatestArrivalsProps {
+  vendureApiUrl?: string;
+}
+
+export default function LatestArrivals({ vendureApiUrl }: LatestArrivalsProps) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -127,7 +132,10 @@ query GetLatestProducts($options: ProductListOptions) {
     };
 
     try {
-      const response = await fetch(process.env.VENDURE_API_URL as string, {
+      // Use the passed prop instead of process.env
+      const apiUrl = vendureApiUrl || '/api/vendure'; // fallback to relative URL
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -168,7 +176,7 @@ query GetLatestProducts($options: ProductListOptions) {
     };
 
     fetchProducts();
-  }, []);
+  }, [vendureApiUrl]);
 
   if (loading) {
     return (
