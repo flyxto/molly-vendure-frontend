@@ -59,10 +59,10 @@ export function ProductCard({
         {/* Product Image Container */}
         <div className="relative bg-[#efefef] rounded overflow-hidden aspect-square w-full mb-1 border border-black group">
           <img
-           // src={'/images/perfumes/perfume_1.jpg'}
-            src={productAsset?.preview + '?w=300&h=400'}
+            // src={'/images/perfumes/perfume_1.jpg'}
+            src={productAsset?.preview + '?w=400&h=400'}
             alt={productName}
-            className="object-cover group-hover:scale-110 transition duration-300"
+            className="object-cover object-center group-hover:scale-110 transition duration-300"
           />
           {/* <Button
             // variant="cart"

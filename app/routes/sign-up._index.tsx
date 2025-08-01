@@ -10,6 +10,7 @@ import {
 import { API_URL, DEMO_API_URL } from '~/constants';
 import { useTranslation } from 'react-i18next';
 import { getFixedT } from '~/i18next.server';
+import ImageShuffles from '~/components/signin/ImageShuffle';
 
 export async function action({ request }: ActionFunctionArgs) {
   if (API_URL === DEMO_API_URL) {
@@ -45,27 +46,43 @@ export default function SignUpPage() {
 
   return (
     <>
-      <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="flex flex-col h-svh justify-center py-12 sm:px-6 lg:px-8">
+        <div className="absolute hidden md:block lg:-left-[10rem] xl:-left-[5rem] 2xl:-left-[10rem]  bottom-0 2xl:-bottom-[16rem] lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] lg:h-[50rem] xl:h-[50rem] 2xl:h-[70rem] z-20 ">
+          <ImageShuffles side="left" />
+        </div>
+        <div className="absolute hidden md:block lg:-right-[10rem] xl:-right-[5rem] 2xl:-right-[10rem]  bottom-0 2xl:-bottom-[16rem] lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] lg:h-[50rem] xl:h-[50rem] 2xl:h-[70rem] z-20 ">
+          <ImageShuffles side="right" />
+        </div>
+        <img
+          src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920804/Ellipse_8_o819io.png"
+          alt="Form background shadow"
+          width={800}
+          height={800}
+          className="absolute -top-50 -right-44 md:right-0 "
+        />
+        <img
+          src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920804/Ellipse_8_o819io.png"
+          alt="Form background shadow"
+          width={600}
+          height={600}
+          className="rotate-180 absolute left-0 top-[25rem] "
+        />
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl text-gray-900">
-            {t('account.create')}
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            {t('common.or')}{' '}
-            <Link
-              to="/sign-in"
-              className="font-medium text-primary-600 hover:text-primary-500"
-            >
-              {t('account.login')}
-            </Link>
-          </p>
+          <div className="sm:mx-auto sm:w-full sm:max-w-md">
+            <h2 className="mt-6 text-center text-6xl tracking-tight text-gray-900 font-semibold">
+              Create Account
+            </h2>
+            <p className="text-gray-300 text-center mt-4">
+              Create an account, <br /> shop through our collection
+            </p>
+          </div>
         </div>
 
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <div className="bg-yellow-50 border border-yellow-400 text-yellow-800 rounded p-4 text-center text-sm">
+        <div className=" sm:mx-auto sm:w-full sm:max-w-md">
+          <div className="bg-white py-8 px-4 sm:px-10">
+            {/* <div className="bg-yellow-50 border border-yellow-400 text-yellow-800 rounded p-4 text-center text-sm">
               <p>{t('vendure.registrationMessage')}</p>
-            </div>
+            </div> */}
             <Form className="space-y-6" method="post">
               <input
                 type="hidden"
@@ -205,6 +222,12 @@ export default function SignUpPage() {
                 </button>
               </div>
             </Form>
+            <p className="text-gray-400 text-center mt-4">
+              Already have an account?{' '}
+              <span className="text-primary-600 font-medium">
+                <Link to={'/sign-in'}>Sign in</Link>
+              </span>
+            </p>
           </div>
         </div>
       </div>

@@ -16,8 +16,8 @@ export function ThreeDCardDemo({ images, paragraphs }: any) {
     'bottomRight' in paragraphs;
 
   // For debugging
-  console.log('Received images:', images);
-  console.log('Received paragraphs:', paragraphs);
+  // console.log('Received images:', images);
+  // console.log('Received paragraphs:', paragraphs);
 
   return (
     <CardContainer className="inter-var">
