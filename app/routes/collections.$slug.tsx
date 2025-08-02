@@ -82,7 +82,7 @@ export default function CollectionSlug() {
   // console.log('result:', result);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 mt-24">
+    <div className="max-w-7xl mx-auto px-4 py:12 md:py-24">
       <div className="flex justify-between items-center mb-12">
         <div className="flex flex-col gap-2 items-baseline ">
           <Breadcrumbs items={collection.breadcrumbs}></Breadcrumbs>

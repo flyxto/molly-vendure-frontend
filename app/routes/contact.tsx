@@ -227,7 +227,7 @@ function LocationSection() {
   );
 
   return (
-    <div className="max-w-7xl mx-auto container mt-12 relative overflow-y-hidden px-4">
+    <div className="max-w-7xl mx-auto container py-12 relative overflow-y-hidden px-4">
       {/* shadow blob */}
       <img
         src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920804/Ellipse_8_o819io.png"
@@ -350,7 +350,7 @@ export default function Contact() {
   const isSubmitting = navigation.state === 'submitting';
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative pb-12">
       <img
         src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920804/Ellipse_8_o819io.png"
         alt="Form background shadow"
