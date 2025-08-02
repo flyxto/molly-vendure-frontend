@@ -64,7 +64,7 @@ export default function SignInPage() {
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-30">
-          <div className="bg-white py-8 px-4 sm:px-10">
+          <div className="py-8 px-4 sm:px-10">
             {/* <div className="bg-yellow-50 border border-yellow-400 text-yellow-800 rounded p-4 text-center text-sm">
               <p>{t('vendure.demoCredentials')}</p>
               <p>
