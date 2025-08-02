@@ -179,7 +179,7 @@ export default function ProductSlug() {
 
   return (
     <div>
-      <div className="flex flex-col gap-20 mt-24">
+      <div className="flex flex-col gap-20 py-16 md:py-24">
         {/* Intro */}
         <div className="flex flex-col gap-8 max-w-7xl w-full mt-5 mx-auto px-4">
           <Breadcrumbs
@@ -252,7 +252,7 @@ export default function ProductSlug() {
               </div>
 
               {/* Product info */}
-              <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
+              <div className="mt-10 sm:mt-16 lg:mt-0">
                 {/* Facets / variants */}
                 <activeOrderFetcher.Form
                   method="post"

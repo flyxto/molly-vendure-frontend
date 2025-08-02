@@ -193,7 +193,7 @@ query GetLatestProducts($options: ProductListOptions) {
   console.log('products : ', products);
 
   return (
-    <div className="mx-auto max-w-7xl w-full py-12 px-4">
+    <div className="mx-auto max-w-7xl w-full sm:py-12 px-4">
       <LatestArrivalsTitle />
       <ProductCarousel products={products} />
       <div className="mt-4 sm:mt-10 hidden sm:grid grid-cols-3 gap-x-6 gap-y-12 w-full ">

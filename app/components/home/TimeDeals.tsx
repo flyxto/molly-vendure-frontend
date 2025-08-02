@@ -95,7 +95,7 @@ export default function TimeDeals() {
             <div className="flex flex-col items-start">
               <h2 className="text-4xl sm:text-5xl text-white mb-2">DENIM</h2>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <h2 className="text-5xl text-white">REFRESH</h2>
+                <h2 className="text-4xl sm:text-5xl text-white">REFRESH</h2>
                 <div className="inline-block bg-white text-[#AF803C] w-fit font-medium px-6 py-2 rounded-full">
                   25% OFF
                 </div>
@@ -136,19 +136,16 @@ export default function TimeDeals() {
         {/* Denim Banner */}
         <div className="pl-4 sm:pl-0">
           <div className="relative h-[280px] sm:h-[400px] rounded-l-md sm:rounded-lg bg-[#DCDCDC] group">
-            <div className="absolute h-full w-full right-0 text-right sm:text-left sm:inset-0 p-8 z-10 flex flex-col">
+            <div className="absolute h-full w-full right-0  sm:inset-0 p-8 z-10 flex flex-col">
               <div>
-                <h2 className="text-4xl sm:text-5xl text-white">
+                <h2 className="text-4xl sm:text-5xl text-white text-right sm:text-left">
                   {/* DENIM
                   <br />
                   REFRESH */}
                   FEMININE, <br />
                   FLOWY
                 </h2>
-                <div className="flex flex-col gap-4">
-                  <h2 className="text-5xl text-white hidden sm:block">
-                    &amp; ON SALE!
-                  </h2>
+                <div className="flex flex-col items-end sm:items-start mt-2 w-full gap-4">
                   <div className="inline-block bg-white w-fit text-[#AF803C] font-medium px-6 py-2 rounded-full">
                     50% OFF
                   </div>
@@ -165,7 +162,7 @@ export default function TimeDeals() {
                 alt="Feminine flowy fashion"
                 width={220}
                 height={220}
-                className="pt-5 absolute bottom-0 right-40 sm:right-2 md:group-hover:scale-125 md:group-hover:translate-y-[-3.18rem] transition-transform duration-700 w-[25rem] sm:w-[20rem]"
+                className="pt-5 absolute bottom-0 right-52 sm:right-2 md:group-hover:scale-125 md:group-hover:translate-y-[-3.18rem] transition-transform duration-700 w-[25rem] sm:w-[20rem]"
               />
             </div>
           </div>
