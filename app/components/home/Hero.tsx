@@ -125,9 +125,8 @@ export default function Hero() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, ease: 'easeOut', delay: 0.5 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labo adipiscing elit. olor sit amet
-                incididunt ut labo
+                Explore stylish, comfortable fashion made for every day. Curated
+                collections that keep you on trend through every season
               </motion.p>
             </div>
           </div>
@@ -141,9 +140,9 @@ export default function Hero() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, ease: 'easeOut', delay: 0.5 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam
+                Refresh your wardrobe with modern essentials and standout
+                pieces. Our fashion blends comfort and style perfect for making
+                everyday outfits effortlessly chic
               </motion.p>
             </div>
             <div className="flex-shrink-0 text-center md:text-left overflow-hidden">
