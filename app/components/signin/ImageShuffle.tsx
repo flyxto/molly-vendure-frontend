@@ -11,30 +11,30 @@ export default function ImageShuffles({ side }: ImageShufflesProps) {
 
   const leftImages = [
     {
-      src: '/images/signin/signin-img-1.png',
+      src: '/images/signin/signin-img-1.webp',
       alt: 'Mountain landscape at sunset',
     },
     {
-      src: '/images/signin/signin-img-2.png',
+      src: '/images/signin/signin-img-2.webp',
       alt: 'Ocean waves on beach',
     },
     {
-      src: '/images/signin/signin-img-3.png',
+      src: '/images/signin/signin-img-3.webp',
       alt: 'Forest with tall trees',
     },
   ];
 
   const rightImages = [
     {
-      src: '/images/signin/signin-img-4.png',
+      src: '/images/signin/signin-img-4.webp',
       alt: 'City skyline at night',
     },
     {
-      src: '/images/signin/signin-img-5.png',
+      src: '/images/signin/signin-img-5.webp',
       alt: 'Desert landscape',
     },
     {
-      src: '/images/signin/signin-img-6.png',
+      src: '/images/signin/signin-img-6.webp',
       alt: 'Tropical beach paradise',
     },
   ];
