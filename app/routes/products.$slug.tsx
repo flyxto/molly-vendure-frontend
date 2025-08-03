@@ -32,7 +32,7 @@ import { filteredSearchLoaderFromPagination } from '~/utils/filtered-search-load
 import ProductRatings from '~/components/product-page-sections/ProductRatings';
 import ProductDetails from '~/components/product-page-sections/ProductDetails';
 
-export const meta: MetaFunction = ({ data }) => {
+export const meta: MetaFunction = ({ data }: any) => {
   return [
     {
       title: data?.product?.name
@@ -327,7 +327,7 @@ export default function ProductSlug() {
                         activeOrderFetcher.state !== 'idle'
                           ? 'bg-gray-400'
                           : qtyInCart === 0
-                          ? 'bg-black hover:bg-black'
+                          ? 'bg-[#AF803C] text-white shadow-xs hover:bg-[#AF803C]/80'
                           : 'bg-green-600 active:bg-green-700 hover:bg-green-700'
                       }
                                      transition-colors border border-transparent rounded-md py-3 px-8 flex items-center
@@ -375,7 +375,7 @@ export default function ProductSlug() {
           {/* <ProductRatings /> */}
           <ProductDetails />
         </div>
-        <ProductViewSeperator />
+        {/* <ProductViewSeperator /> */}
         {/* <ProductVideoPreview /> */}
         {/* <SizeChart /> */}
         <RelatedProducts randomRelatedProducts={randomRelatedProducts} />

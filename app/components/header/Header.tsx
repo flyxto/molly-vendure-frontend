@@ -25,7 +25,6 @@ export function Header({
   // Define navigation links similar to Medusa structure
   const navLinks = [
     { href: '/', label: 'HOME' },
-    { href: '/collections', label: 'STORE' },
     ...data.collections.map((collection) => ({
       href: `/collections/${collection.slug}`,
       label: collection.name.toUpperCase(),
