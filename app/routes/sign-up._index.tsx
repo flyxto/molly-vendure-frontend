@@ -46,7 +46,7 @@ export default function SignUpPage() {
 
   return (
     <>
-      <div className="flex flex-col h-svh justify-center py-12 sm:px-6 lg:px-8">
+      <div className="flex flex-col min-h-svh pt-24 py-12 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute hidden md:block lg:-left-[10rem] xl:-left-[5rem] 2xl:-left-[10rem]  bottom-0 2xl:-bottom-[16rem] lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] lg:h-[50rem] xl:h-[50rem] 2xl:h-[70rem] z-20 ">
           <ImageShuffles side="left" />
         </div>
@@ -69,16 +69,16 @@ export default function SignUpPage() {
         />
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
-            <h2 className="mt-6 text-center text-6xl tracking-tight text-gray-900 font-semibold">
+            <h2 className="mt-6 text-center text-4xl md:text-6xl tracking-tight text-gray-900 font-semibold">
               Create Account
             </h2>
-            <p className="text-gray-300 text-center mt-4">
-              Create an account, <br /> shop through our collection
+            <p className="text-gray-300 text-center ">
+              Create an account, shop through our collection
             </p>
           </div>
         </div>
 
-        <div className=" sm:mx-auto sm:w-full sm:max-w-md">
+        <div className=" sm:mx-auto sm:w-full sm:max-w-md relative z-30">
           <div className="py-8 px-4 sm:px-10">
             {/* <div className="bg-yellow-50 border border-yellow-400 text-yellow-800 rounded p-4 text-center text-sm">
               <p>{t('vendure.registrationMessage')}</p>
