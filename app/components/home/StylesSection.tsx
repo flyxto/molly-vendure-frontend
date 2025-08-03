@@ -153,8 +153,8 @@ export default function StylesSection() {
             <motion.img
               src={
                 imageOneHover
-                  ? '/images/home-page/styles-img-1-2.jpg'
-                  : '/images/home-page/styles-img-1-1.jpg'
+                  ? '/images/home-page/styles-img-1-2.webp'
+                  : '/images/home-page/styles-img-1-1.webp'
               }
               alt="img1"
               width={560}
@@ -187,8 +187,8 @@ export default function StylesSection() {
             <motion.img
               src={
                 imageTwoHover
-                  ? '/images/home-page/styles-img-2-2.jpg'
-                  : '/images/home-page/styles-img-2-1.jpg'
+                  ? '/images/home-page/styles-img-2-2.webp'
+                  : '/images/home-page/styles-img-2-1.webp'
               }
               alt="img2"
               width={500}
@@ -221,8 +221,8 @@ export default function StylesSection() {
             <img
               src={
                 imageThreeHover
-                  ? '/images/home-page/styles-img-3-1.jpg'
-                  : '/images/home-page/styles-img-3-2.jpg'
+                  ? '/images/home-page/styles-img-3-1.webp'
+                  : '/images/home-page/styles-img-3-2.webp'
               }
               alt="img3"
               width={340}
