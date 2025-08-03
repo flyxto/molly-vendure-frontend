@@ -7,12 +7,6 @@ import { AiFillInstagram } from 'react-icons/ai';
 
 const navigation = {
   store: [
-    { page: 'store', href: '/collections', label: 'Store' },
-    {
-      page: 'new-arrivals',
-      href: '/collections/new-arrivals',
-      label: 'New Arrivals',
-    },
     { page: 'contact', href: '/contact', label: 'Contact' },
     {
       page: 'Privacy Policy',
@@ -66,7 +60,7 @@ export default function Footer({
         }
       `}</style>
       <footer
-        className="bg-[#AC8537] rounded-t-3xl"
+        className="bg-[#AC8537] rounded-t-3x relative z-30"
         aria-labelledby="footer-heading"
       >
         <h2 id="footer-heading" className="sr-only">
