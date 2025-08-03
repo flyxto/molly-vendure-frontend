@@ -108,7 +108,7 @@ export default function TimeDeals() {
           </div>
           <div className="absolute hidden md:block right-0 h-full w-full z-10">
             <img
-              src="/images/home-page/deals-img-2.png"
+              src="/images/home-page/deals-img-2.webp"
               alt="Denim refresh collection"
               width={300}
               height={300}
@@ -117,7 +117,7 @@ export default function TimeDeals() {
           </div>
           <div className=" md:hidden absolute right-0 h-full w-1/2 z-20">
             <img
-              src="/images/home-page/deals-img-1-mobile.png"
+              src="/images/home-page/deals-img-1-mobile.webp"
               alt="Feminine flowy fashion"
               width={220}
               height={220}
@@ -158,7 +158,7 @@ export default function TimeDeals() {
             </div>
             <div className="absolute right-0 h-full w-[15rem] sm:w-[18rem] z-20">
               <img
-                src="/images/home-page/deals-img-1.png"
+                src="/images/home-page/deals-img-1.webp"
                 alt="Feminine flowy fashion"
                 width={220}
                 height={220}
@@ -196,7 +196,7 @@ export default function TimeDeals() {
               {/* Image takes the full left side */}
               <div className="absolute w-[280px] bottom-0 right-0 sm:inset-0 z-20">
                 <img
-                  src="/images/home-page/deals-img-3.png"
+                  src="/images/home-page/deals-img-3.webp"
                   alt="Cool styles collection"
                   width={400}
                   height={400}
