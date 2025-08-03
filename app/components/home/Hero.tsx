@@ -36,7 +36,7 @@ export default function Hero() {
         className="absolute -left-56 top-10 md:hidden h-svh"
       >
         <img
-          src="/images/home-page/hero_2.png"
+          src="/images/home-page/hero_2.webp"
           alt="hero-2"
           width={900}
           height={900}
@@ -54,7 +54,7 @@ export default function Hero() {
           className="absolute top-20 lg:top-16 xl:top-10 left-0 hidden md:block z-10 w-[25rem] lg:w-[35rem] xl:w-[45rem]"
         >
           <img
-            src="/images/home-page/hero_1.png"
+            src="/images/home-page/hero_1.webp"
             alt="hero-1"
             width={800}
             height={800}
@@ -73,7 +73,7 @@ export default function Hero() {
           className="absolute top-20 lg:top-16 xl:top-10 -right-20 -scale-x-[1] hidden md:block z-10 w-[32rem] lg:w-[45rem] xl:w-[55rem]"
         >
           <img
-            src="/images/home-page/hero_2.png"
+            src="/images/home-page/hero_2.webp"
             alt="hero-2"
             width={900}
             height={900}
@@ -92,7 +92,7 @@ export default function Hero() {
           className="absolute top-20 left-1/2 -translate-x-1/2 hidden md:block"
         >
           <img
-            src="/images/home-page/hero_3.png"
+            src="/images/home-page/hero_3.webp"
             alt="hero-3"
             width={420}
             height={420}
