@@ -24,14 +24,14 @@ export default function CategorySection() {
   // Define category images mapping
   const categoriesImages: Record<CategoryType, string[]> = {
     mens: [
-      '/images/home-page/mens-img-2.jpg',
-      '/images/home-page/mens-img-1.jpg',
-      '/images/home-page/mens-img-3.jpg',
+      '/images/home-page/mens-img-2.webp',
+      '/images/home-page/mens-img-1.webp',
+      '/images/home-page/mens-img-3.webp',
     ],
     womens: [
-      '/images/home-page/womens-img-2.jpg',
-      '/images/home-page/womens-img-1.jpg',
-      '/images/home-page/womens-img-3.jpg',
+      '/images/home-page/womens-img-2.webp',
+      '/images/home-page/womens-img-1.webp',
+      '/images/home-page/womens-img-3.webp',
     ],
     kids: [
       '/images/home-page/new_arrivals-img_3.png',
