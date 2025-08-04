@@ -8,8 +8,30 @@ import {
   UpdateAddressInput,
   UpdateCustomerInput,
   VerifyCustomerAccountMutation,
+  RequestPasswordResetMutation,
+  ResetPasswordMutation,
 } from '~/generated/graphql';
 import { QueryOptions, sdk, WithHeaders } from '~/graphqlWrapper';
+
+export const requestPasswordReset = async (
+  emailAddress: string,
+  options: QueryOptions,
+) => {
+  return sdk
+    .requestPasswordReset({ emailAddress }, options)
+    .then((res) => res.requestPasswordReset);
+};
+
+export const resetPassword = async (
+  token: string,
+  password: string,
+  options: QueryOptions,
+) => {
+  return sdk.resetPassword({ token, password }, options).then((res) => ({
+    ...res.resetPassword,
+    _headers: res._headers,
+  }));
+};
 
 export const login = async (
   email: string,
@@ -247,6 +269,37 @@ gql`
       __typename
       ... on Success {
         success
+      }
+      ... on ErrorResult {
+        errorCode
+        message
+      }
+    }
+  }
+`;
+
+gql`
+  mutation requestPasswordReset($emailAddress: String!) {
+    requestPasswordReset(emailAddress: $emailAddress) {
+      __typename
+      ... on Success {
+        success
+      }
+      ... on ErrorResult {
+        errorCode
+        message
+      }
+    }
+  }
+`;
+
+gql`
+  mutation resetPassword($token: String!, $password: String!) {
+    resetPassword(token: $token, password: $password) {
+      __typename
+      ... on CurrentUser {
+        id
+        identifier
       }
       ... on ErrorResult {
         errorCode

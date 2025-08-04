@@ -7,6 +7,7 @@ import { Button } from '~/components/Button';
 import { ArrowPathIcon } from '@heroicons/react/24/solid';
 import { useTranslation } from 'react-i18next';
 import ImageShuffles from '~/components/signin/ImageShuffle';
+import { CheckCircleIcon } from 'lucide-react';
 
 export async function action({ params, request }: DataFunctionArgs) {
   const body = await request.formData();
@@ -76,6 +77,28 @@ export default function SignInPage() {
                 {t('account.password')}: <span className="font-bold">test</span>
               </p>
             </div> */}
+
+            {searchParams.get('message') === 'password-reset-success' && (
+              <div className="rounded-md bg-green-50 p-4 mb-6">
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <CheckCircleIcon
+                      className="h-5 w-5 text-green-400"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-sm font-medium text-green-800">
+                      Password Reset Successful
+                    </h3>
+                    <p className="text-sm text-green-700 mt-2">
+                      Your password has been successfully reset. You can now
+                      sign in with your new password.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
             <login.Form method="post">
               <fieldset disabled={login.state !== 'idle'} className="space-y-6">
                 <input
@@ -143,12 +166,12 @@ export default function SignInPage() {
                   </div>
 
                   <div className="text-sm">
-                    <a
-                      href="#"
+                    <Link
+                      to="/forgot-password"
                       className="font-medium text-primary-600 hover:text-primary-500"
                     >
                       {t('account.forgotPassword')}
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
