@@ -271,8 +271,7 @@ export default function AccountDetails() {
               type="button"
               onClick={() => openChangeEmailModal()}
             >
-              <PencilIcon className="w-4 h-4" />{' '}
-              {t('account.changeEmailButton')}
+              <PencilIcon className="w-4 h-4" /> Change Email Address
             </HighlightedButton>
           </div>
         </div>
@@ -332,12 +331,10 @@ export default function AccountDetails() {
 
               <div>
                 {isEditing ? (
-                  <Input label={t('account.phoneNumber')} name="phoneNumber" />
+                  <Input label={'Phone Number'} name="phoneNumber" />
                 ) : (
                   <div>
-                    <h3 className="text-sm text-gray-500">
-                      {t('account.phoneNumber')}
-                    </h3>
+                    <h3 className="text-sm text-gray-500">Phone Number</h3>
                     {replaceEmptyString(phoneNumber)}
                   </div>
                 )}
