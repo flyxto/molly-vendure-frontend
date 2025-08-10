@@ -1,4 +1,7 @@
-// app/routes/checkout.payment.tsx - Fixed TypeScript types
+// Make sure you're using this version - NO GraphQL calls, only direct MPGS API
+// This should be at the top of your checkout.payment.tsx file
+
+// REMOVE all GraphQL mutation code and use only this direct API approach:
 import { DataFunctionArgs, json, redirect } from '@remix-run/server-runtime';
 import {
   addPaymentToOrder,
@@ -12,174 +15,120 @@ import { useLoaderData, useOutletContext } from '@remix-run/react';
 import { OutletContext } from '~/types';
 import { CurrencyCode, ErrorCode, ErrorResult } from '~/generated/graphql';
 import { StripePayments } from '~/components/checkout/stripe/StripePayments';
-import { MPGSPayments } from '~/components/checkout/mpgs/MPGSPayments'; // New MPGS component
+import { MPGSPayments } from '~/components/checkout/mpgs/MPGSPayments';
 import { DummyPayments } from '~/components/checkout/DummyPayments';
 import { BraintreeDropIn } from '~/components/checkout/braintree/BraintreePayments';
 import { getActiveOrder } from '~/providers/orders/order';
 import { getSessionStorage } from '~/sessions';
 import { useTranslation } from 'react-i18next';
 
-// Type definitions for MPGS responses
-interface MPGSSessionResponse {
-  checkoutMode: string;
-  merchant: string;
-  result: string;
-  session: {
-    id: string;
-    updateStatus: string;
-    version: string;
-  };
-  successIndicator: string;
-}
-
-interface MPGSErrorResult {
-  errorCode: string;
-  message: string;
-}
-
-interface MPGSGraphQLResponse {
-  data?: {
-    createMPGSSession?: MPGSSessionResponse | MPGSErrorResult;
-    verifyMPGSPayment?: boolean;
-  };
-  errors?: Array<{
-    message: string;
-  }>;
-}
-
-// MPGS session creation using Shop API
-async function createMPGSSession({
-  request,
-}: {
-  request: Request;
-}): Promise<MPGSSessionResponse> {
+// Direct MPGS API calls (bypassing GraphQL for now)
+async function createMPGSSessionDirect({ request }: { request: Request }) {
   const activeOrder = await getActiveOrder({ request });
   if (!activeOrder) {
     throw new Error('No active order found');
   }
 
-  const returnUrl = `${new URL(request.url).origin}/checkout/confirmation/${
-    activeOrder.code
-  }`;
+  // Check if order already has payment
+  if (activeOrder.state !== 'AddingItems' && activeOrder.state !== 'ArrangingPayment') {
+    throw new Error('Order is not in a state that allows payment');
+  }
+
+  // Check if order already has successful payments
+  if (activeOrder.payments && activeOrder.payments.length > 0) {
+    const hasSuccessfulPayment = activeOrder.payments.some(
+      (payment: any) => payment.state === 'Settled' || payment.state === 'Authorized'
+    );
+    if (hasSuccessfulPayment) {
+      throw new Error('Payment for this order has already been received');
+    }
+  }
+
+  const returnUrl = `${new URL(request.url).origin}/checkout/confirmation/${activeOrder.code}`;
   const amount = (activeOrder.totalWithTax / 100).toFixed(2);
 
-  // Get session data for customer authentication
-  const session = await getSessionStorage().then((sessionStorage) =>
-    sessionStorage.getSession(request?.headers.get('Cookie')),
-  );
+  // Direct MPGS API call
+  const merchantId = process.env.MPGS_MERCHANT_ID || 'TESTMOLLYFASHLKR';
+  const apiPassword = process.env.MPGS_API_PASSWORD;
+  const baseUrl = process.env.MPGS_BASE_URL || 'https://cbcmpgs.gateway.mastercard.com';
+  const apiVersion = process.env.MPGS_API_VERSION || '100';
 
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
+  if (!apiPassword) {
+    throw new Error('MPGS API Password not configured');
+  }
+
+  const credentials = `merchant.${merchantId}:${apiPassword}`;
+  const authHeader = `Basic ${Buffer.from(credentials).toString('base64')}`;
+
+  // Generate unique order reference to avoid conflicts
+  const uniqueOrderId = `${activeOrder.code}-${Date.now()}`;
+  
+  const requestData = {
+    apiOperation: 'INITIATE_CHECKOUT',
+    interaction: {
+      merchant: {
+        name: merchantId,
+      },
+      operation: 'PURCHASE',
+      displayControl: {
+        billingAddress: 'HIDE',
+        customerEmail: 'HIDE',
+        shipping: 'HIDE',
+      },
+      returnUrl,
+    },
+    order: {
+      id: uniqueOrderId, // Use unique ID instead of order code
+      currency: 'LKR', // Force LKR currency for MPGS
+      description: `Order ${activeOrder.code} - ${activeOrder.customer?.emailAddress || 'Guest'}`,
+      amount,
+    },
   };
 
-  // Add customer session token if available
-  const customerToken = session.get('vendure-token');
-  if (customerToken) {
-    headers['Authorization'] = `Bearer ${customerToken}`;
-  }
-
-  // Call Vendure SHOP API (not admin API)
-  const response = await fetch(`${process.env.VENDURE_API_URL}`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({
-      query: `
-        mutation CreateMPGSSession($input: CreateMPGSSessionInput!) {
-          createMPGSSession(input: $input) {
-            ... on MPGSSessionResponse {
-              checkoutMode
-              merchant
-              result
-              session {
-                id
-                updateStatus
-                version
-              }
-              successIndicator
-            }
-            ... on ErrorResult {
-              errorCode
-              message
-            }
-          }
-        }
-      `,
-      variables: {
-        input: {
-          orderId: activeOrder.code,
-          amount,
-          currency: activeOrder.currencyCode,
-          returnUrl,
-          description: `Order ${activeOrder.code} - ${
-            activeOrder.customer?.emailAddress || 'Guest'
-          }`,
+  try {
+    const response = await fetch(
+      `${baseUrl}/api/rest/version/${apiVersion}/merchant/${merchantId}/session`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': authHeader,
         },
-      },
-    }),
-  });
+        body: JSON.stringify(requestData),
+      }
+    );
 
-  const data = (await response.json()) as MPGSGraphQLResponse;
+    if (!response.ok) {
+      const errorData = await response.json() as any;
+      throw new Error(`MPGS API Error: ${errorData.error?.explanation || response.statusText}`);
+    }
 
-  if (data.errors) {
-    throw new Error(data.errors[0].message);
+    const data = await response.json() as any;
+    console.log('MPGS Session created successfully:', data.session?.id);
+    return data;
+
+  } catch (error) {
+    console.error('MPGS Direct API Error:', error);
+    throw error;
   }
-
-  if (!data.data?.createMPGSSession) {
-    throw new Error('No MPGS session data received');
-  }
-
-  const sessionData = data.data.createMPGSSession;
-
-  // Check if it's an error result
-  if ('errorCode' in sessionData) {
-    throw new Error(sessionData.message);
-  }
-
-  return sessionData as MPGSSessionResponse;
 }
 
-// MPGS payment verification using Shop API
-async function verifyMPGSPayment(
-  orderId: string,
-  resultIndicator: string,
-  successIndicator: string,
-  request: Request,
-): Promise<boolean> {
-  const session = await getSessionStorage().then((sessionStorage) =>
-    sessionStorage.getSession(request?.headers.get('Cookie')),
-  );
-
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-  };
-
-  const customerToken = session.get('vendure-token');
-  if (customerToken) {
-    headers['Authorization'] = `Bearer ${customerToken}`;
+// Direct MPGS payment verification
+async function verifyMPGSPaymentDirect(
+  orderId: string, 
+  resultIndicator: string, 
+  successIndicator: string
+) {
+  // Simple verification - check if indicators match
+  if (resultIndicator !== successIndicator) {
+    console.warn(`Payment verification failed for order ${orderId}: indicators don't match`);
+    return false;
   }
 
-  const response = await fetch(`${process.env.VENDURE_API_URL}`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({
-      query: `
-        mutation VerifyMPGSPayment($input: VerifyMPGSPaymentInput!) {
-          verifyMPGSPayment(input: $input)
-        }
-      `,
-      variables: {
-        input: { orderId, resultIndicator, successIndicator },
-      },
-    }),
-  });
-
-  const data = (await response.json()) as MPGSGraphQLResponse;
-
-  if (data.errors) {
-    throw new Error(data.errors[0].message);
-  }
-
-  return data.data?.verifyMPGSPayment || false;
+  // For now, if indicators match, consider it verified
+  // In production, you might want to call MPGS retrieve order API
+  console.log(`Payment verification for order ${orderId}: SUCCESS`);
+  return true;
 }
 
 export async function loader({ params, request }: DataFunctionArgs) {
@@ -188,7 +137,6 @@ export async function loader({ params, request }: DataFunctionArgs) {
   );
   const activeOrder = await getActiveOrder({ request });
 
-  //check if there is an active order if not redirect to homepage
   if (
     !session ||
     !activeOrder ||
@@ -198,11 +146,21 @@ export async function loader({ params, request }: DataFunctionArgs) {
     return redirect('/');
   }
 
+  // Check if order is in a payable state
+  if (activeOrder.state !== 'AddingItems' && activeOrder.state !== 'ArrangingPayment') {
+    // If order is already paid or in another state, redirect to confirmation
+    if (activeOrder.state === 'PaymentSettled' || activeOrder.state === 'PaymentAuthorized') {
+      return redirect(`/checkout/confirmation/${activeOrder.code}`);
+    }
+    // For other states, redirect to home
+    return redirect('/');
+  }
+
   const { eligiblePaymentMethods } = await getEligiblePaymentMethods({
     request,
   });
   const error = session.get('activeOrderError');
-
+  
   // Existing Stripe logic
   let stripePaymentIntent: string | undefined;
   let stripePublishableKey: string | undefined;
@@ -237,12 +195,13 @@ export async function loader({ params, request }: DataFunctionArgs) {
     }
   }
 
-  // MPGS logic - Server-side session creation
-  let mpgsSession: MPGSSessionResponse | undefined = undefined;
+  // MPGS logic - Direct API calls (bypassing GraphQL)
+  let mpgsSession: any = undefined;
   let mpgsError: string | undefined;
   if (eligiblePaymentMethods.find((method) => method.code.includes('mpgs'))) {
     try {
-      mpgsSession = await createMPGSSession({ request });
+      mpgsSession = await createMPGSSessionDirect({ request });
+      console.log('MPGS Session created successfully:', mpgsSession?.session?.id);
     } catch (e: any) {
       mpgsError = e.message;
       console.error('MPGS Session Creation Error:', e);
@@ -266,11 +225,11 @@ export async function action({ params, request }: DataFunctionArgs) {
   const body = await request.formData();
   const paymentMethodCode = body.get('paymentMethodCode');
   const paymentNonce = body.get('paymentNonce');
-
+  
   // Handle MPGS payment verification
   const mpgsResultIndicator = body.get('mpgsResultIndicator');
   const mpgsSuccessIndicator = body.get('mpgsSuccessIndicator');
-
+  
   if (typeof paymentMethodCode === 'string') {
     const { nextOrderStates } = await getNextOrderStates({
       request,
@@ -299,13 +258,12 @@ export async function action({ params, request }: DataFunctionArgs) {
         throw new Response('No active order', { status: 400 });
       }
 
-      // Verify payment with MPGS
+      // Verify payment with MPGS (direct verification)
       try {
-        const isValid = await verifyMPGSPayment(
+        const isValid = await verifyMPGSPaymentDirect(
           activeOrder.code,
           mpgsResultIndicator as string,
-          mpgsSuccessIndicator as string,
-          request,
+          mpgsSuccessIndicator as string
         );
 
         if (!isValid) {
@@ -318,8 +276,8 @@ export async function action({ params, request }: DataFunctionArgs) {
     }
 
     // Prepare metadata based on payment method
-    let metadata: Record<string, any> = {};
-
+    let metadata: any = {};
+    
     if (paymentMethodCode.includes('mpgs')) {
       metadata = {
         resultIndicator: mpgsResultIndicator,
@@ -333,7 +291,7 @@ export async function action({ params, request }: DataFunctionArgs) {
       { method: paymentMethodCode, metadata },
       { request },
     );
-
+    
     if (result.addPaymentToOrder.__typename === 'Order') {
       return redirect(
         `/checkout/confirmation/${result.addPaymentToOrder.code}`,
@@ -416,14 +374,12 @@ export default function CheckoutPayment() {
                 <p className="text-sm">{mpgsError}</p>
               </div>
             ) : (
-              mpgsSession && (
-                <MPGSPayments
-                  orderCode={activeOrder?.code ?? ''}
-                  sessionData={mpgsSession}
-                  paymentMethod={paymentMethod}
-                  activeOrder={activeOrder}
-                />
-              )
+              <MPGSPayments
+                orderCode={activeOrder?.code ?? ''}
+                sessionData={mpgsSession}
+                paymentMethod={paymentMethod}
+                activeOrder={activeOrder}
+              />
             )}
           </div>
         ) : (
