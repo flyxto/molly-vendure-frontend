@@ -58,9 +58,27 @@ export async function action({ params, request }: DataFunctionArgs) {
         });
       }
     }
+    
+    // Fetch the active order again to get the order code for the return URL
+    const activeOrder = await getActiveOrder({ request });
+    if (!activeOrder) {
+      throw new Response('Not Found', {
+        status: 400,
+        statusText: 'No active order found',
+      });
+    }
+
+    // Dynamically create the return URL based on the request origin and order code
+    const returnUrl = `${new URL(request.url).origin}/checkout/confirmation/${activeOrder.code}`;
 
     const result = await addPaymentToOrder(
-      { method: paymentMethodCode, metadata: { nonce: paymentNonce } },
+      {
+        method: paymentMethodCode,
+        metadata: {
+          nonce: paymentNonce,
+          returnUrl, // Pass the dynamic returnUrl to the backend
+        },
+      },
       { request },
     );
 
