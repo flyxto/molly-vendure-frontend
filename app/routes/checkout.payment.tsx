@@ -1,18 +1,13 @@
 import { DataFunctionArgs, json, redirect } from '@remix-run/server-runtime';
 import {
   addPaymentToOrder,
-  createStripePaymentIntent,
-  generateBraintreeClientToken,
   getEligiblePaymentMethods,
   getNextOrderStates,
   transitionOrderToState,
 } from '~/providers/checkout/checkout';
-import { useLoaderData, useOutletContext } from '@remix-run/react';
-import { OutletContext } from '~/types';
-import { CurrencyCode, ErrorCode, ErrorResult } from '~/generated/graphql';
-import { StripePayments } from '~/components/checkout/stripe/StripePayments';
+import { useLoaderData, Form } from '@remix-run/react';
+import { ErrorCode, ErrorResult } from '~/generated/graphql';
 import { DummyPayments } from '~/components/checkout/DummyPayments';
-import { BraintreeDropIn } from '~/components/checkout/braintree/BraintreePayments';
 import { getActiveOrder } from '~/providers/orders/order';
 import { getSessionStorage } from '~/sessions';
 import { useTranslation } from 'react-i18next';
@@ -37,44 +32,9 @@ export async function loader({ params, request }: DataFunctionArgs) {
     request,
   });
   const error = session.get('activeOrderError');
-  let stripePaymentIntent: string | undefined;
-  let stripePublishableKey: string | undefined;
-  let stripeError: string | undefined;
-  if (eligiblePaymentMethods.find((method) => method.code.includes('stripe'))) {
-    try {
-      const stripePaymentIntentResult = await createStripePaymentIntent({
-        request,
-      });
-      stripePaymentIntent =
-        stripePaymentIntentResult.createStripePaymentIntent ?? undefined;
-      stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
-    } catch (e: any) {
-      stripeError = e.message;
-    }
-  }
 
-  let brainTreeKey: string | undefined;
-  let brainTreeError: string | undefined;
-  if (
-    eligiblePaymentMethods.find((method) => method.code.includes('braintree'))
-  ) {
-    try {
-      const generateBrainTreeTokenResult = await generateBraintreeClientToken({
-        request,
-      });
-      brainTreeKey =
-        generateBrainTreeTokenResult.generateBraintreeClientToken ?? '';
-    } catch (e: any) {
-      brainTreeError = e.message;
-    }
-  }
   return json({
     eligiblePaymentMethods,
-    stripePaymentIntent,
-    stripePublishableKey,
-    stripeError,
-    brainTreeKey,
-    brainTreeError,
     error,
   });
 }
@@ -83,10 +43,9 @@ export async function action({ params, request }: DataFunctionArgs) {
   const body = await request.formData();
   const paymentMethodCode = body.get('paymentMethodCode');
   const paymentNonce = body.get('paymentNonce');
+
   if (typeof paymentMethodCode === 'string') {
-    const { nextOrderStates } = await getNextOrderStates({
-      request,
-    });
+    const { nextOrderStates } = await getNextOrderStates({ request });
     if (nextOrderStates.includes('ArrangingPayment')) {
       const transitionResult = await transitionOrderToState(
         'ArrangingPayment',
@@ -104,10 +63,24 @@ export async function action({ params, request }: DataFunctionArgs) {
       { method: paymentMethodCode, metadata: { nonce: paymentNonce } },
       { request },
     );
+
     if (result.addPaymentToOrder.__typename === 'Order') {
-      return redirect(
-        `/checkout/confirmation/${result.addPaymentToOrder.code}`,
+      const payment = result.addPaymentToOrder.payments?.find(
+        (p) => p.method === paymentMethodCode,
       );
+      
+      const sessionId = payment?.metadata?.public?.sessionId;
+
+      if (sessionId) {
+        // Corrected hosted checkout URL to use path parameters
+        const hostedCheckoutUrl = `https://cbcmpgs.gateway.mastercard.com/checkout/pay/${sessionId}?checkoutVersion=1.0.0`;
+        return redirect(hostedCheckoutUrl);
+      } else {
+        // For non-redirect payments, go to confirmation
+        return redirect(
+          `/checkout/confirmation/${result.addPaymentToOrder.code}`,
+        );
+      }
     } else {
       throw new Response('Not Found', {
         status: 400,
@@ -115,19 +88,12 @@ export async function action({ params, request }: DataFunctionArgs) {
       });
     }
   }
+
+  return null;
 }
 
 export default function CheckoutPayment() {
-  const {
-    eligiblePaymentMethods,
-    stripePaymentIntent,
-    stripePublishableKey,
-    stripeError,
-    brainTreeKey,
-    brainTreeError,
-    error,
-  } = useLoaderData<typeof loader>();
-  const { activeOrderFetcher, activeOrder } = useOutletContext<OutletContext>();
+  const { eligiblePaymentMethods, error } = useLoaderData<typeof loader>();
   const { t } = useTranslation();
 
   const paymentError = getPaymentError(error);
@@ -135,41 +101,40 @@ export default function CheckoutPayment() {
   return (
     <div className="flex flex-col items-center divide-gray-200 divide-y">
       {eligiblePaymentMethods.map((paymentMethod) =>
-        paymentMethod.code.includes('braintree') ? (
-          <div className="py-3 w-full" key={paymentMethod.id}>
-            {brainTreeError ? (
-              <div>
-                <p className="text-red-700 font-bold">
-                  {t('checkout.braintreeError')}
-                </p>
-                <p className="text-sm">{brainTreeError}</p>
-              </div>
-            ) : (
-              <BraintreeDropIn
-                fullAmount={activeOrder?.totalWithTax ?? 0}
-                currencyCode={
-                  activeOrder?.currencyCode ?? ('USD' as CurrencyCode)
-                }
-                show={true}
-                authorization={brainTreeKey!}
-              />
-            )}
-          </div>
-        ) : paymentMethod.code.includes('stripe') ? (
+        paymentMethod.code === 'mpgs-hosted-checkout' ? (
           <div className="py-12" key={paymentMethod.id}>
-            {stripeError ? (
+            {paymentError ? (
               <div>
                 <p className="text-red-700 font-bold">
-                  {t('checkout.stripeError')}
+                  {t('checkout.mpgsError', {
+                    defaultValue: 'MPGS payment initialization failed.',
+                  })}
                 </p>
-                <p className="text-sm">{stripeError}</p>
+                <p className="text-sm">{paymentError}</p>
               </div>
             ) : (
-              <StripePayments
-                orderCode={activeOrder?.code ?? ''}
-                clientSecret={stripePaymentIntent!}
-                publishableKey={stripePublishableKey!}
-              ></StripePayments>
+              <Form
+                method="post"
+                className="flex flex-col items-center space-y-4"
+              >
+                <input
+                  type="hidden"
+                  name="paymentMethodCode"
+                  value="mpgs-hosted-checkout"
+                />
+                <p className="text-gray-600">
+                  {t('checkout.mpgsInstructions', {
+                    defaultValue:
+                      'Click the button below to complete your payment.',
+                  })}
+                </p>
+                <button
+                  type="submit"
+                  className="px-6 py-2 rounded-md font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                >
+                  Pay with Mastercard
+                </button>
+              </Form>
             )}
           </div>
         ) : (
