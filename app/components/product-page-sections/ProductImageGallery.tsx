@@ -3,6 +3,20 @@
 'use client';
 import { useState } from 'react';
 
+// Helper function to optimize Vendure images
+function getOptimizedImageUrl(url: string, width: number): string {
+  if (!url) return '';
+
+  try {
+    const urlObj = new URL(url);
+    urlObj.searchParams.set('w', width.toString());
+    // Don't set height - let it scale proportionally
+    return urlObj.toString();
+  } catch {
+    return url;
+  }
+}
+
 export default function ProductImageGallery({ assets }: any) {
   const [selectedImage, setSelectedImage] = useState(
     assets?.[0]?.preview || '',
@@ -31,12 +45,18 @@ export default function ProductImageGallery({ assets }: any) {
   return (
     <div className="space-y-4 md:col-span-3">
       {/* Main Image */}
+      {/* Main Image */}
       <div className="relative bg-[#efefef] rounded overflow-hidden aspect-square w-full mb-3 border group">
         <img
-          src={selectedImage || assets[0].preview}
+          src={getOptimizedImageUrl(selectedImage || assets[0].preview, 800)}
+          srcSet={`
+      ${getOptimizedImageUrl(selectedImage || assets[0].preview, 800)} 1x,
+      ${getOptimizedImageUrl(selectedImage || assets[0].preview, 1600)} 2x
+    `}
           alt="Main View"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
           className="object-cover object-top w-full h-full"
+          loading="eager"
         />
       </div>
 
@@ -88,10 +108,15 @@ export default function ProductImageGallery({ assets }: any) {
                     onClick={() => setSelectedImage(image.preview)}
                   >
                     <img
-                      src={image.preview}
+                      src={getOptimizedImageUrl(image.preview, 200)}
+                      srcSet={`
+                        ${getOptimizedImageUrl(image.preview, 200)} 1x,
+                        ${getOptimizedImageUrl(image.preview, 400)} 2x
+                      `}
                       alt={`Product view ${index + 1}`}
                       sizes="(max-width: 768px) 25vw, 12vw"
                       className="object-cover object-top w-full h-full"
+                      loading="lazy"
                     />
                   </div>
                 </div>
