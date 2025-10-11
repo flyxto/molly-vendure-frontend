@@ -57,25 +57,26 @@ export function ProductCard({
     <Link className="flex flex-col" prefetch="intent" to={`/products/${slug}`}>
       <div className="w-full flex flex-col border-b border-b-black pb-2 group ">
         {/* Product Image Container */}
-        <div className="relative bg-[#efefef] rounded overflow-hidden aspect-square w-full mb-1 border border-black group">
+        <div className="relative bg-white rounded overflow-hidden w-full mb-1 border border-black group">
           <img
-            // src={'/images/perfumes/perfume_1.jpg'}
             src={productAsset?.preview + '?w=800'}
             alt={productName}
-            className="object-cover object-top group-hover:scale-110 transition duration-300"
+            className="w-full h-full object-contain group-hover:scale-110 transition duration-300"
           />
           {/* <Button
-            // variant="cart"
-            className="absolute bottom-0 left-0 m-2 active:scale-95 border border-gray-200 rounded-full w-8 h-8 flex items-center justify-center 
-             md:rounded-md md:w-auto md:h-auto md:px-3 md:py-1.5 md:gap-2"
-          >
-            <p className="hidden md:block">Add to Cart</p>
-            <ShoppingCart className="w-4 h-4" />
-          </Button> */}
+    // variant="cart"
+    className="absolute bottom-0 left-0 m-2 active:scale-95 border border-gray-200 rounded-full w-8 h-8 flex items-center justify-center 
+     md:rounded-md md:w-auto md:h-auto md:px-3 md:py-1.5 md:gap-2"
+  >
+    <p className="hidden md:block">Add to Cart</p>
+    <ShoppingCart className="w-4 h-4" />
+  </Button> */}
         </div>
 
         {/* Product Details */}
-        <h3 className=" text-sm text-gray-500 mb-2">{productName}</h3>
+        <h3 className=" text-sm text-gray-500 mb-2 whitespace-nowrap truncate w-full">
+          {productName}
+        </h3>
 
         {/* Color Options - Static display only */}
         {/* <div className="flex space-x-1 md:space-x-2 mb-3">
