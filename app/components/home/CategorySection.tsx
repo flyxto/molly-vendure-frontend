@@ -152,9 +152,7 @@ export default function CategorySection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 1 }}
         >
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. A
-          consequuntur tenetur consequatur, explicabo in blanditiis molestias
-          dolor impedit distinctio
+         Discover a world where style has no limits. our collections are designed for every shape, shade, and personality, making fashion an experience that truly belongs to everyone.
         </motion.p>
 
         <div className="w-full flex gap-10 items-center justify-center overflow-hidden px-4 sm:px-0">
