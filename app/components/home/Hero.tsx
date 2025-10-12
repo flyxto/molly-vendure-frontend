@@ -157,7 +157,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
-        <a href="/store">
+        <a href="#category-section">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
