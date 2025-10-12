@@ -5,6 +5,7 @@ import {
   useLoaderData,
   useNavigate,
   useOutletContext,
+  useNavigation,
 } from '@remix-run/react';
 import { OutletContext } from '~/types';
 import { DataFunctionArgs, json, redirect } from '@remix-run/server-runtime';
@@ -53,10 +54,11 @@ export async function loader({ request }: DataFunctionArgs) {
 }
 
 export default function CheckoutShipping() {
-console.log('🚢 Shipping component is rendering');
+  console.log('🚢 Shipping component is rendering');
   const { availableCountries, eligibleShippingMethods, activeCustomer, error } =
     useLoaderData<typeof loader>();
   const { activeOrderFetcher, activeOrder } = useOutletContext<OutletContext>();
+  const navigation = useNavigation();
   const [customerFormChanged, setCustomerFormChanged] = useState(false);
   const [addressFormChanged, setAddressFormChanged] = useState(false);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
@@ -75,6 +77,11 @@ console.log('🚢 Shipping component is rendering');
       selectedAddressIndex != null) &&
     activeOrder?.shippingLines?.length &&
     activeOrder?.lines?.length;
+
+  const isLoading =
+    activeOrderFetcher.state === 'submitting' ||
+    activeOrderFetcher.state === 'loading' ||
+    navigation.state === 'loading';
 
   const submitCustomerForm = (event: FormEvent<HTMLFormElement>) => {
     const formData = new FormData(event.currentTarget);
@@ -147,7 +154,19 @@ console.log('🚢 Shipping component is rendering');
   }
 
   return (
-    <div>
+    <div className="relative">
+      {/* Loading Overlay */}
+      {isLoading && (
+        <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
+          <div className="flex flex-col items-center space-y-3">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+            <p className="text-sm text-gray-600">
+              {t('Updating') || 'Loading...'}
+            </p>
+          </div>
+        </div>
+      )}
+
       <div>
         <h2 className="text-lg font-medium text-gray-900">
           {t('checkout.detailsTitle')}
@@ -277,10 +296,10 @@ console.log('🚢 Shipping component is rendering');
 
       <button
         type="button"
-        disabled={!canProceedToPayment}
+        disabled={!canProceedToPayment || isLoading}
         onClick={navigateToPayment}
         className={classNames(
-          canProceedToPayment
+          canProceedToPayment && !isLoading
             ? 'bg-primary-600 hover:bg-primary-700'
             : 'bg-gray-400',
           'flex w-full items-center justify-center space-x-2 mt-24 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500',

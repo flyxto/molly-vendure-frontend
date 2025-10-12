@@ -30,6 +30,11 @@ export type Scalars = {
 
 export type ActiveOrderResult = NoActiveOrderError | Order;
 
+export type AddItemInput = {
+  productVariantId: Scalars['ID'];
+  quantity: Scalars['Int'];
+};
+
 export type AddPaymentToOrderResult =
   | IneligiblePaymentMethodError
   | NoActiveOrderError
@@ -135,6 +140,8 @@ export type AuthenticationResult =
 
 export type BooleanCustomFieldConfig = CustomField & {
   __typename?: 'BooleanCustomFieldConfig';
+  deprecated?: Maybe<Scalars['Boolean']>;
+  deprecationReason?: Maybe<Scalars['String']>;
   description?: Maybe<Array<LocalizedString>>;
   internal?: Maybe<Scalars['Boolean']>;
   label?: Maybe<Array<LocalizedString>>;
@@ -142,6 +149,7 @@ export type BooleanCustomFieldConfig = CustomField & {
   name: Scalars['String'];
   nullable?: Maybe<Scalars['Boolean']>;
   readonly?: Maybe<Scalars['Boolean']>;
+  requiresPermission?: Maybe<Array<Permission>>;
   type: Scalars['String'];
   ui?: Maybe<Scalars['JSON']>;
 };
@@ -155,6 +163,16 @@ export type BooleanListOperators = {
 export type BooleanOperators = {
   eq?: InputMaybe<Scalars['Boolean']>;
   isNull?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type BooleanStructFieldConfig = StructField & {
+  __typename?: 'BooleanStructFieldConfig';
+  description?: Maybe<Array<LocalizedString>>;
+  label?: Maybe<Array<LocalizedString>>;
+  list: Scalars['Boolean'];
+  name: Scalars['String'];
+  type: Scalars['String'];
+  ui?: Maybe<Scalars['JSON']>;
 };
 
 export type Channel = Node & {
@@ -215,6 +233,8 @@ export type CollectionBreadcrumb = {
 };
 
 export type CollectionFilterParameter = {
+  _and?: InputMaybe<Array<CollectionFilterParameter>>;
+  _or?: InputMaybe<Array<CollectionFilterParameter>>;
   createdAt?: InputMaybe<DateOperators>;
   description?: InputMaybe<StringOperators>;
   id?: InputMaybe<IdOperators>;
@@ -235,7 +255,7 @@ export type CollectionList = PaginatedList & {
 export type CollectionListOptions = {
   /** Allows the results to be filtered */
   filter?: InputMaybe<CollectionFilterParameter>;
-  /** Specifies whether multiple "filter" arguments should be combines with a logical AND or OR operation. Defaults to AND. */
+  /** Specifies whether multiple top-level "filter" fields should be combined with a logical AND or OR operation. Defaults to AND. */
   filterOperator?: InputMaybe<LogicalOperator>;
   /** Skips the first n results, for use in pagination */
   skip?: InputMaybe<Scalars['Int']>;
@@ -326,6 +346,12 @@ export type Coordinate = {
   y: Scalars['Float'];
 };
 
+/**
+ * A Country of the world which your shop operates in.
+ *
+ * The `code` field is typically a 2-character ISO code such as "GB", "US", "DE" etc. This code is used in certain inputs such as
+ * `UpdateAddressInput` and `CreateAddressInput` to specify the country.
+ */
 export type Country = Node &
   Region & {
     __typename?: 'Country';
@@ -374,6 +400,13 @@ export type CouponCodeLimitError = ErrorResult & {
   message: Scalars['String'];
 };
 
+/**
+ * Input used to create an Address.
+ *
+ * The countryCode must correspond to a `code` property of a Country that has been defined in the
+ * Vendure server. The `code` property is typically a 2-character ISO code such as "GB", "US", "DE" etc.
+ * If an invalid code is passed, the mutation will fail.
+ */
 export type CreateAddressInput = {
   city?: InputMaybe<Scalars['String']>;
   company?: InputMaybe<Scalars['String']>;
@@ -737,6 +770,8 @@ export type CurrentUserChannel = {
 };
 
 export type CustomField = {
+  deprecated?: Maybe<Scalars['Boolean']>;
+  deprecationReason?: Maybe<Scalars['String']>;
   description?: Maybe<Array<LocalizedString>>;
   internal?: Maybe<Scalars['Boolean']>;
   label?: Maybe<Array<LocalizedString>>;
@@ -744,6 +779,7 @@ export type CustomField = {
   name: Scalars['String'];
   nullable?: Maybe<Scalars['Boolean']>;
   readonly?: Maybe<Scalars['Boolean']>;
+  requiresPermission?: Maybe<Array<Permission>>;
   type: Scalars['String'];
   ui?: Maybe<Scalars['JSON']>;
 };
@@ -757,6 +793,7 @@ export type CustomFieldConfig =
   | LocaleTextCustomFieldConfig
   | RelationCustomFieldConfig
   | StringCustomFieldConfig
+  | StructCustomFieldConfig
   | TextCustomFieldConfig;
 
 export type Customer = Node & {
@@ -780,6 +817,8 @@ export type CustomerOrdersArgs = {
 };
 
 export type CustomerFilterParameter = {
+  _and?: InputMaybe<Array<CustomerFilterParameter>>;
+  _or?: InputMaybe<Array<CustomerFilterParameter>>;
   createdAt?: InputMaybe<DateOperators>;
   emailAddress?: InputMaybe<StringOperators>;
   firstName?: InputMaybe<StringOperators>;
@@ -813,7 +852,7 @@ export type CustomerList = PaginatedList & {
 export type CustomerListOptions = {
   /** Allows the results to be filtered */
   filter?: InputMaybe<CustomerFilterParameter>;
-  /** Specifies whether multiple "filter" arguments should be combines with a logical AND or OR operation. Defaults to AND. */
+  /** Specifies whether multiple top-level "filter" fields should be combined with a logical AND or OR operation. Defaults to AND. */
   filterOperator?: InputMaybe<LogicalOperator>;
   /** Skips the first n results, for use in pagination */
   skip?: InputMaybe<Scalars['Int']>;
@@ -859,6 +898,8 @@ export type DateRange = {
  */
 export type DateTimeCustomFieldConfig = CustomField & {
   __typename?: 'DateTimeCustomFieldConfig';
+  deprecated?: Maybe<Scalars['Boolean']>;
+  deprecationReason?: Maybe<Scalars['String']>;
   description?: Maybe<Array<LocalizedString>>;
   internal?: Maybe<Scalars['Boolean']>;
   label?: Maybe<Array<LocalizedString>>;
@@ -868,6 +909,24 @@ export type DateTimeCustomFieldConfig = CustomField & {
   name: Scalars['String'];
   nullable?: Maybe<Scalars['Boolean']>;
   readonly?: Maybe<Scalars['Boolean']>;
+  requiresPermission?: Maybe<Array<Permission>>;
+  step?: Maybe<Scalars['Int']>;
+  type: Scalars['String'];
+  ui?: Maybe<Scalars['JSON']>;
+};
+
+/**
+ * Expects the same validation formats as the `<input type="datetime-local">` HTML element.
+ * See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local#Additional_attributes
+ */
+export type DateTimeStructFieldConfig = StructField & {
+  __typename?: 'DateTimeStructFieldConfig';
+  description?: Maybe<Array<LocalizedString>>;
+  label?: Maybe<Array<LocalizedString>>;
+  list: Scalars['Boolean'];
+  max?: Maybe<Scalars['String']>;
+  min?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   step?: Maybe<Scalars['Int']>;
   type: Scalars['String'];
   ui?: Maybe<Scalars['JSON']>;
@@ -920,6 +979,7 @@ export enum ErrorCode {
   NegativeQuantityError = 'NEGATIVE_QUANTITY_ERROR',
   NotVerifiedError = 'NOT_VERIFIED_ERROR',
   NoActiveOrderError = 'NO_ACTIVE_ORDER_ERROR',
+  OrderInterceptorError = 'ORDER_INTERCEPTOR_ERROR',
   OrderLimitError = 'ORDER_LIMIT_ERROR',
   OrderModificationError = 'ORDER_MODIFICATION_ERROR',
   OrderPaymentStateError = 'ORDER_PAYMENT_STATE_ERROR',
@@ -950,10 +1010,18 @@ export type Facet = Node & {
   name: Scalars['String'];
   translations: Array<FacetTranslation>;
   updatedAt: Scalars['DateTime'];
+  /** Returns a paginated, sortable, filterable list of the Facet's values. Added in v2.1.0. */
+  valueList: FacetValueList;
   values: Array<FacetValue>;
 };
 
+export type FacetValueListArgs = {
+  options?: InputMaybe<FacetValueListOptions>;
+};
+
 export type FacetFilterParameter = {
+  _and?: InputMaybe<Array<FacetFilterParameter>>;
+  _or?: InputMaybe<Array<FacetFilterParameter>>;
   code?: InputMaybe<StringOperators>;
   createdAt?: InputMaybe<DateOperators>;
   id?: InputMaybe<IdOperators>;
@@ -971,7 +1039,7 @@ export type FacetList = PaginatedList & {
 export type FacetListOptions = {
   /** Allows the results to be filtered */
   filter?: InputMaybe<FacetFilterParameter>;
-  /** Specifies whether multiple "filter" arguments should be combines with a logical AND or OR operation. Defaults to AND. */
+  /** Specifies whether multiple top-level "filter" fields should be combined with a logical AND or OR operation. Defaults to AND. */
   filterOperator?: InputMaybe<LogicalOperator>;
   /** Skips the first n results, for use in pagination */
   skip?: InputMaybe<Scalars['Int']>;
@@ -1004,6 +1072,7 @@ export type FacetValue = Node & {
   createdAt: Scalars['DateTime'];
   customFields?: Maybe<Scalars['JSON']>;
   facet: Facet;
+  facetId: Scalars['ID'];
   id: Scalars['ID'];
   languageCode: LanguageCode;
   name: Scalars['String'];
@@ -1024,6 +1093,37 @@ export type FacetValueFilterInput = {
   or?: InputMaybe<Array<Scalars['ID']>>;
 };
 
+export type FacetValueFilterParameter = {
+  _and?: InputMaybe<Array<FacetValueFilterParameter>>;
+  _or?: InputMaybe<Array<FacetValueFilterParameter>>;
+  code?: InputMaybe<StringOperators>;
+  createdAt?: InputMaybe<DateOperators>;
+  facetId?: InputMaybe<IdOperators>;
+  id?: InputMaybe<IdOperators>;
+  languageCode?: InputMaybe<StringOperators>;
+  name?: InputMaybe<StringOperators>;
+  updatedAt?: InputMaybe<DateOperators>;
+};
+
+export type FacetValueList = PaginatedList & {
+  __typename?: 'FacetValueList';
+  items: Array<FacetValue>;
+  totalItems: Scalars['Int'];
+};
+
+export type FacetValueListOptions = {
+  /** Allows the results to be filtered */
+  filter?: InputMaybe<FacetValueFilterParameter>;
+  /** Specifies whether multiple top-level "filter" fields should be combined with a logical AND or OR operation. Defaults to AND. */
+  filterOperator?: InputMaybe<LogicalOperator>;
+  /** Skips the first n results, for use in pagination */
+  skip?: InputMaybe<Scalars['Int']>;
+  /** Specifies which properties to sort the results by */
+  sort?: InputMaybe<FacetValueSortParameter>;
+  /** Takes n results, for use in pagination */
+  take?: InputMaybe<Scalars['Int']>;
+};
+
 /**
  * Which FacetValues are present in the products returned
  * by the search, and in what quantity.
@@ -1032,6 +1132,15 @@ export type FacetValueResult = {
   __typename?: 'FacetValueResult';
   count: Scalars['Int'];
   facetValue: FacetValue;
+};
+
+export type FacetValueSortParameter = {
+  code?: InputMaybe<SortOrder>;
+  createdAt?: InputMaybe<SortOrder>;
+  facetId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
 };
 
 export type FacetValueTranslation = {
@@ -1045,6 +1154,8 @@ export type FacetValueTranslation = {
 
 export type FloatCustomFieldConfig = CustomField & {
   __typename?: 'FloatCustomFieldConfig';
+  deprecated?: Maybe<Scalars['Boolean']>;
+  deprecationReason?: Maybe<Scalars['String']>;
   description?: Maybe<Array<LocalizedString>>;
   internal?: Maybe<Scalars['Boolean']>;
   label?: Maybe<Array<LocalizedString>>;
@@ -1054,6 +1165,20 @@ export type FloatCustomFieldConfig = CustomField & {
   name: Scalars['String'];
   nullable?: Maybe<Scalars['Boolean']>;
   readonly?: Maybe<Scalars['Boolean']>;
+  requiresPermission?: Maybe<Array<Permission>>;
+  step?: Maybe<Scalars['Float']>;
+  type: Scalars['String'];
+  ui?: Maybe<Scalars['JSON']>;
+};
+
+export type FloatStructFieldConfig = StructField & {
+  __typename?: 'FloatStructFieldConfig';
+  description?: Maybe<Array<LocalizedString>>;
+  label?: Maybe<Array<LocalizedString>>;
+  list: Scalars['Boolean'];
+  max?: Maybe<Scalars['Float']>;
+  min?: Maybe<Scalars['Float']>;
+  name: Scalars['String'];
   step?: Maybe<Scalars['Float']>;
   type: Scalars['String'];
   ui?: Maybe<Scalars['JSON']>;
@@ -1099,6 +1224,7 @@ export type GuestCheckoutError = ErrorResult & {
 export type HistoryEntry = Node & {
   __typename?: 'HistoryEntry';
   createdAt: Scalars['DateTime'];
+  customFields?: Maybe<Scalars['JSON']>;
   data: Scalars['JSON'];
   id: Scalars['ID'];
   type: HistoryEntryType;
@@ -1106,6 +1232,8 @@ export type HistoryEntry = Node & {
 };
 
 export type HistoryEntryFilterParameter = {
+  _and?: InputMaybe<Array<HistoryEntryFilterParameter>>;
+  _or?: InputMaybe<Array<HistoryEntryFilterParameter>>;
   createdAt?: InputMaybe<DateOperators>;
   id?: InputMaybe<IdOperators>;
   type?: InputMaybe<StringOperators>;
@@ -1121,7 +1249,7 @@ export type HistoryEntryList = PaginatedList & {
 export type HistoryEntryListOptions = {
   /** Allows the results to be filtered */
   filter?: InputMaybe<HistoryEntryFilterParameter>;
-  /** Specifies whether multiple "filter" arguments should be combines with a logical AND or OR operation. Defaults to AND. */
+  /** Specifies whether multiple top-level "filter" fields should be combined with a logical AND or OR operation. Defaults to AND. */
   filterOperator?: InputMaybe<LogicalOperator>;
   /** Skips the first n results, for use in pagination */
   skip?: InputMaybe<Scalars['Int']>;
@@ -1155,6 +1283,7 @@ export enum HistoryEntryType {
   OrderCancellation = 'ORDER_CANCELLATION',
   OrderCouponApplied = 'ORDER_COUPON_APPLIED',
   OrderCouponRemoved = 'ORDER_COUPON_REMOVED',
+  OrderCustomerUpdated = 'ORDER_CUSTOMER_UPDATED',
   OrderFulfillment = 'ORDER_FULFILLMENT',
   OrderFulfillmentTransition = 'ORDER_FULFILLMENT_TRANSITION',
   OrderModified = 'ORDER_MODIFIED',
@@ -1224,6 +1353,8 @@ export type InsufficientStockError = ErrorResult & {
 
 export type IntCustomFieldConfig = CustomField & {
   __typename?: 'IntCustomFieldConfig';
+  deprecated?: Maybe<Scalars['Boolean']>;
+  deprecationReason?: Maybe<Scalars['String']>;
   description?: Maybe<Array<LocalizedString>>;
   internal?: Maybe<Scalars['Boolean']>;
   label?: Maybe<Array<LocalizedString>>;
@@ -1233,6 +1364,20 @@ export type IntCustomFieldConfig = CustomField & {
   name: Scalars['String'];
   nullable?: Maybe<Scalars['Boolean']>;
   readonly?: Maybe<Scalars['Boolean']>;
+  requiresPermission?: Maybe<Array<Permission>>;
+  step?: Maybe<Scalars['Int']>;
+  type: Scalars['String'];
+  ui?: Maybe<Scalars['JSON']>;
+};
+
+export type IntStructFieldConfig = StructField & {
+  __typename?: 'IntStructFieldConfig';
+  description?: Maybe<Array<LocalizedString>>;
+  label?: Maybe<Array<LocalizedString>>;
+  list: Scalars['Boolean'];
+  max?: Maybe<Scalars['Int']>;
+  min?: Maybe<Scalars['Int']>;
+  name: Scalars['String'];
   step?: Maybe<Scalars['Int']>;
   type: Scalars['String'];
   ui?: Maybe<Scalars['JSON']>;
@@ -1574,6 +1719,8 @@ export enum LanguageCode {
 
 export type LocaleStringCustomFieldConfig = CustomField & {
   __typename?: 'LocaleStringCustomFieldConfig';
+  deprecated?: Maybe<Scalars['Boolean']>;
+  deprecationReason?: Maybe<Scalars['String']>;
   description?: Maybe<Array<LocalizedString>>;
   internal?: Maybe<Scalars['Boolean']>;
   label?: Maybe<Array<LocalizedString>>;
@@ -1583,12 +1730,15 @@ export type LocaleStringCustomFieldConfig = CustomField & {
   nullable?: Maybe<Scalars['Boolean']>;
   pattern?: Maybe<Scalars['String']>;
   readonly?: Maybe<Scalars['Boolean']>;
+  requiresPermission?: Maybe<Array<Permission>>;
   type: Scalars['String'];
   ui?: Maybe<Scalars['JSON']>;
 };
 
 export type LocaleTextCustomFieldConfig = CustomField & {
   __typename?: 'LocaleTextCustomFieldConfig';
+  deprecated?: Maybe<Scalars['Boolean']>;
+  deprecationReason?: Maybe<Scalars['String']>;
   description?: Maybe<Array<LocalizedString>>;
   internal?: Maybe<Scalars['Boolean']>;
   label?: Maybe<Array<LocalizedString>>;
@@ -1596,6 +1746,7 @@ export type LocaleTextCustomFieldConfig = CustomField & {
   name: Scalars['String'];
   nullable?: Maybe<Scalars['Boolean']>;
   readonly?: Maybe<Scalars['Boolean']>;
+  requiresPermission?: Maybe<Array<Permission>>;
   type: Scalars['String'];
   ui?: Maybe<Scalars['JSON']>;
 };
@@ -1620,8 +1771,10 @@ export type MissingPasswordError = ErrorResult & {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Adds an item to the order. If custom fields are defined on the OrderLine entity, a third argument 'customFields' will be available. */
+  /** Adds an item to the Order. If custom fields are defined on the OrderLine entity, a third argument 'customFields' will be available. */
   addItemToOrder: UpdateOrderItemsResult;
+  /** Adds mutliple items to the Order. Returns a list of errors for each item that failed to add. It will still add successful items. */
+  addItemsToOrder: UpdateMultipleOrderItemsResult;
   /** Add a Payment to the Order */
   addPaymentToOrder: AddPaymentToOrderResult;
   /** Adjusts an OrderLine. If custom fields are defined on the OrderLine entity, a third argument 'customFields' of type `OrderLineCustomFieldsInput` will be available. */
@@ -1635,7 +1788,12 @@ export type Mutation = {
   createStripePaymentIntent?: Maybe<Scalars['String']>;
   /** Delete an existing Address */
   deleteCustomerAddress: Success;
-  /** Authenticates the user using the native authentication strategy. This mutation is an alias for `authenticate({ native: { ... }})` */
+  /**
+   * Authenticates the user using the native authentication strategy. This mutation is an alias for authenticate({ native: { ... }})
+   *
+   * The `rememberMe` option applies when using cookie-based sessions, and if `true` it will set the maxAge of the session cookie
+   * to 1 year.
+   */
   login: NativeAuthenticationResult;
   /** End the current authenticated session */
   logout: Success;
@@ -1677,11 +1835,11 @@ export type Mutation = {
   resetPassword: ResetPasswordResult;
   /** Set the Customer for the Order. Required only if the Customer is not currently logged in */
   setCustomerForOrder: SetCustomerForOrderResult;
-  /** Sets the billing address for this order */
+  /** Sets the billing address for the active Order */
   setOrderBillingAddress: ActiveOrderResult;
-  /** Allows any custom fields to be set for the active order */
+  /** Allows any custom fields to be set for the active Order */
   setOrderCustomFields: ActiveOrderResult;
-  /** Sets the shipping address for this order */
+  /** Sets the shipping address for the active Order */
   setOrderShippingAddress: ActiveOrderResult;
   /**
    * Sets the shipping method by id, which can be obtained with the `eligibleShippingMethods` query.
@@ -1692,6 +1850,10 @@ export type Mutation = {
   setOrderShippingMethod: SetOrderShippingMethodResult;
   /** Transitions an Order to a new state. Valid next states can be found by querying `nextOrderStates` */
   transitionOrderToState?: Maybe<TransitionOrderToStateResult>;
+  /** Unsets the billing address for the active Order. Available since version 3.1.0 */
+  unsetOrderBillingAddress: ActiveOrderResult;
+  /** Unsets the shipping address for the active Order. Available since version 3.1.0 */
+  unsetOrderShippingAddress: ActiveOrderResult;
   /** Update an existing Customer */
   updateCustomer: Customer;
   /** Update an existing Address */
@@ -1715,6 +1877,10 @@ export type Mutation = {
 export type MutationAddItemToOrderArgs = {
   productVariantId: Scalars['ID'];
   quantity: Scalars['Int'];
+};
+
+export type MutationAddItemsToOrderArgs = {
+  inputs: Array<AddItemInput>;
 };
 
 export type MutationAddPaymentToOrderArgs = {
@@ -1973,6 +2139,8 @@ export type OrderAddress = {
 };
 
 export type OrderFilterParameter = {
+  _and?: InputMaybe<Array<OrderFilterParameter>>;
+  _or?: InputMaybe<Array<OrderFilterParameter>>;
   active?: InputMaybe<BooleanOperators>;
   code?: InputMaybe<StringOperators>;
   createdAt?: InputMaybe<DateOperators>;
@@ -1989,6 +2157,14 @@ export type OrderFilterParameter = {
   totalWithTax?: InputMaybe<NumberOperators>;
   type?: InputMaybe<StringOperators>;
   updatedAt?: InputMaybe<DateOperators>;
+};
+
+/** Returned when an order operation is rejected by an OrderInterceptor method. */
+export type OrderInterceptorError = ErrorResult & {
+  __typename?: 'OrderInterceptorError';
+  errorCode: ErrorCode;
+  interceptorError: Scalars['String'];
+  message: Scalars['String'];
 };
 
 /** Returned when the maximum order size limit has been reached. */
@@ -2048,6 +2224,7 @@ export type OrderLine = Node & {
   proratedUnitPrice: Scalars['Money'];
   /** The proratedUnitPrice including tax */
   proratedUnitPriceWithTax: Scalars['Money'];
+  /** The quantity of items purchased */
   quantity: Scalars['Int'];
   taxLines: Array<TaxLine>;
   taxRate: Scalars['Float'];
@@ -2071,7 +2248,7 @@ export type OrderList = PaginatedList & {
 export type OrderListOptions = {
   /** Allows the results to be filtered */
   filter?: InputMaybe<OrderFilterParameter>;
-  /** Specifies whether multiple "filter" arguments should be combines with a logical AND or OR operation. Defaults to AND. */
+  /** Specifies whether multiple top-level "filter" fields should be combined with a logical AND or OR operation. Defaults to AND. */
   filterOperator?: InputMaybe<LogicalOperator>;
   /** Skips the first n results, for use in pagination */
   skip?: InputMaybe<Scalars['Int']>;
@@ -2143,6 +2320,16 @@ export enum OrderType {
   Seller = 'Seller',
 }
 
+export type Page = {
+  __typename?: 'Page';
+  content: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  slug: Scalars['String'];
+  title: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
 export type PaginatedList = {
   items: Array<Node>;
   totalItems: Scalars['Int'];
@@ -2187,6 +2374,7 @@ export type Payment = Node & {
   __typename?: 'Payment';
   amount: Scalars['Money'];
   createdAt: Scalars['DateTime'];
+  customFields?: Maybe<Scalars['JSON']>;
   errorMessage?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   metadata?: Maybe<Scalars['JSON']>;
@@ -2404,6 +2592,8 @@ export enum Permission {
   ReadCustomer = 'ReadCustomer',
   /** Grants permission to read CustomerGroup */
   ReadCustomerGroup = 'ReadCustomerGroup',
+  /** Grants permission to read DashboardGlobalViews */
+  ReadDashboardGlobalViews = 'ReadDashboardGlobalViews',
   /** Grants permission to read Facet */
   ReadFacet = 'ReadFacet',
   /** Grants permission to read Order */
@@ -2480,6 +2670,8 @@ export enum Permission {
   UpdateTaxRate = 'UpdateTaxRate',
   /** Grants permission to update Zone */
   UpdateZone = 'UpdateZone',
+  /** Grants permission to write DashboardGlobalViews */
+  WriteDashboardGlobalViews = 'WriteDashboardGlobalViews',
 }
 
 /** The price range where the result has more than one price */
@@ -2496,6 +2688,7 @@ export type Product = Node & {
   createdAt: Scalars['DateTime'];
   customFields?: Maybe<Scalars['JSON']>;
   description: Scalars['String'];
+  enabled: Scalars['Boolean'];
   facetValues: Array<FacetValue>;
   featuredAsset?: Maybe<Asset>;
   id: Scalars['ID'];
@@ -2516,8 +2709,11 @@ export type ProductVariantListArgs = {
 };
 
 export type ProductFilterParameter = {
+  _and?: InputMaybe<Array<ProductFilterParameter>>;
+  _or?: InputMaybe<Array<ProductFilterParameter>>;
   createdAt?: InputMaybe<DateOperators>;
   description?: InputMaybe<StringOperators>;
+  enabled?: InputMaybe<BooleanOperators>;
   id?: InputMaybe<IdOperators>;
   languageCode?: InputMaybe<StringOperators>;
   name?: InputMaybe<StringOperators>;
@@ -2534,7 +2730,7 @@ export type ProductList = PaginatedList & {
 export type ProductListOptions = {
   /** Allows the results to be filtered */
   filter?: InputMaybe<ProductFilterParameter>;
-  /** Specifies whether multiple "filter" arguments should be combines with a logical AND or OR operation. Defaults to AND. */
+  /** Specifies whether multiple top-level "filter" fields should be combined with a logical AND or OR operation. Defaults to AND. */
   filterOperator?: InputMaybe<LogicalOperator>;
   /** Skips the first n results, for use in pagination */
   skip?: InputMaybe<Scalars['Int']>;
@@ -2634,6 +2830,8 @@ export type ProductVariant = Node & {
 };
 
 export type ProductVariantFilterParameter = {
+  _and?: InputMaybe<Array<ProductVariantFilterParameter>>;
+  _or?: InputMaybe<Array<ProductVariantFilterParameter>>;
   createdAt?: InputMaybe<DateOperators>;
   currencyCode?: InputMaybe<StringOperators>;
   id?: InputMaybe<IdOperators>;
@@ -2656,7 +2854,7 @@ export type ProductVariantList = PaginatedList & {
 export type ProductVariantListOptions = {
   /** Allows the results to be filtered */
   filter?: InputMaybe<ProductVariantFilterParameter>;
-  /** Specifies whether multiple "filter" arguments should be combines with a logical AND or OR operation. Defaults to AND. */
+  /** Specifies whether multiple top-level "filter" fields should be combined with a logical AND or OR operation. Defaults to AND. */
   filterOperator?: InputMaybe<LogicalOperator>;
   /** Skips the first n results, for use in pagination */
   skip?: InputMaybe<Scalars['Int']>;
@@ -2703,6 +2901,7 @@ export type Promotion = Node & {
   startsAt?: Maybe<Scalars['DateTime']>;
   translations: Array<PromotionTranslation>;
   updatedAt: Scalars['DateTime'];
+  usageLimit?: Maybe<Scalars['Int']>;
 };
 
 export type PromotionList = PaginatedList & {
@@ -2744,6 +2943,26 @@ export type ProvinceList = PaginatedList & {
   totalItems: Scalars['Int'];
 };
 
+export type PublicPaymentMethod = {
+  __typename?: 'PublicPaymentMethod';
+  code: Scalars['String'];
+  customFields?: Maybe<Scalars['JSON']>;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  translations: Array<PaymentMethodTranslation>;
+};
+
+export type PublicShippingMethod = {
+  __typename?: 'PublicShippingMethod';
+  code: Scalars['String'];
+  customFields?: Maybe<Scalars['JSON']>;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  translations: Array<ShippingMethodTranslation>;
+};
+
 export type Query = {
   __typename?: 'Query';
   /** The active Channel */
@@ -2756,6 +2975,10 @@ export type Query = {
    * query will once again return `null`.
    */
   activeOrder?: Maybe<Order>;
+  /** Get active payment methods */
+  activePaymentMethods: Array<Maybe<PublicPaymentMethod>>;
+  /** Get active shipping methods */
+  activeShippingMethods: Array<Maybe<PublicShippingMethod>>;
   /** An array of supported Countries */
   availableCountries: Array<Country>;
   /** Returns a Collection either by its id or slug. If neither 'id' nor 'slug' is specified, an error will result. */
@@ -2771,6 +2994,7 @@ export type Query = {
   /** A list of Facets available to the shop */
   facets: FacetList;
   generateBraintreeClientToken?: Maybe<Scalars['String']>;
+  getPage?: Maybe<Page>;
   /** Returns information about the current authenticated User */
   me?: Maybe<CurrentUser>;
   /** Returns the possible next states that the activeOrder can transition to */
@@ -2812,6 +3036,10 @@ export type QueryFacetsArgs = {
   options?: InputMaybe<FacetListOptions>;
 };
 
+export type QueryGetPageArgs = {
+  slug: Scalars['String'];
+};
+
 export type QueryOrderArgs = {
   id: Scalars['ID'];
 };
@@ -2841,6 +3069,7 @@ export type Refund = Node & {
   __typename?: 'Refund';
   adjustment: Scalars['Money'];
   createdAt: Scalars['DateTime'];
+  customFields?: Maybe<Scalars['JSON']>;
   id: Scalars['ID'];
   items: Scalars['Money'];
   lines: Array<RefundLine>;
@@ -2904,6 +3133,8 @@ export type RegisterCustomerInput = {
 
 export type RelationCustomFieldConfig = CustomField & {
   __typename?: 'RelationCustomFieldConfig';
+  deprecated?: Maybe<Scalars['Boolean']>;
+  deprecationReason?: Maybe<Scalars['String']>;
   description?: Maybe<Array<LocalizedString>>;
   entity: Scalars['String'];
   internal?: Maybe<Scalars['Boolean']>;
@@ -2912,12 +3143,16 @@ export type RelationCustomFieldConfig = CustomField & {
   name: Scalars['String'];
   nullable?: Maybe<Scalars['Boolean']>;
   readonly?: Maybe<Scalars['Boolean']>;
+  requiresPermission?: Maybe<Array<Permission>>;
   scalarFields: Array<Scalars['String']>;
   type: Scalars['String'];
   ui?: Maybe<Scalars['JSON']>;
 };
 
-export type RemoveOrderItemsResult = Order | OrderModificationError;
+export type RemoveOrderItemsResult =
+  | Order
+  | OrderInterceptorError
+  | OrderModificationError;
 
 export type RequestPasswordResetResult = NativeAuthStrategyError | Success;
 
@@ -2970,22 +3205,10 @@ export type SearchReindexResponse = {
 
 export type SearchResponse = {
   __typename?: 'SearchResponse';
-  cacheIdentifier?: Maybe<SearchResponseCacheIdentifier>;
   collections: Array<CollectionResult>;
   facetValues: Array<FacetValueResult>;
   items: Array<SearchResult>;
   totalItems: Scalars['Int'];
-};
-
-/**
- * This type is here to allow us to easily purge the Stellate cache
- * of any search results where the collectionSlug is used. We cannot rely on
- * simply purging the SearchResult type, because in the case of an empty 'items'
- * array, Stellate cannot know that that particular query now needs to be purged.
- */
-export type SearchResponseCacheIdentifier = {
-  __typename?: 'SearchResponseCacheIdentifier';
-  collectionSlug?: Maybe<Scalars['String']>;
 };
 
 export type SearchResult = {
@@ -3049,6 +3272,7 @@ export type SetOrderShippingMethodResult =
 
 export type ShippingLine = {
   __typename?: 'ShippingLine';
+  customFields?: Maybe<Scalars['JSON']>;
   discountedPrice: Scalars['Money'];
   discountedPriceWithTax: Scalars['Money'];
   discounts: Array<Discount>;
@@ -3116,6 +3340,8 @@ export enum SortOrder {
 
 export type StringCustomFieldConfig = CustomField & {
   __typename?: 'StringCustomFieldConfig';
+  deprecated?: Maybe<Scalars['Boolean']>;
+  deprecationReason?: Maybe<Scalars['String']>;
   description?: Maybe<Array<LocalizedString>>;
   internal?: Maybe<Scalars['Boolean']>;
   label?: Maybe<Array<LocalizedString>>;
@@ -3126,6 +3352,7 @@ export type StringCustomFieldConfig = CustomField & {
   options?: Maybe<Array<StringFieldOption>>;
   pattern?: Maybe<Scalars['String']>;
   readonly?: Maybe<Scalars['Boolean']>;
+  requiresPermission?: Maybe<Array<Permission>>;
   type: Scalars['String'];
   ui?: Maybe<Scalars['JSON']>;
 };
@@ -3152,6 +3379,53 @@ export type StringOperators = {
   notIn?: InputMaybe<Array<Scalars['String']>>;
   regex?: InputMaybe<Scalars['String']>;
 };
+
+export type StringStructFieldConfig = StructField & {
+  __typename?: 'StringStructFieldConfig';
+  description?: Maybe<Array<LocalizedString>>;
+  label?: Maybe<Array<LocalizedString>>;
+  length?: Maybe<Scalars['Int']>;
+  list: Scalars['Boolean'];
+  name: Scalars['String'];
+  options?: Maybe<Array<StringFieldOption>>;
+  pattern?: Maybe<Scalars['String']>;
+  type: Scalars['String'];
+  ui?: Maybe<Scalars['JSON']>;
+};
+
+export type StructCustomFieldConfig = CustomField & {
+  __typename?: 'StructCustomFieldConfig';
+  deprecated?: Maybe<Scalars['Boolean']>;
+  deprecationReason?: Maybe<Scalars['String']>;
+  description?: Maybe<Array<LocalizedString>>;
+  fields: Array<StructFieldConfig>;
+  internal?: Maybe<Scalars['Boolean']>;
+  label?: Maybe<Array<LocalizedString>>;
+  list: Scalars['Boolean'];
+  name: Scalars['String'];
+  nullable?: Maybe<Scalars['Boolean']>;
+  readonly?: Maybe<Scalars['Boolean']>;
+  requiresPermission?: Maybe<Array<Permission>>;
+  type: Scalars['String'];
+  ui?: Maybe<Scalars['JSON']>;
+};
+
+export type StructField = {
+  description?: Maybe<Array<LocalizedString>>;
+  label?: Maybe<Array<LocalizedString>>;
+  list?: Maybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  type: Scalars['String'];
+  ui?: Maybe<Scalars['JSON']>;
+};
+
+export type StructFieldConfig =
+  | BooleanStructFieldConfig
+  | DateTimeStructFieldConfig
+  | FloatStructFieldConfig
+  | IntStructFieldConfig
+  | StringStructFieldConfig
+  | TextStructFieldConfig;
 
 /** Indicates that an operation succeeded, where we do not want to return any more specific information. */
 export type Success = {
@@ -3224,6 +3498,8 @@ export type TaxRateList = PaginatedList & {
 
 export type TextCustomFieldConfig = CustomField & {
   __typename?: 'TextCustomFieldConfig';
+  deprecated?: Maybe<Scalars['Boolean']>;
+  deprecationReason?: Maybe<Scalars['String']>;
   description?: Maybe<Array<LocalizedString>>;
   internal?: Maybe<Scalars['Boolean']>;
   label?: Maybe<Array<LocalizedString>>;
@@ -3231,12 +3507,30 @@ export type TextCustomFieldConfig = CustomField & {
   name: Scalars['String'];
   nullable?: Maybe<Scalars['Boolean']>;
   readonly?: Maybe<Scalars['Boolean']>;
+  requiresPermission?: Maybe<Array<Permission>>;
+  type: Scalars['String'];
+  ui?: Maybe<Scalars['JSON']>;
+};
+
+export type TextStructFieldConfig = StructField & {
+  __typename?: 'TextStructFieldConfig';
+  description?: Maybe<Array<LocalizedString>>;
+  label?: Maybe<Array<LocalizedString>>;
+  list: Scalars['Boolean'];
+  name: Scalars['String'];
   type: Scalars['String'];
   ui?: Maybe<Scalars['JSON']>;
 };
 
 export type TransitionOrderToStateResult = Order | OrderStateTransitionError;
 
+/**
+ * Input used to update an Address.
+ *
+ * The countryCode must correspond to a `code` property of a Country that has been defined in the
+ * Vendure server. The `code` property is typically a 2-character ISO code such as "GB", "US", "DE" etc.
+ * If an invalid code is passed, the mutation will fail.
+ */
 export type UpdateAddressInput = {
   city?: InputMaybe<Scalars['String']>;
   company?: InputMaybe<Scalars['String']>;
@@ -3273,14 +3567,33 @@ export type UpdateCustomerPasswordResult =
   | PasswordValidationError
   | Success;
 
+/**
+ * Returned when multiple items are added to an Order.
+ * The errorResults array contains the errors that occurred for each item, if any.
+ */
+export type UpdateMultipleOrderItemsResult = {
+  __typename?: 'UpdateMultipleOrderItemsResult';
+  errorResults: Array<UpdateOrderItemErrorResult>;
+  order: Order;
+};
+
 export type UpdateOrderInput = {
   customFields?: InputMaybe<Scalars['JSON']>;
 };
+
+/** Union type of all possible errors that can occur when adding or removing items from an Order. */
+export type UpdateOrderItemErrorResult =
+  | InsufficientStockError
+  | NegativeQuantityError
+  | OrderInterceptorError
+  | OrderLimitError
+  | OrderModificationError;
 
 export type UpdateOrderItemsResult =
   | InsufficientStockError
   | NegativeQuantityError
   | Order
+  | OrderInterceptorError
   | OrderLimitError
   | OrderModificationError;
 
@@ -3543,6 +3856,54 @@ export type UpdateCustomerPasswordMutation = {
         message: string;
       }
     | { __typename: 'Success'; success: boolean };
+};
+
+export type RequestPasswordResetMutationVariables = Exact<{
+  emailAddress: Scalars['String'];
+}>;
+
+export type RequestPasswordResetMutation = {
+  __typename?: 'Mutation';
+  requestPasswordReset?:
+    | {
+        __typename: 'NativeAuthStrategyError';
+        errorCode: ErrorCode;
+        message: string;
+      }
+    | { __typename: 'Success'; success: boolean }
+    | null;
+};
+
+export type ResetPasswordMutationVariables = Exact<{
+  token: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+export type ResetPasswordMutation = {
+  __typename?: 'Mutation';
+  resetPassword:
+    | { __typename: 'CurrentUser'; id: string; identifier: string }
+    | {
+        __typename: 'NativeAuthStrategyError';
+        errorCode: ErrorCode;
+        message: string;
+      }
+    | { __typename: 'NotVerifiedError'; errorCode: ErrorCode; message: string }
+    | {
+        __typename: 'PasswordResetTokenExpiredError';
+        errorCode: ErrorCode;
+        message: string;
+      }
+    | {
+        __typename: 'PasswordResetTokenInvalidError';
+        errorCode: ErrorCode;
+        message: string;
+      }
+    | {
+        __typename: 'PasswordValidationError';
+        errorCode: ErrorCode;
+        message: string;
+      };
 };
 
 export type ActiveChannelQueryVariables = Exact<{ [key: string]: never }>;
@@ -4402,6 +4763,11 @@ export type AddItemToOrderMutation = {
           metadata?: any | null;
         }> | null;
       }
+    | {
+        __typename?: 'OrderInterceptorError';
+        errorCode: ErrorCode;
+        message: string;
+      }
     | { __typename?: 'OrderLimitError'; errorCode: ErrorCode; message: string }
     | {
         __typename?: 'OrderModificationError';
@@ -4491,6 +4857,11 @@ export type RemoveOrderLineMutation = {
           amount: number;
           metadata?: any | null;
         }> | null;
+      }
+    | {
+        __typename?: 'OrderInterceptorError';
+        errorCode: ErrorCode;
+        message: string;
       }
     | {
         __typename?: 'OrderModificationError';
@@ -4591,6 +4962,11 @@ export type AdjustOrderLineMutation = {
           amount: number;
           metadata?: any | null;
         }> | null;
+      }
+    | {
+        __typename?: 'OrderInterceptorError';
+        errorCode: ErrorCode;
+        message: string;
       }
     | { __typename?: 'OrderLimitError'; errorCode: ErrorCode; message: string }
     | {
@@ -5273,6 +5649,35 @@ export const UpdateCustomerPasswordDocument = gql`
     }
   }
 `;
+export const RequestPasswordResetDocument = gql`
+  mutation requestPasswordReset($emailAddress: String!) {
+    requestPasswordReset(emailAddress: $emailAddress) {
+      __typename
+      ... on Success {
+        success
+      }
+      ... on ErrorResult {
+        errorCode
+        message
+      }
+    }
+  }
+`;
+export const ResetPasswordDocument = gql`
+  mutation resetPassword($token: String!, $password: String!) {
+    resetPassword(token: $token, password: $password) {
+      __typename
+      ... on CurrentUser {
+        id
+        identifier
+      }
+      ... on ErrorResult {
+        errorCode
+        message
+      }
+    }
+  }
+`;
 export const ActiveChannelDocument = gql`
   query activeChannel {
     activeChannel {
@@ -5775,6 +6180,29 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
         variables,
         options,
       ) as Promise<UpdateCustomerPasswordMutation>;
+    },
+    requestPasswordReset(
+      variables: RequestPasswordResetMutationVariables,
+      options?: C,
+    ): Promise<RequestPasswordResetMutation> {
+      return requester<
+        RequestPasswordResetMutation,
+        RequestPasswordResetMutationVariables
+      >(
+        RequestPasswordResetDocument,
+        variables,
+        options,
+      ) as Promise<RequestPasswordResetMutation>;
+    },
+    resetPassword(
+      variables: ResetPasswordMutationVariables,
+      options?: C,
+    ): Promise<ResetPasswordMutation> {
+      return requester<ResetPasswordMutation, ResetPasswordMutationVariables>(
+        ResetPasswordDocument,
+        variables,
+        options,
+      ) as Promise<ResetPasswordMutation>;
     },
     activeChannel(
       variables?: ActiveChannelQueryVariables,

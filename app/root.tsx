@@ -31,6 +31,7 @@ import { useActiveOrder } from '~/utils/use-active-order';
 import { useChangeLanguage } from 'remix-i18next';
 import { useTranslation } from 'react-i18next';
 import { getI18NextServer } from '~/i18next.server';
+import { LoadingBar } from '~/components/LoadingBar';
 
 export const meta: MetaFunction = () => {
   return [{ title: APP_META_TITLE }, { description: APP_META_DESCRIPTION }];
@@ -181,6 +182,7 @@ function DefaultSparseErrorPage({
         <Links />
       </head>
       <body>
+        <LoadingBar />
         <main className="flex flex-col items-center px-4 py-16 sm:py-32 text-center">
           <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
             {tagline}

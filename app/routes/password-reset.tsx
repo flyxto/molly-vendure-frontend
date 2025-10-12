@@ -1,13 +1,6 @@
-// REPLACE YOUR password-reset.tsx WITH THIS - TRY EACH URL UNTIL ONE WORKS:
-
-import {
-  ActionFunctionArgs,
-  json,
-  LoaderFunctionArgs,
-  redirect,
-} from '@remix-run/server-runtime';
+import { ActionFunctionArgs, json, redirect } from '@remix-run/server-runtime';
 import { Form, useActionData, useSearchParams, Link } from '@remix-run/react';
-import { getCollections } from '~/providers/collections/collections';
+import { resetPassword } from '~/providers/account/account';
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -31,54 +24,54 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   try {
-    const apiUrl =
-      process.env.VENDURE_API_URL || 'http://localhost:3000/shop-api';
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        query: `
-            mutation resetPassword($token: String!, $password: String!) {
-              resetPassword(token: $token, password: $password) {
-                __typename
-                ... on CurrentUser {
-                  id
-                  identifier
-                }
-                ... on ErrorResult {
-                  errorCode
-                  message
-                }
-              }
-            }
-          `,
-        variables: { token, password },
-      }),
-    });
+    // Use the provider function instead of direct fetch
+    const result = await resetPassword(token, password, { request });
 
-    if (response.ok) {
-      const result = await response.json();
-
-      if (
-        result.data?.resetPassword?.id ||
-        result.data?.resetPassword?.__typename === 'CurrentUser'
-      ) {
-        return redirect('/sign-in?message=password-reset-success');
-      } else if (result.data?.resetPassword?.message) {
-        return json(
-          { error: result.data.resetPassword.message },
-          { status: 400 },
-        );
-      }
+    if (result.__typename === 'CurrentUser') {
+      // Password reset successful and user is now logged in
+      return redirect('/account?message=password-reset-success');
+    } else if (result.__typename === 'PasswordResetTokenExpiredError') {
+      return json(
+        { error: 'Password reset link has expired. Please request a new one.' },
+        { status: 400 },
+      );
+    } else if (result.__typename === 'PasswordResetTokenInvalidError') {
+      return json(
+        { error: 'Invalid password reset link. Please request a new one.' },
+        { status: 400 },
+      );
+    } else if (result.__typename === 'PasswordValidationError') {
+      return json(
+        {
+          error:
+            result.validationErrorMessage ||
+            'Password does not meet requirements',
+        },
+        { status: 400 },
+      );
+    } else if (result.__typename === 'NotVerifiedError') {
+      return json(
+        { error: 'Please verify your email address first.' },
+        { status: 400 },
+      );
+    } else if (result.__typename === 'NativeAuthStrategyError') {
+      return json(
+        { error: result.message || 'Authentication error occurred.' },
+        { status: 400 },
+      );
+    } else {
+      return json(
+        { error: 'Failed to reset password. Please try again.' },
+        { status: 400 },
+      );
     }
   } catch (error) {
-    console.log(error);
+    console.error('Password reset error:', error);
+    return json(
+      { error: 'Unable to connect to server. Please try again.' },
+      { status: 500 },
+    );
   }
-
-  return json(
-    { error: 'Could not connect to server. Contact support.' },
-    { status: 500 },
-  );
 }
 
 export default function ResetPasswordPage() {

@@ -1,5 +1,6 @@
 import { ActionFunctionArgs, json } from '@remix-run/server-runtime';
 import { Form, useActionData, Link } from '@remix-run/react';
+import { requestPasswordReset } from '~/providers/account/account';
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -13,52 +14,20 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   try {
-    // Direct GraphQL call without using the account provider
-    const apiUrl =
-      process.env.VENDURE_API_URL || 'http://localhost:3000/shop-api';
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...Object.fromEntries(request.headers.entries()),
-      },
-      body: JSON.stringify({
-        query: `
-          mutation requestPasswordReset($emailAddress: String!) {
-            requestPasswordReset(emailAddress: $emailAddress) {
-              __typename
-              ... on Success {
-                success
-              }
-              ... on ErrorResult {
-                errorCode
-                message
-              }
-            }
-          }
-        `,
-        variables: { emailAddress: email.trim() },
-      }),
-    });
+    const result = await requestPasswordReset(email.trim(), { request });
 
-    const result = await response.json();
-
-    if (
-      result.data?.requestPasswordReset?.success ||
-      result.data?.requestPasswordReset?.__typename === 'Success'
-    ) {
+    if (result.__typename === 'Success' || result.success) {
       return json({ success: true });
     } else {
       return json(
         {
-          error:
-            result.data?.requestPasswordReset?.message ||
-            'Failed to send reset email',
+          error: result.message || 'Failed to send reset email',
         },
         { status: 400 },
       );
     }
   } catch (error) {
+    console.error('Password reset error:', error);
     return json({ error: 'Unable to connect to server' }, { status: 500 });
   }
 }

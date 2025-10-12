@@ -106,7 +106,7 @@
     "checkout": "Checkout"
   },
   "checkout": {
-    "dummyPayment": "This is a dummy payment for demonstration purposes only",
+    "dummyPayment": "This is a ",
     "paymentErrorMessage": "There was an error processing the payment",
     "payWith": "Pay with",
     "deliveryMethod": "Delivery method",
