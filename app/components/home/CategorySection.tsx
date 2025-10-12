@@ -8,7 +8,7 @@ import { ThreeDCardDemo } from './ThreeDCardDemo';
 
 export default function CategorySection() {
   // Define the category types
-  type CategoryType = 'mens' | 'womens' | 'kids' | 'homeNlifestyle';
+  type CategoryType = 'mens' | 'womens' | 'homeNlifestyle';
 
   // Initialize state for selected category and images
   const [selectedCategory, setSelectedCategory] =
@@ -33,11 +33,11 @@ export default function CategorySection() {
       '/images/home-page/womens-img-1.webp',
       '/images/home-page/womens-img-3.webp',
     ],
-    kids: [
-      '/images/home-page/new_arrivals-img_3.png',
-      '/images/home-page/new_arrivals-img_1.png',
-      '/images/home-page/new_arrivals-img_2.png',
-    ],
+    // kids: [
+    //   '/images/home-page/new_arrivals-img_3.png',
+    //   '/images/home-page/new_arrivals-img_1.png',
+    //   '/images/home-page/new_arrivals-img_2.png',
+    // ],
     homeNlifestyle: [
       '/images/home-page/new_arrivals-img_6.png',
       '/images/home-page/new_arrivals-img_4.png',
@@ -62,12 +62,12 @@ export default function CategorySection() {
       bottomRight:
         "Each piece in our women's line balances sophistication with practicality, offering versatile options for every occasion.",
     },
-    kids: {
-      topLeft:
-        "Our kids' collection brings playful designs, comfortable fabrics, and durable construction together for active little ones who love to explore.",
-      bottomRight:
-        'Thoughtfully crafted with growing children in mind, featuring easy-care materials and adjustable details that move with them.',
-    },
+    // kids: {
+    //   topLeft:
+    //     "Our kids' collection brings playful designs, comfortable fabrics, and durable construction together for active little ones who love to explore.",
+    //   bottomRight:
+    //     'Thoughtfully crafted with growing children in mind, featuring easy-care materials and adjustable details that move with them.',
+    // },
     homeNlifestyle: {
       topLeft:
         'Transform your living spaces with our curated home & lifestyle collection featuring unique designs that blend form and function.',
@@ -90,12 +90,12 @@ export default function CategorySection() {
       link: '/categories/womens',
       images: categoriesImages.womens[0],
     },
-    {
-      name: 'kids',
-      displayName: 'Kids',
-      link: '/categories/kids',
-      images: categoriesImages.kids[0],
-    },
+    // {
+    //   name: 'kids',
+    //   displayName: 'Kids',
+    //   link: '/categories/kids',
+    //   images: categoriesImages.kids[0],
+    // },
     {
       name: 'homeNlifestyle',
       displayName: 'home & lifestyle',

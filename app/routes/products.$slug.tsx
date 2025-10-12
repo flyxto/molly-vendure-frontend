@@ -141,7 +141,8 @@ export default function ProductSlug() {
   const addItemToOrderError = getAddItemToOrderError(error);
   const { t } = useTranslation();
 
-  console.log('Random related products:', randomRelatedProducts);
+  // console.log('Random related products:', randomRelatedProducts);
+  console.log('description :', product.description);
 
   if (!product) {
     return <div>{t('product.notFound')}</div>;
@@ -172,10 +173,10 @@ export default function ProductSlug() {
   );
 
   // Slug name
-  console.log(
-    'product:',
-    product.collections[1]?.slug || product.collections[0]?.slug,
-  );
+  // console.log(
+  //   'product:',
+  //   product.collections[1]?.slug || product.collections[0]?.slug,
+  // );
 
   return (
     <div>
@@ -296,31 +297,7 @@ export default function ProductSlug() {
                     ></input>
                   )}
 
-                  {/* Description */}
-                  <div className="">
-                    <h3 className="sr-only">{t('product.description')}</h3>
-
-                    <div
-                      className="text-base text-gray-700"
-                      dangerouslySetInnerHTML={{
-                        __html: product.description,
-                      }}
-                    />
-                  </div>
-
-                  {/* shipping content */}
-                  {/* <section className="mt-12 pt-12 border-t text-xs">
-                  <h3 className="text-gray-600 font-bold mb-2">
-                    {t('product.shippingAndReturns')}
-                  </h3>
-                  <div className="text-gray-500 space-y-1">
-                    <p>{t('product.shippingInfo')}</p>
-                    <p>{t('product.shippingCostsInfo')}</p>
-                    <p>{t('product.returnsInfo')}</p>
-                  </div>
-                </section> */}
-                  {/* Add to cart button */}
-                  <div className="flex sm:flex-col1 align-baseline mt-4">
+                  <div className="flex sm:flex-col1 align-baseline mt-8">
                     <button
                       type="submit"
                       className={`w-full flex-1 py-4 ${
@@ -330,7 +307,7 @@ export default function ProductSlug() {
                           ? 'bg-[#AF803C] text-white shadow-xs hover:bg-[#AF803C]/80'
                           : 'bg-green-600 active:bg-green-700 hover:bg-green-700'
                       }
-                                     transition-colors border border-transparent rounded-md py-3 px-8 flex items-center
+                                    transition-colors border border-transparent rounded-md py-3 px-8 flex items-center
                                       justify-center text-base font-medium text-white focus:outline-none
                                       focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-primary-500 sm:w-full`}
                       disabled={activeOrderFetcher.state !== 'idle'}
@@ -361,6 +338,20 @@ export default function ProductSlug() {
                     </span>
                   </button> */}
                   </div>
+
+                  {/* shipping content */}
+                  {/* <section className="mt-12 pt-12 border-t text-xs">
+                  <h3 className="text-gray-600 font-bold mb-2">
+                    {t('product.shippingAndReturns')}
+                  </h3>
+                  <div className="text-gray-500 space-y-1">
+                    <p>{t('product.shippingInfo')}</p>
+                    <p>{t('product.shippingCostsInfo')}</p>
+                    <p>{t('product.returnsInfo')}</p>
+                  </div>
+                </section> */}
+                  {/* Add to cart button */}
+
                   {addItemToOrderError && (
                     <div className="mt-4">
                       <Alert message={addItemToOrderError} />
@@ -373,7 +364,19 @@ export default function ProductSlug() {
         </div>
         <div className="max-w-7xl w-full mx-auto px-4">
           {/* <ProductRatings /> */}
-          <ProductDetails />
+          {/* Description */}
+          <h2 className="text-xl font-semibold">Product Details</h2>
+          <div className="mt-4">
+            <h3 className="sr-only">{t('product.description')}</h3>
+
+            <div
+              className="text-base max-w-3xl text-gray-700 [&>p]:mb-4 [&>p:last-child]:mb-0"
+              dangerouslySetInnerHTML={{
+                __html: product.description,
+              }}
+            />
+          </div>
+          {/* <ProductDetails /> */}
         </div>
         {/* <ProductViewSeperator /> */}
         {/* <ProductVideoPreview /> */}
