@@ -2,13 +2,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 
 export default function StylesSection() {
-  const [imageOneHover, setImageOneHover] = useState(false);
-  const [imageTwoHover, setImageTwoHover] = useState(false);
-  const [imageThreeHover, setImageThreeHover] = useState(false);
-
   // Animation variants for staggered children
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -27,24 +22,6 @@ export default function StylesSection() {
       opacity: 1,
       y: 0,
       transition: { duration: 0.8, ease: 'easeOut' },
-    },
-  };
-
-  const imageHoverVariants = {
-    initial: { scale: 1 },
-    hover: {
-      scale: 1.03,
-      boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.1)',
-      transition: { duration: 0.3, ease: 'easeInOut' },
-    },
-  };
-
-  const lineDrawVariants = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: {
-      pathLength: 1,
-      opacity: 1,
-      transition: { duration: 1.5, ease: 'easeInOut' },
     },
   };
 
@@ -68,13 +45,7 @@ export default function StylesSection() {
           >
             ENCHANTING STYLES
           </motion.h2>
-          <motion.hr
-            className="flex-grow border-t border-[#AF803C] opacity-0"
-            // initial={{ opacity: 0, x: 100 }}
-            // whileInView={{ opacity: 1, x: 0 }}
-            // transition={{ duration: 0.8, ease: "easeOut" }}
-            // viewport={{ once: true, amount: 0.2 }}
-          />
+          <motion.hr className="flex-grow border-t border-[#AF803C] opacity-0" />
         </div>
       </motion.div>
       <div className="h-14 flex mx-auto max-w-7xl justify-center items-center container my-4">
@@ -103,13 +74,7 @@ export default function StylesSection() {
           transition={{ duration: 1, delay: 1.2 }}
           viewport={{ once: true, amount: 0.8 }}
         >
-          <motion.div
-            className="h-px bg-black w-full opacity-0"
-            // initial={{ width: 0 }}
-            // whileInView={{ width: "100%" }}
-            // transition={{ duration: 1, delay: 1.4 }}
-            // viewport={{ once: true, amount: 0.8 }}
-          />
+          <motion.div className="h-px bg-black w-full opacity-0" />
           <motion.p
             className="max-w-xs uppercase text-justify leading-tight text-xs lg:text-sm"
             initial={{ opacity: 0 }}
@@ -145,17 +110,9 @@ export default function StylesSection() {
             Shop the
             <br /> Latest Trends
           </motion.h1>
-          <motion.div
-            className="w-full max-w-[31.25rem] aspect-[5/7] overflow-hidden"
-            onMouseEnter={() => setImageOneHover(true)}
-            onMouseLeave={() => setImageOneHover(false)}
-          >
-            <motion.img
-              src={
-                imageOneHover
-                  ? '/images/home-page/styles-img-1-2.webp'
-                  : '/images/home-page/styles-img-1-1.webp'
-              }
+          <motion.div className="w-full max-w-[31.25rem] aspect-[5/7] overflow-hidden border rounded-md">
+            <img
+              src="/images/home-page/styles-img-1-1.webp"
               alt="img1"
               width={560}
               height={650}
@@ -179,17 +136,9 @@ export default function StylesSection() {
             Find Your
             <br /> Perfect Look
           </motion.h1>
-          <motion.div
-            className="w-full max-w-[27.813rem] aspect-[27.813/36.25] overflow-hidden"
-            onMouseEnter={() => setImageTwoHover(true)}
-            onMouseLeave={() => setImageTwoHover(false)}
-          >
-            <motion.img
-              src={
-                imageTwoHover
-                  ? '/images/home-page/styles-img-2-2.webp'
-                  : '/images/home-page/styles-img-2-1.webp'
-              }
+          <motion.div className="w-full max-w-[27.813rem] aspect-[27.813/36.25] overflow-hidden border rounded-md">
+            <img
+              src="/images/home-page/styles-img-2-1.webp"
               alt="img2"
               width={500}
               height={500}
@@ -213,17 +162,9 @@ export default function StylesSection() {
             Fresh Fits
             <br /> Await
           </motion.h1>
-          <motion.div
-            className="w-full max-w-[19.5rem] aspect-[39/53] overflow-hidden"
-            onMouseEnter={() => setImageThreeHover(true)}
-            onMouseLeave={() => setImageThreeHover(false)}
-          >
+          <motion.div className="w-full max-w-[19.5rem] aspect-[39/53] overflow-hidden border rounded-md">
             <img
-              src={
-                imageThreeHover
-                  ? '/images/home-page/styles-img-3-1.webp'
-                  : '/images/home-page/styles-img-3-2.webp'
-              }
+              src="/images/home-page/styles-img-3-1.webp"
               alt="img3"
               width={340}
               height={400}

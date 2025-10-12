@@ -24,14 +24,14 @@ export default function CategorySection() {
   // Define category images mapping
   const categoriesImages: Record<CategoryType, string[]> = {
     mens: [
-      '/images/home-page/mens-img-2.webp',
-      '/images/home-page/mens-img-1.webp',
-      '/images/home-page/mens-img-3.webp',
+      '/images/signin/signin-img-4.webp',
+      '/images/signin//signin-img-5.webp',
+      '/images/signin//signin-img-6.webp',
     ],
     womens: [
-      '/images/home-page/womens-img-2.webp',
-      '/images/home-page/womens-img-1.webp',
-      '/images/home-page/womens-img-3.webp',
+      '/images/signin//signin-img-1.webp',
+      '/images/signin//signin-img-2.webp',
+      '/images/signin//signin-img-3.webp',
     ],
     // kids: [
     //   '/images/home-page/new_arrivals-img_3.png',
@@ -39,9 +39,9 @@ export default function CategorySection() {
     //   '/images/home-page/new_arrivals-img_2.png',
     // ],
     homeNlifestyle: [
-      '/images/home-page/new_arrivals-img_6.png',
-      '/images/home-page/new_arrivals-img_4.png',
-      '/images/home-page/new_arrivals-img_5.png',
+      '/images/home-page/home-1.webp',
+      '/images/home-page/home-3.webp',
+      '/images/home-page/home-2.webp',
     ],
   };
 
