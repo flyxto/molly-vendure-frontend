@@ -51,7 +51,7 @@ export default function ProductImageGallery({ assets }: any) {
       {/* Desktop Layout - Side by Side */}
       <div className="hidden md:flex md:space-x-4 md:items-center">
         {/* Main Image */}
-        <div className="relative bg-[#efefef] rounded overflow-hidden aspect-[2/3] w-full border group">
+        <div className="relative bg-[#efefef] rounded overflow-hidden w-full border group">
           <img
             src={getOptimizedImageUrl(selectedImage || assets[0].preview, 800)}
             srcSet={`
@@ -66,7 +66,7 @@ export default function ProductImageGallery({ assets }: any) {
             `}
             alt="Main View"
             sizes="(max-width: 768px) 100vw, (max-width: 600px) 50vw, 800px"
-            className="object-cover object-top w-full h-full"
+            className="object-contain object-center w-full h-full"
             loading="eager"
           />
         </div>
@@ -164,7 +164,7 @@ export default function ProductImageGallery({ assets }: any) {
       {/* Mobile Layout - Stacked */}
       <div className="md:hidden space-y-4">
         {/* Main Image */}
-        <div className="relative bg-[#efefef] rounded overflow-hidden aspect-[2/3] w-full border group">
+        <div className="relative bg-[#efefef] rounded overflow-hidden w-full border group">
           <img
             src={getOptimizedImageUrl(selectedImage || assets[0].preview, 800)}
             srcSet={`
@@ -179,7 +179,7 @@ export default function ProductImageGallery({ assets }: any) {
             `}
             alt="Main View"
             sizes="100vw"
-            className="object-cover object-top w-full h-full"
+            className="object-contain object-center w-full h-full"
             loading="eager"
           />
         </div>
