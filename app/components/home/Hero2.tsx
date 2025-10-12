@@ -63,7 +63,7 @@ export default function Hero2() {
           delay: 0.1,
           ease: [0.25, 0.1, 0.25, 1.0],
         }}
-        className="absolute bottom-0 -left-8 sm:-left-4 md:left-12 xl:left-40 2xl:left-80 hidden lg:block z-20 w-32 sm:w-40 md:w-48 lg:w-64"
+        className="absolute bottom-0 -left-8 sm:-left-4 md:left-12 xl:left-40 2xl:left-80 hidden lg:block z-20 w-32 sm:w-40 md:w-48 lg:w-[15rem]"
       >
         <img
           src="/images/home-page/hero-img-1.webp"
