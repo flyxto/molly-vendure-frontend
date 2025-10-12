@@ -8,6 +8,7 @@ import {
   useLoaderData,
   useOutletContext,
   MetaFunction,
+  useNavigation,
 } from '@remix-run/react';
 import { CheckIcon, HeartIcon, PhotoIcon } from '@heroicons/react/24/solid';
 import { Breadcrumbs } from '~/components/Breadcrumbs';
@@ -22,7 +23,7 @@ import { ScrollableContainer } from '~/components/products/ScrollableContainer';
 import { useTranslation } from 'react-i18next';
 import ProductImageGallery from '~/components/product-page-sections/ProductImageGallery';
 import ProductInfo from '~/components/product-page-sections/ProductInfo';
-import { ShoppingBag, ShoppingCart } from 'lucide-react';
+import { ShoppingBag, ShoppingCart, Loader2 } from 'lucide-react';
 import { Button } from '~/components/ui/button';
 import ProductViewSeperator from '~/components/product-page-sections/ProductViewSeperator';
 import ProductVideoPreview from '~/components/product-page-sections/ProductVideoPreview';
@@ -161,7 +162,67 @@ export async function loader({ params, request, context }: DataFunctionArgs) {
 
 export const shouldRevalidate: ShouldRevalidateFunction = () => true;
 
+// Loading component
+function ProductPageLoader() {
+  return (
+    <div className="flex flex-col gap-20 py-16 md:py-24">
+      <div className="flex flex-col gap-8 max-w-7xl w-full mt-5 mx-auto px-4">
+        {/* Breadcrumb skeleton */}
+        <div className="h-4 w-64 bg-gray-200 rounded animate-pulse"></div>
+
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-16">
+          {/* Left col - Image skeleton */}
+          <div className="md:col-span-3">
+            <div className="w-full aspect-square bg-gray-200 rounded-lg animate-pulse"></div>
+          </div>
+
+          {/* Right col - Product info skeleton */}
+          <div className="flex flex-col md:col-span-3 gap-6">
+            <div className="h-8 w-3/4 bg-gray-200 rounded animate-pulse"></div>
+            <div className="h-10 w-32 bg-gray-200 rounded animate-pulse"></div>
+            <div className="h-6 w-48 bg-gray-200 rounded animate-pulse"></div>
+
+            {/* Color/Size skeletons */}
+            <div className="space-y-4 mt-8">
+              <div className="h-5 w-20 bg-gray-200 rounded animate-pulse"></div>
+              <div className="flex gap-2">
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className="h-10 w-20 bg-gray-200 rounded animate-pulse"
+                  ></div>
+                ))}
+              </div>
+            </div>
+
+            {/* Button skeleton */}
+            <div className="h-12 w-full bg-gray-200 rounded-md animate-pulse mt-8"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Description skeleton */}
+      <div className="max-w-7xl w-full mx-auto px-4 space-y-4">
+        <div className="h-6 w-48 bg-gray-200 rounded animate-pulse"></div>
+        <div className="space-y-2">
+          <div className="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
+          <div className="h-4 w-5/6 bg-gray-200 rounded animate-pulse"></div>
+          <div className="h-4 w-4/6 bg-gray-200 rounded animate-pulse"></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ProductSlug() {
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
+
+  // Show loader while navigating
+  if (isLoading) {
+    return <ProductPageLoader />;
+  }
+
   const { product, error, result, randomRelatedProducts } =
     useLoaderData<typeof loader>();
   const { activeOrderFetcher } = useOutletContext<{
@@ -171,7 +232,6 @@ export default function ProductSlug() {
   const addItemToOrderError = getAddItemToOrderError(error);
   const { t } = useTranslation();
 
-  // console.log('Random related products:', randomRelatedProducts);
   console.log('description :', product.description);
 
   if (!product) {
@@ -229,12 +289,6 @@ export default function ProductSlug() {
       .filter(Boolean);
   };
 
-  // Slug name
-  // console.log(
-  //   'product:',
-  //   product.collections[1]?.slug || product.collections[0]?.slug,
-  // );
-
   return (
     <div>
       <div className="flex flex-col gap-20 py-16 md:py-24">
@@ -257,29 +311,6 @@ export default function ProductSlug() {
                   {product.name}
                 </h1>
 
-                {/* <div className="hidden sm:flex gap-4">
-                  <div className="flex items-center">
-                    <div className="flex items-center">
-                      {[0, 1, 2, 3, 4].map((rating) => (
-                        <svg
-                          key={rating}
-                          className="h-5 w-5 text-yellow-400"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 15.585l-6.557 3.453 1.25-7.29L.196 7.318l7.306-1.063L10 0l2.498 6.255 7.306 1.063-4.497 4.43 1.25 7.29z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      ))}
-                    </div>
-                    <p className="ml-2 text-sm text-gray-500">
-                      (4.5 stars • 56 reviews)
-                    </p>
-                  </div>
-                </div> */}
                 <div className="flex md:hidden gap-2 items-center">
                   <p className="text-gray-500">4.5</p>
                   <svg
@@ -509,10 +540,14 @@ export default function ProductSlug() {
                         (sizes.length > 0 && !selectedSize)
                       }
                     >
-                      {qtyInCart ? (
+                      {activeOrderFetcher.state !== 'idle' ? (
                         <span className="flex items-center">
-                          <CheckIcon className="w-5 h-5 mr-1" /> {qtyInCart}{' '}
-                          {t('product.inCart')}
+                          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                          Adding...
+                        </span>
+                      ) : qtyInCart ? (
+                        <span className="flex items-center">
+                          ( {qtyInCart} ) {t('Add More+')}
                         </span>
                       ) : (
                         <span className="flex items-center">
@@ -534,7 +569,6 @@ export default function ProductSlug() {
           </div>
         </div>
         <div className="max-w-7xl w-full mx-auto px-4">
-          {/* <ProductRatings /> */}
           {/* Description */}
           <h2 className="text-xl font-semibold">Product Details</h2>
           <div className="mt-4">
@@ -547,16 +581,9 @@ export default function ProductSlug() {
               }}
             />
           </div>
-          {/* <ProductDetails /> */}
         </div>
-        {/* <ProductViewSeperator /> */}
-        {/* <ProductVideoPreview /> */}
-        {/* <SizeChart /> */}
         <RelatedProducts randomRelatedProducts={randomRelatedProducts} />
       </div>
-      {/* <div className="mt-24">
-        <TopReviews></TopReviews>
-      </div> */}
     </div>
   );
 }

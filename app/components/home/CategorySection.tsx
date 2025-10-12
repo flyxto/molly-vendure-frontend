@@ -81,13 +81,13 @@ export default function CategorySection() {
     {
       name: 'mens',
       displayName: 'Men',
-      link: '/categories/mens',
+      link: '/collections/men',
       images: categoriesImages.mens[0],
     },
     {
       name: 'womens',
       displayName: 'Women',
-      link: '/categories/womens',
+      link: '/collections/women',
       images: categoriesImages.womens[0],
     },
     // {
@@ -99,7 +99,7 @@ export default function CategorySection() {
     {
       name: 'homeNlifestyle',
       displayName: 'home & lifestyle',
-      link: '/categories/homenlifestyle',
+      link: '/collections/home-lifestyle',
       images: categoriesImages.homeNlifestyle[0],
     },
   ];
