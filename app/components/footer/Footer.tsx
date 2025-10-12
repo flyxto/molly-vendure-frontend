@@ -81,7 +81,7 @@ export default function Footer({
             <div className="w-[80%] border-b border-b-white flex justify-end items-center relative">
               <div className="relative">
                 <img
-                  src="/images/nav-and-footer/footer-payment_methods.png"
+                  src="/images/nav-and-footer/payment-types.webp"
                   alt="Payment methods accepted"
                   width={250}
                   height={100}
@@ -261,7 +261,8 @@ export default function Footer({
         {/* Payment methods for mobile */}
         <div className="md:hidden flex justify-center my-4">
           <img
-            src="/images/nav-and-footer/footer-payment_methods.png"
+            src="/images/nav-and-footer/payment-types.webp
+            "
             alt="Payment methods accepted"
             width={200}
             height={80}
