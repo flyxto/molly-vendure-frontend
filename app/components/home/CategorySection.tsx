@@ -133,7 +133,10 @@ export default function CategorySection() {
   };
 
   return (
-    <div className="max-w-7xl w-full mx-auto lg:px-4 flex flex-col gap-10 relative pb-20 lg:pb-80">
+    <div
+      className="max-w-7xl w-full mx-auto lg:px-4 flex flex-col gap-10 relative pb-20 lg:pb-80"
+      id="category-section"
+    >
       <div className="pt-12 h-full w-16 absolute -z-10 hidden lg:block">
         <div className="h-full w-px bg-black flex mx-auto"></div>
       </div>
