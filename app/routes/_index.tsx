@@ -9,6 +9,7 @@ import StylesSection from '~/components/home/StylesSection';
 import TimeDeals from '~/components/home/TimeDeals';
 import LatestArrivals from '~/components/home/LatestArrivals';
 import CategorySection from '~/components/home/CategorySection';
+import Hero2 from '~/components/home/Hero2';
 
 export async function loader({ request }: LoaderArgs) {
   const collections = await getCollections(request, { take: 20 });
@@ -26,7 +27,7 @@ export default function Index() {
   return (
     <>
       <div className="flex flex-col min-h-screen gap-20 overflow-x-hidden w-full">
-        <Hero />
+        <Hero2 />
         <StylesSection />
         <LatestArrivals vendureApiUrl={vendureApiUrl} />
         <CategorySection />
