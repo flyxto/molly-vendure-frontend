@@ -4,7 +4,7 @@ import { Button } from '../ui/button';
 export default function Hero2() {
   return (
     <div
-      className="h-[100svh] relative overflow-hidden dm-sans flex"
+      className="min-h-[100svh] relative overflow-hidden dm-sans flex py-32 sm:py-28"
       style={{
         backgroundImage: 'url(/images/home-page/grid-bg.svg)',
         backgroundSize: 'cover',
