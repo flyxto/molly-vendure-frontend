@@ -133,7 +133,7 @@ export default function CategorySection() {
   };
 
   return (
-    <div className="max-w-7xl w-full mx-auto lg:px-4 flex flex-col gap-10 relative lg:pb-80">
+    <div className="max-w-7xl w-full mx-auto lg:px-4 flex flex-col gap-10 relative pb-20 lg:pb-80">
       <div className="pt-12 h-full w-16 absolute -z-10 hidden lg:block">
         <div className="h-full w-px bg-black flex mx-auto"></div>
       </div>
@@ -152,7 +152,9 @@ export default function CategorySection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 1 }}
         >
-         Discover a world where style has no limits. our collections are designed for every shape, shade, and personality, making fashion an experience that truly belongs to everyone.
+          Discover a world where style has no limits. our collections are
+          designed for every shape, shade, and personality, making fashion an
+          experience that truly belongs to everyone.
         </motion.p>
 
         <div className="w-full flex gap-10 items-center justify-center overflow-hidden px-4 sm:px-0">
@@ -234,8 +236,18 @@ export default function CategorySection() {
       {/* Mobile view */}
       <div className="grid lg:hidden grid-cols-2">
         {categories.map((category, index) => (
-          <a key={index} href={category.link}>
-            <div className="aspect-[3/4] sm:aspect-square relative flex justify-center items-center active:opacity-80 overflow-hidden ">
+          <a
+            key={index}
+            href={category.link}
+            className={category.name === 'homeNlifestyle' ? 'col-span-2' : ''}
+          >
+            <div
+              className={`${
+                category.name === 'homeNlifestyle'
+                  ? 'aspect-[4/3]'
+                  : 'aspect-[3/4] sm:aspect-square'
+              } relative flex justify-center items-center active:opacity-80 overflow-hidden`}
+            >
               <img
                 src={category.images}
                 alt={`${category.displayName} category`}

@@ -300,18 +300,21 @@ export default function ProductSlug() {
                 ?.breadcrumbs ?? []
             }
           ></Breadcrumbs>
+          <h1 className="text-xl md:text-3xl font-semibold text-gray-900 md:hidden block">
+            {product.name}
+          </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-16 ">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-8 ">
             {/* Left col */}
             <ProductImageGallery assets={product.assets} />
             {/* Right col */}
             <div className="flex flex-col md:col-span-3 md:gap-6">
               <div className="flex md:flex-col w-full gap-2 items-center md:items-start justify-between">
-                <h1 className="text-xl md:text-3xl font-semibold text-gray-900">
+                <h1 className="text-xl md:text-3xl font-semibold text-gray-900 hidden md:block">
                   {product.name}
                 </h1>
 
-                <div className="flex md:hidden gap-2 items-center">
+                {/* <div className="flex md:hidden gap-2 items-center">
                   <p className="text-gray-500">4.5</p>
                   <svg
                     className="h-5 w-5 text-yellow-400"
@@ -324,7 +327,7 @@ export default function ProductSlug() {
                       clipRule="evenodd"
                     />
                   </svg>
-                </div>
+                </div> */}
               </div>
 
               <div className="py-2 md:py-4">
@@ -341,7 +344,7 @@ export default function ProductSlug() {
               </div>
 
               {/* Product info */}
-              <div className="mt-10 sm:mt-16 lg:mt-0">
+              <div className="mt-4 sm:mt-16 lg:mt-0">
                 {/* Facets / variants */}
                 <activeOrderFetcher.Form
                   method="post"

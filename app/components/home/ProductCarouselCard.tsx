@@ -11,7 +11,7 @@ export default function ProductCarouselCard({ product }: any) {
     <Link to={`/products/${product.slug}`}>
       <div className="w-full max-w-lg flex flex-col border-b border-b-black pb-2 mx-auto">
         {/* Product Image Container */}
-        <div className="relative bg-gray-200 rounded-lg overflow-hidden aspect-square mb-3 border border-black group">
+        <div className="relative bg-gray-200 rounded-lg overflow-hidden mb-3 border border-black group">
           {product.featuredAsset.preview ? (
             <img
               src={product.featuredAsset.preview}
@@ -33,7 +33,7 @@ export default function ProductCarouselCard({ product }: any) {
         </div>
 
         {/* Product Details */}
-        <h3 className="font-medium text-gray-800 mb-2">
+        <h3 className="font-medium text-gray-800 mb-2  whitespace-nowrap truncate w-full">
           {product.name || 'Product Name'}
         </h3>
 

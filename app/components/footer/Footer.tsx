@@ -103,7 +103,7 @@ export default function Footer({
 
               <div className="mt-14 w-fit">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/molly_fashion_circle/"
                   className="text-white hover:text-[#201b11] transition flex items-center gap-3"
                 >
                   <AiFillInstagram size={28} />
@@ -112,7 +112,7 @@ export default function Footer({
               </div>
               <div className="mt-4 w-fit">
                 <a
-                  href="#"
+                  href="https://web.facebook.com/SLmolly"
                   className="text-white hover:text-[#201b11] transition flex items-center gap-3"
                 >
                   <FaFacebookSquare size={24} />
@@ -156,7 +156,7 @@ export default function Footer({
           </div>
         </div>
 
-        <div className="container mx-auto px-28 py-6">
+        <div className="container mx-auto px-4 md:px-28 py-6">
           <div className="py-3 w-full bg-white rounded-full"></div>
         </div>
 
@@ -202,7 +202,10 @@ export default function Footer({
 
           {/* Social Media */}
           <div className="flex justify-center space-x-6 my-4">
-            <a href="#" className="text-white hover:text-[#201b11]">
+            <a
+              href="https://www.instagram.com/molly_fashion_circle/"
+              className="text-white hover:text-[#201b11]"
+            >
               <svg
                 className="h-8 w-8"
                 fill="currentColor"
@@ -222,7 +225,10 @@ export default function Footer({
               </svg>
             </a>
             <div className="border-r border-white h-8"></div>
-            <a href="#" className="text-white hover:text-[#201b11]">
+            <a
+              href="https://web.facebook.com/SLmolly"
+              className="text-white hover:text-[#201b11]"
+            >
               <svg
                 className="h-8 w-8"
                 fill="currentColor"

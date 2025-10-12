@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 
 export default function TimeDeals() {
   return (
-    <div className="w-full max-w-7xl mx-auto md:px-4 mb-20">
+    <div className="w-full max-w-7xl mx-auto md:px-4 mb-20 hidden md:block">
       <div className="mb-10">
         {/* H2 + Left Line */}
         <div className="items-center justify-center flex mb-2">
