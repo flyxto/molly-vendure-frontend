@@ -34,7 +34,7 @@ export function ThreeDCardDemo({ images, paragraphs }: any) {
         </CardItem>
         <CardItem
           translateZ="50"
-          className="justify-center items-center flex absolute rounded-xl left-0 bottom-0 z-20 border-l-8 border-l-white"
+          className="justify-center items-center flex absolute rounded-xl left-0 bottom-0 z-20 border-l-8 border border-gray-200 bg-white"
         >
           <img
             src={
@@ -50,7 +50,7 @@ export function ThreeDCardDemo({ images, paragraphs }: any) {
         </CardItem>
         <CardItem
           translateZ="0"
-          className=" justify-center items-center rounded-xl flex mt-4 w-96 border-8 border-white"
+          className=" justify-center items-center rounded-xl flex mt-4 w-96  border border-gray-200 bg-white"
         >
           <img
             src={
@@ -66,7 +66,7 @@ export function ThreeDCardDemo({ images, paragraphs }: any) {
         </CardItem>
         <CardItem
           translateZ="50"
-          className="justify-center items-center flex absolute rounded-xl right-0 top-0 "
+          className="justify-center items-center flex absolute rounded-xl right-0 top-0  border border-gray-200 bg-white"
         >
           <img
             src={
