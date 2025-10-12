@@ -48,7 +48,7 @@ export default function StylesSection() {
           <motion.hr className="flex-grow border-t border-[#AF803C] opacity-0" />
         </div>
       </motion.div>
-      <div className="h-14 flex mx-auto max-w-7xl justify-center items-center container my-4">
+      {/* <div className="h-20 flex mx-auto max-w-7xl justify-center items-center container my-4">
         <motion.div
           className="w-px h-full bg-black"
           initial={{ height: 0 }}
@@ -56,7 +56,7 @@ export default function StylesSection() {
           transition={{ duration: 1, delay: 0.5, ease: 'easeOut' }}
           viewport={{ once: true, amount: 0.4 }}
         />
-      </div>
+      </div> */}
 
       {/* Desktop View */}
       <motion.div
@@ -67,7 +67,7 @@ export default function StylesSection() {
         viewport={{ once: true, amount: 0.3 }}
       >
         {/* absolute row */}
-        <motion.div
+        {/* <motion.div
           className="absolute top-0 flex justify-between items-center w-full gap-6"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -93,7 +93,7 @@ export default function StylesSection() {
             transition={{ duration: 1, delay: 1.4 }}
             viewport={{ once: true, amount: 0.8 }}
           />
-        </motion.div>
+        </motion.div> */}
 
         {/* col 1 */}
         <motion.div

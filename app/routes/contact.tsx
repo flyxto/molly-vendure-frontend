@@ -378,11 +378,11 @@ export default function Contact() {
       <div className="mx-auto max-w-7xl container px-4 relative z-40">
         {/* Model image positioned at the top right */}
         <img
-          src="https://res.cloudinary.com/vccpsacloud/image/upload/v1745920806/model-2_ztprvs.png"
+          src="/images/contact-us/contact-image.webp"
           alt="Fashion model"
           height={550}
           width={450}
-          className="absolute w-[30rem] right-0 z-20 hidden lg:block"
+          className="absolute w-[40rem] -right-20 z-20 hidden lg:block"
         />
 
         {/* Heading */}
