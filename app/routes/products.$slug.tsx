@@ -47,10 +47,10 @@ const parseVariants = (variants: any[]) => {
 
     if (SIZE_OPTIONS.includes(lastWord.toUpperCase())) {
       size = lastWord.toUpperCase();
-      color = secondLastWord;
+      color = secondLastWord?.replace(/-/g, ' ');
       baseName = words.slice(0, -2).join(' ');
     } else {
-      color = lastWord;
+      color = lastWord.replace(/-/g, ' ');
       baseName = words.slice(0, -1).join(' ');
     }
 
@@ -449,7 +449,7 @@ export default function ProductSlug() {
                                       : 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
                                   }`}
                                 >
-                                  {color}
+                                  {color.replace(/-/g, ' ')}
                                 </button>
                               );
                             })}
