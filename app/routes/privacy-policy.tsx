@@ -9,28 +9,30 @@ export const meta: MetaFunction = () => {
 
 export default function PrivacyPolicy() {
   return (
-    <div className="flex justify-center w-full">
+    <div className="flex justify-center w-full px-4 md:px-0 overflow-x-hidden">
       <div className="flex flex-col max-w-4xl w-full gap-12">
         <div className="flex flex-col bg-white gap-8">
           <div className="flex flex-col gap-2 mt-24">
-            <h1 className="text-3xl font-bold text-black text-center items-center">Privacy Policy</h1>
+            <h1 className="text-3xl font-bold text-black text-center items-center">
+              Privacy Policy
+            </h1>
             <div className="flex flex-col text-black gap-1">
               <p>
                 <strong>Effective Date:</strong> 2025 October
               </p>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <strong>Website:</strong>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <a
                     href="https://www.mollyfashion.lk"
-                    className="text-blue-600 underline"
+                    className="text-blue-600 underline break-all"
                   >
                     www.mollyfashion.lk
                   </a>
                   <span>|</span>
                   <a
                     href="https://www.mollyfashioncircle.lk"
-                    className="text-blue-600 underline"
+                    className="text-blue-600 underline break-all"
                   >
                     www.mollyfashioncircle.lk
                   </a>
@@ -223,8 +225,8 @@ export default function PrivacyPolicy() {
                 <h3 className="text-lg font-semibold">
                   Examples of Cookies We Use:
                 </h3>
-                <div className="overflow-x-auto">
-                  <table className="min-w-full">
+                <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+                  <table className="min-w-full text-sm md:text-base">
                     <thead>
                       <tr>
                         <th className="text-center font-semibold">
@@ -257,7 +259,7 @@ export default function PrivacyPolicy() {
                         </td>
                       </tr>
                       <tr>
-                        <td className="pt-2">PERSISTENT_SHOPPING_CART</td>
+                        <td className="pt-2 break-words">PERSISTENT_SHOPPING_CART</td>
                         <td className="pt-2">
                           Links to your previous cart items if you return.
                         </td>
@@ -288,7 +290,7 @@ export default function PrivacyPolicy() {
                 Please email us at{' '}
                 <a
                   href="mailto:hello@mollyfashion.lk"
-                  className="text-black font-bold"
+                  className="text-black font-bold break-all"
                 >
                   hello@mollyfashion.lk
                 </a>{' '}
@@ -315,7 +317,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-2xl font-semibold">
               9. Updates to This Policy
             </h2>
-            <div className="flex flex-col gap-3 text-black leading-tight">
+            <div className="flex flex-col text-black">
               <p>
                 Molly Fashion Circle may update this Privacy Policy
                 periodically.
