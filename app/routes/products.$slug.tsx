@@ -266,9 +266,12 @@ export default function ProductSlug() {
   const colors = [...new Set(parsedVariants.map((v) => v.parsedColor))].filter(
     Boolean,
   ) as string[];
-  const sizes = [...new Set(parsedVariants.map((v) => v.parsedSize))].filter(
-    Boolean,
-  ) as string[];
+  const sizes = [...new Set(parsedVariants.map((v) => v.parsedSize))]
+    .filter(Boolean)
+    .sort((a, b) => {
+      const order = SIZE_OPTIONS.indexOf(a) - SIZE_OPTIONS.indexOf(b);
+      return order;
+    }) as string[];
 
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
