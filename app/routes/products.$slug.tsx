@@ -573,12 +573,20 @@ export default function ProductSlug() {
         </div>
         <div className="max-w-7xl w-full mx-auto px-4">
           {/* Description */}
-          <h2 className="text-xl font-semibold">Product Details</h2>
+          <h2 className="text-xl font-semibold mb-4">Product Details</h2>
           <div className="mt-4">
             <h3 className="sr-only">{t('product.description')}</h3>
 
             <div
-              className="text-base max-w-3xl text-gray-700 [&>p]:mb-4 [&>p:last-child]:mb-0"
+              className="text-base max-w-3xl text-gray-700 
+        [&>p]:mb-4 [&>p:last-child]:mb-0
+        [&>table]:w-full [&>table]:border-collapse [&>table]:my-6
+        [&>table_td]:border [&>table_td]:border-gray-300 [&>table_td]:px-4 [&>table_td]:py-2
+        [&>table_th]:border [&>table_th]:border-gray-300 [&>table_th]:px-4 [&>table_th]:py-2 [&>table_th]:bg-gray-100
+        [&>table_strong]:font-semibold
+        [&_strong]:font-semibold
+        [&>ul]:list-disc [&>ul]:ml-6 [&>ul]:mb-4
+        [&>ol]:list-decimal [&>ol]:ml-6 [&>ol]:mb-4"
               dangerouslySetInnerHTML={{
                 __html: product.description,
               }}
