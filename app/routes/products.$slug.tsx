@@ -302,6 +302,7 @@ export default function ProductSlug() {
               product.collections[product.collections.length - 1]
                 ?.breadcrumbs ?? []
             }
+            productName={product.name}
           ></Breadcrumbs>
           <h1 className="text-xl md:text-3xl font-semibold text-gray-900 md:hidden block">
             {product.name}
