@@ -96,44 +96,46 @@ export default function LatestArrivals({ vendureApiUrl }: LatestArrivalsProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  async function getLatestProducts() {
+  async function fetchProductsByFacetValue(facetValueId: number, take: number) {
     const query = `
-query GetLatestProducts($options: ProductListOptions) {
-  products(options: $options) {
+query SearchProducts($input: SearchInput!) {
+  search(input: $input) {
     totalItems
     items {
-      id
-      name
+      productId
+      productName
       slug
-      createdAt
-      featuredAsset {
+      productAsset {
         id
         preview
       }
-      variants {
-        id
-        sku
-        priceWithTax 
-        currencyCode
+      priceWithTax {
+        ... on PriceRange {
+          min
+          max
+        }
+        ... on SinglePrice {
+          value
+        }
       }
+      currencyCode
     }
   }
 }
     `;
 
     const variables = {
-      options: {
-        sort: {
-          createdAt: 'DESC',
-        },
-        take: 6,
+      input: {
+        term: '',
         skip: 0,
+        take: take,
+        groupByProduct: true,
+        facetValueFilters: [{ and: facetValueId }],
       },
     };
 
     try {
-      // Use the passed prop instead of process.env
-      const apiUrl = vendureApiUrl || '/api/vendure'; // fallback to relative URL
+      const apiUrl = vendureApiUrl || '/api/vendure';
 
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -153,7 +155,43 @@ query GetLatestProducts($options: ProductListOptions) {
         throw new Error('GraphQL query failed');
       }
 
-      return result.data.products.items;
+      return result.data.search.items.map((item: any) => ({
+        id: item.productId,
+        name: item.productName,
+        slug: item.slug,
+        featuredAsset: item.productAsset,
+        variants: [
+          {
+            priceWithTax: item.priceWithTax?.value || item.priceWithTax?.min,
+            currencyCode: item.currencyCode,
+          },
+        ],
+      }));
+    } catch (error) {
+      console.error(
+        `Error fetching products for facet ${facetValueId}:`,
+        error,
+      );
+      throw error;
+    }
+  }
+
+  async function getLatestProducts() {
+    try {
+      // Fetch 3 items from facet value 40
+      const products40 = await fetchProductsByFacetValue(40, 3);
+
+      // Fetch 3 items from facet value 41
+      const products41 = await fetchProductsByFacetValue(41, 3);
+
+      // Combine both arrays into a single array of 6 items
+      const combinedProducts = [...products40, ...products41];
+
+      console.log('Products from facet 40:', products40);
+      console.log('Products from facet 41:', products41);
+      console.log('Combined products:', combinedProducts);
+
+      return combinedProducts;
     } catch (error) {
       console.error('Error fetching latest products:', error);
       throw error;
