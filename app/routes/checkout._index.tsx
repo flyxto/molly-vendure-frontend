@@ -62,6 +62,7 @@ export default function CheckoutShipping() {
   const [customerFormChanged, setCustomerFormChanged] = useState(false);
   const [addressFormChanged, setAddressFormChanged] = useState(false);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   let navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -294,15 +295,45 @@ export default function CheckoutShipping() {
         />
       </div>
 
+      {/* terms and conditions Checkbox */}
+      <div className="mt-10">
+        <label className="flex items-start">
+          <input
+            type="checkbox"
+            checked={termsAccepted}
+            onChange={(e) => setTermsAccepted(e.target.checked)}
+            className="mt-1 h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+          />
+          <span className="ml-2 text-sm text-gray-600">
+            I agree to the
+            <a href="/terms-conditions">
+              <span className="text-blue-500 cursor-pointer">
+                {' '}
+                terms and conditions
+              </span>
+            </a>
+          </span>
+        </label>
+      </div>
+
+      {/* Payment types image */}
+      <div className="w-full">
+        <img
+          src="/images/checkout/payment-types-2.jpeg"
+          alt="payment types"
+          className=" object-contain object-center w-full h-full"
+        />
+      </div>
+
       <button
         type="button"
-        disabled={!canProceedToPayment || isLoading}
+        disabled={!canProceedToPayment || !termsAccepted || isLoading}
         onClick={navigateToPayment}
         className={classNames(
-          canProceedToPayment && !isLoading
+          canProceedToPayment && termsAccepted && !isLoading
             ? 'bg-primary-600 hover:bg-primary-700'
             : 'bg-gray-400',
-          'flex w-full items-center justify-center space-x-2 mt-24 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500',
+          'flex w-full items-center justify-center space-x-2 mt-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500',
         )}
       >
         <LockClosedIcon className="w-5 h-5"></LockClosedIcon>
