@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
 
 export default function TermsAndConditions() {
   return (
-    <div className="flex justify-center w-full px-4 md:px-0 overflow-x-hidden">
+    <div className="flex justify-center w-full">
       <div className="flex flex-col max-w-4xl w-full gap-12">
         <div className="flex flex-col bg-white gap-8">
           <div className="flex flex-col gap-4 mt-28">
@@ -23,19 +23,19 @@ export default function TermsAndConditions() {
               <p>
                 <strong>Effective Date:</strong> 2025 October
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex gap-2">
                 <strong>Website:</strong>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex gap-2">
                   <a
                     href="https://www.mollyfashion.lk"
-                    className="text-blue-600 underline break-all"
+                    className="text-blue-600 underline"
                   >
                     www.mollyfashion.lk
                   </a>
                   <span>|</span>
                   <a
                     href="https://www.mollyfashioncircle.lk"
-                    className="text-blue-600 underline break-all"
+                    className="text-blue-600 underline"
                   >
                     www.mollyfashioncircle.lk
                   </a>
@@ -360,7 +360,7 @@ export default function TermsAndConditions() {
                 Please contact us via{' '}
                 <a
                   href="mailto:hello@mollyfashion.lk"
-                  className="text-black hover:underline font-bold break-all"
+                  className="text-black hover:underline font-bold"
                 >
                   hello@mollyfashion.lk
                 </a>{' '}

@@ -1,48 +1,66 @@
-import { HomeIcon } from '@heroicons/react/24/solid';
+import { HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { Link } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
 
 export function Breadcrumbs({
   items,
+  productName,
 }: {
   items: { name: string; slug: string; id: string }[];
+  productName?: string;
 }) {
   const { t } = useTranslation();
 
+  // Filter out root collection and get the last collection (most specific)
+  const filteredItems = items.filter(
+    (item) => item.name !== '__root_collection__',
+  );
+
+  // For breadcrumbs, we only want the last (most specific) collection
+  const lastCollection =
+    filteredItems.length > 0 ? filteredItems[filteredItems.length - 1] : null;
+
   return (
     <nav className="flex" aria-label="Breadcrumb">
-      <ol role="list" className="flex items-center space-x-1 md:space-x-4">
+      <ol role="list" className="flex items-center space-x-1 md:space-x-2">
+        {/* Home */}
         <li>
-          <div>
-            <Link to="/" className="text-gray-400 hover:text-gray-500">
-              <HomeIcon className="flex-shrink-0 h-5 w-5" aria-hidden="true" />
-              <span className="sr-only">{t('home')}</span>
-            </Link>
-          </div>
+          <Link
+            to="/"
+            className="text-gray-500 hover:text-gray-700 text-xs md:text-sm font-medium"
+          >
+            Home
+          </Link>
         </li>
-        {items
-          .filter((item) => item.name !== '__root_collection__')
-          .map((item, index) => (
-            <li key={item.name}>
-              <div className="flex items-center">
-                <svg
-                  className="flex-shrink-0 h-5 w-5 text-gray-300"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  aria-hidden="true"
-                >
-                  <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
-                </svg>
-                <Link
-                  to={'/collections/' + item.slug}
-                  className="ml-2 md:ml-4 text-xs md:text-sm font-medium text-gray-500 hover:text-gray-700"
-                >
-                  {item.name}
-                </Link>
-              </div>
-            </li>
-          ))}
+
+        {/* Collection (if exists) */}
+        {lastCollection && (
+          <li className="flex items-center">
+            <ChevronRightIcon
+              className="flex-shrink-0 h-4 w-4 text-gray-400 mx-1 md:mx-2"
+              aria-hidden="true"
+            />
+            <Link
+              to={'/collections/' + lastCollection.slug}
+              className="text-gray-500 hover:text-gray-700 text-xs md:text-sm font-medium"
+            >
+              {lastCollection.name}
+            </Link>
+          </li>
+        )}
+
+        {/* Product name (if provided) */}
+        {productName && (
+          <li className="flex items-center">
+            <ChevronRightIcon
+              className="flex-shrink-0 h-4 w-4 text-gray-400 mx-1 md:mx-2"
+              aria-hidden="true"
+            />
+            <span className="text-gray-700 text-xs md:text-sm font-medium">
+              {productName}
+            </span>
+          </li>
+        )}
       </ol>
     </nav>
   );
