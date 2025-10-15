@@ -317,9 +317,9 @@ export default function CheckoutShipping() {
       </div>
 
       {/* Payment types image */}
-      <div className="w-full">
+      <div className="w-full mt-4">
         <img
-          src="/images/checkout/payment-types-2.jpeg"
+          src="/images/checkout/payment-types-2.png"
           alt="payment types"
           className=" object-contain object-center w-full h-full"
         />
