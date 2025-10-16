@@ -40,7 +40,7 @@ export function Header({
     <>
       {/* Fullscreen Navigation Loader */}
       {isNavigating && (
-        <div className="fixed inset-0 z-30 flex items-center justify-center bg-white/80 backdrop-blur-md">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/80 backdrop-blur-md">
           <div className="flex flex-col items-center space-y-4">
             {/* Spinner */}
             <div className="relative">
