@@ -78,7 +78,7 @@ export function ScrollNavbar({ children }: ScrollNavbarProps) {
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 h-20 lg:h-32 z-[100] w-full ${gradientClass} py-4 ${
+      className={`fixed top-0 h-20 lg:h-32 z-30 w-full ${gradientClass} py-4 ${
         isVisible ? 'transform-none' : '-translate-y-full'
       } transition-transform duration-300 ease-in-out`}
     >

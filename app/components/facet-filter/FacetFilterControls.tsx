@@ -25,7 +25,7 @@ export default function FacetFilterControlsHorizontal({
       <Transition.Root show={mobileFiltersOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-40 lg:hidden"
+          className="relative z-50 lg:hidden"
           onClose={setMobileFiltersOpen}
         >
           <Transition.Child
@@ -139,7 +139,7 @@ export default function FacetFilterControlsHorizontal({
       </Transition.Root>
 
       {/* Horizontal desktop filters with checkboxes */}
-      <div className="hidden lg:block">
+      <div className="hidden lg:block mt-8">
         <input type="hidden" name="q" value={q} />
         <div className="space-y-4">
           {facetFilterTracker.facetsWithValues.map((facet) => (

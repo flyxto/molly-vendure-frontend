@@ -100,7 +100,7 @@ export function MobileNavigation({
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white absolute top-16 left-0 right-0 z-[101] shadow-lg border-t">
+        <div className="lg:hidden bg-white absolute top-16 left-0 right-0 z-40 shadow-lg border-t">
           <div className="flex flex-col py-4 px-6 space-y-4">
             {navLinks.map((link) => (
               <Link

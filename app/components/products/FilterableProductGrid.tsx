@@ -42,7 +42,7 @@ export function FilterableProductGrid({
   );
 
   return (
-    <div className="mt-6 gap-x-4 w-full flex flex-col">
+    <div className="gap-x-4 w-full flex flex-col">
       <FacetFilterControls
         facetFilterTracker={facetValuesTracker.current}
         mobileFiltersOpen={mobileFiltersOpen}
