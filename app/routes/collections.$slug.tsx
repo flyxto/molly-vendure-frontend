@@ -124,6 +124,7 @@ export default function CollectionSlug() {
           allowedPaginationLimits={allowedPaginationLimits}
           mobileFiltersOpen={mobileFiltersOpen}
           setMobileFiltersOpen={setMobileFiltersOpen}
+          slug={collection.slug}
           {...loaderData}
         />
       </ValidatedForm>
