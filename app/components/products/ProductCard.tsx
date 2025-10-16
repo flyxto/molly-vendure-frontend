@@ -62,9 +62,9 @@ export function ProductCard({
         {/* Product Image Container */}
         <div
           className={`relative bg-white rounded overflow-hidden w-full h-auto ${
-            collectionSlug === 'men' || collectionSlug === 'women'
-              ? 'aspect-[2/3]'
-              : 'aspect-square'
+            collectionSlug === 'home-lifestyle'
+              ? 'aspect-square'
+              : 'aspect-[2/3]'
           } mb-1 border border-black group`}
         >
           <img

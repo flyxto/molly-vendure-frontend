@@ -38,7 +38,7 @@ export default function Search() {
   const { t } = useTranslation();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-24">
+    <div className="max-w-6xl min-h-screen mx-auto px-4 py-24">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl sm:text-5xl font-light tracking-tight text-gray-900 my-2">
           {term
