@@ -11,6 +11,7 @@ import { DummyPayments } from '~/components/checkout/DummyPayments';
 import { getActiveOrder } from '~/providers/orders/order';
 import { getSessionStorage } from '~/sessions';
 import { useTranslation } from 'react-i18next';
+import { CreditCardIcon, DollarSign } from 'lucide-react';
 
 export async function loader({ params, request }: DataFunctionArgs) {
   const session = await getSessionStorage().then((sessionStorage) =>
@@ -58,7 +59,7 @@ export async function action({ params, request }: DataFunctionArgs) {
         });
       }
     }
-    
+
     // Fetch the active order again to get the order code for the return URL
     const activeOrder = await getActiveOrder({ request });
     if (!activeOrder) {
@@ -69,7 +70,9 @@ export async function action({ params, request }: DataFunctionArgs) {
     }
 
     // Dynamically create the return URL based on the request origin and order code
-    const returnUrl = `${new URL(request.url).origin}/checkout/confirmation/${activeOrder.code}`;
+    const returnUrl = `${new URL(request.url).origin}/checkout/confirmation/${
+      activeOrder.code
+    }`;
 
     const result = await addPaymentToOrder(
       {
@@ -86,7 +89,7 @@ export async function action({ params, request }: DataFunctionArgs) {
       const payment = result.addPaymentToOrder.payments?.find(
         (p) => p.method === paymentMethodCode,
       );
-      
+
       const sessionId = payment?.metadata?.public?.sessionId;
 
       if (sessionId) {
@@ -117,53 +120,85 @@ export default function CheckoutPayment() {
   const paymentError = getPaymentError(error);
 
   return (
-    <div className="flex flex-col items-center divide-gray-200 divide-y">
-      {eligiblePaymentMethods.map((paymentMethod) =>
-        paymentMethod.code === 'mpgs-hosted-checkout' ? (
-          <div className="py-12" key={paymentMethod.id}>
-            {paymentError ? (
-              <div>
-                <p className="text-red-700 font-bold">
-                  {t('checkout.mpgsError', {
-                    defaultValue: 'MPGS payment initialization failed.',
-                  })}
-                </p>
-                <p className="text-sm">{paymentError}</p>
-              </div>
-            ) : (
-              <Form
-                method="post"
-                className="flex flex-col items-center space-y-4"
-              >
-                <input
-                  type="hidden"
-                  name="paymentMethodCode"
-                  value="mpgs-hosted-checkout"
-                />
-                <p className="text-gray-600">
-                  {t('checkout.mpgsInstructions', {
-                    defaultValue:
-                      'Click the button below to complete your payment.',
-                  })}
-                </p>
-                <button
-                  type="submit"
-                  className="px-6 py-2 rounded-md font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+    <div className="flex flex-col-reverse items-center">
+      {eligiblePaymentMethods.map((paymentMethod) => {
+        // Mastercard Payment
+        if (paymentMethod.code === 'commercial-bank') {
+          return (
+            <div className="py-12" key={paymentMethod.id}>
+              {paymentError ? (
+                <div>
+                  <p className="text-red-700 font-bold">
+                    {t('checkout.mpgsError', {
+                      defaultValue: 'MPGS payment initialization failed.',
+                    })}
+                  </p>
+                  <p className="text-sm">{paymentError}</p>
+                </div>
+              ) : (
+                <Form
+                  method="post"
+                  className="flex flex-col items-center space-y-4"
                 >
-                  Pay with Mastercard
-                </button>
-              </Form>
-            )}
-          </div>
-        ) : (
-          <div className="py-12" key={paymentMethod.id}>
-            <DummyPayments
-              paymentMethod={paymentMethod}
-              paymentError={paymentError}
-            />
-          </div>
-        ),
-      )}
+                  <input
+                    type="hidden"
+                    name="paymentMethodCode"
+                    value="commercial-bank"
+                  />
+
+                  <button
+                    type="submit"
+                    className="flex px-6 bg-primary-600 hover:bg-primary-700 items-center justify-center space-x-2 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                  >
+                    <CreditCardIcon className="w-5 h-5 mr-3"></CreditCardIcon>{' '}
+                    Online Payments
+                  </button>
+                </Form>
+              )}
+            </div>
+          );
+        }
+
+        // Cash on Delivery Payment
+        if (paymentMethod.code === 'cash-on-delivery') {
+          return (
+            <div className="py-12" key={paymentMethod.id}>
+              {paymentError ? (
+                <div>
+                  <p className="text-red-700 font-bold">
+                    {t('checkout.codError', {
+                      defaultValue: 'Cash on Delivery payment failed.',
+                    })}
+                  </p>
+                  <p className="text-sm">{paymentError}</p>
+                </div>
+              ) : (
+                <Form
+                  method="post"
+                  className="flex flex-col items-center space-y-4"
+                >
+                  <input
+                    type="hidden"
+                    name="paymentMethodCode"
+                    value="cash-on-delivery"
+                  />
+
+                  <button
+                    type="submit"
+                    className="flex px-6 bg-primary-600 hover:bg-primary-700 items-center justify-center space-x-2 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                  >
+                    <DollarSign className="w-5 h-5 mr-3" />
+                    Cash on Delivery
+                  </button>
+                </Form>
+              )}
+            </div>
+          );
+        }
+
+        // Fallback for other payment methods (optional - can be removed)
+        return null;
+      })}
     </div>
   );
 }
