@@ -26,13 +26,13 @@ export function Header({
   // Check if we're currently navigating
   const isNavigating = navigation.state !== 'idle';
 
-  // Define navigation links similar to Medusa structure
+  // Hardcoded navigation links
   const navLinks = [
     { href: '/', label: 'HOME' },
-    ...data.collections.map((collection) => ({
-      href: `/collections/${collection.slug}`,
-      label: collection.name.toUpperCase(),
-    })),
+    { href: '/collections/home-lifestyle', label: 'HOME & LIFESTYLE' },
+    { href: '/collections/women', label: 'WOMEN' },
+    { href: '/collections/men', label: 'MEN' },
+    { href: '/collections/accessories-all', label: 'ACCESSORIES' },
     { href: '/contact', label: 'CONTACT US' },
   ];
 
