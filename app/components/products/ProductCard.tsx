@@ -36,7 +36,9 @@ import { Link } from '@remix-run/react';
 import { Price } from './Price';
 import { Button } from '../ui/button';
 
-export type ProductCardProps = SearchQuery['search']['items'][number];
+export type ProductCardProps = SearchQuery['search']['items'][number] & {
+  collectionSlug?: string;
+};
 
 export function ProductCard({
   productAsset,
@@ -44,6 +46,7 @@ export function ProductCard({
   slug,
   priceWithTax,
   currencyCode,
+  collectionSlug,
 }: ProductCardProps) {
   const product = {
     name: 'Midnight Vogue Dress',
@@ -57,11 +60,17 @@ export function ProductCard({
     <Link className="flex flex-col" prefetch="intent" to={`/products/${slug}`}>
       <div className="w-full flex flex-col border-b border-b-black pb-2 group ">
         {/* Product Image Container */}
-        <div className="relative bg-white rounded overflow-hidden w-full mb-1 border border-black group">
+        <div
+          className={`relative bg-white rounded overflow-hidden w-full h-auto ${
+            collectionSlug === 'men' || collectionSlug === 'women'
+              ? 'aspect-[2/3]'
+              : 'aspect-square'
+          } mb-1 border border-black group`}
+        >
           <img
             src={productAsset?.preview + '?w=800'}
             alt={productName}
-            className="w-full h-full object-contain group-hover:scale-110 transition duration-300"
+            className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
           />
           {/* <Button
     // variant="cart"

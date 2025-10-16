@@ -83,7 +83,7 @@ export default function CollectionSlug() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-24">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-end">
         <div className="flex flex-col gap-2 items-baseline ">
           <Breadcrumbs items={collection.breadcrumbs}></Breadcrumbs>
           <h2 className="text-3xl sm:text-5xl font-light tracking-tight  text-gray-900">
@@ -91,10 +91,10 @@ export default function CollectionSlug() {
           </h2>
         </div>
 
-        {/* <FiltersButton
+        <FiltersButton
           filterCount={facetValueIds.length}
           onClick={() => setMobileFiltersOpen(true)}
-        /> */}
+        />
       </div>
 
       {/* {collection.children?.length ? (
@@ -124,6 +124,7 @@ export default function CollectionSlug() {
           allowedPaginationLimits={allowedPaginationLimits}
           mobileFiltersOpen={mobileFiltersOpen}
           setMobileFiltersOpen={setMobileFiltersOpen}
+          slug={collection.slug}
           {...loaderData}
         />
       </ValidatedForm>

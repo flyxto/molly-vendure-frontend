@@ -20,6 +20,7 @@ export function FilterableProductGrid({
   allowedPaginationLimits,
   mobileFiltersOpen,
   setMobileFiltersOpen,
+  slug,
 }: Awaited<
   ReturnType<
     ReturnType<
@@ -30,6 +31,7 @@ export function FilterableProductGrid({
   allowedPaginationLimits: Set<number>;
   mobileFiltersOpen: boolean;
   setMobileFiltersOpen: (arg0: boolean) => void;
+  slug?: string;
 }) {
   const { t } = useTranslation();
   const facetValuesTracker = useRef(new FacetFilterTracker());
@@ -40,7 +42,7 @@ export function FilterableProductGrid({
   );
 
   return (
-    <div className="mt-6 gap-x-4 w-full flex flex-col">
+    <div className="gap-x-4 w-full flex flex-col">
       <FacetFilterControls
         facetFilterTracker={facetValuesTracker.current}
         mobileFiltersOpen={mobileFiltersOpen}
@@ -50,7 +52,11 @@ export function FilterableProductGrid({
         <div className=" w-full mt-8">
           <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-3 gap-x-4 w-full">
             {result.items.map((item) => (
-              <ProductCard key={item.productId} {...item} />
+              <ProductCard
+                key={item.productId}
+                {...item}
+                collectionSlug={slug}
+              />
             ))}
           </div>
 

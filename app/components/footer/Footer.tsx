@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import { FaFacebookSquare } from 'react-icons/fa';
 import { AiFillInstagram } from 'react-icons/ai';
+import InfiniteMarquee from './MarqueeComponent';
 
 const navigation = {
   store: [
@@ -248,13 +249,7 @@ export default function Footer({
         {/* Marquee */}
         <div className="w-full text-white py-6 border-t border-t-white  border-b border-b-white">
           <div className="overflow-hidden">
-            <div className="animate-marquee whitespace-nowrap py-2">
-              <span className="inline-flex items-center text-3xl md:text-5xl mx-4">
-                MOLLY FASHION CIRCLE ✱ MOLLY FASHION CIRCLE ✱ MOLLY FASHION
-                CIRCLE ✱ MOLLY FASHION CIRCLE ✱ MOLLY FASHION CIRCLE ✱ MOLLY
-                FASHION CIRCLE ✱ MOLLY FASHION CIRCLE ✱ MOLLY FASHION CIRCLE ✱
-              </span>
-            </div>
+            <InfiniteMarquee />
           </div>
         </div>
 
