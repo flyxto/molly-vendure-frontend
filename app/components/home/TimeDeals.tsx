@@ -102,7 +102,7 @@ export default function TimeDeals() {
               </div>
             </div>
             <div className="flex items-center mt-auto pt-8">
-              <Button>View all</Button>
+              <Button>coming soon</Button>
               <div className="h-px bg-white flex-grow ml-4"></div>
             </div>
           </div>
@@ -152,7 +152,7 @@ export default function TimeDeals() {
                 </div>
               </div>
               <div className="flex sm:flex-row flex-row-reverse  items-center mt-auto">
-                <Button>View all</Button>
+                <Button>coming soon</Button>
                 <div className="h-px bg-white flex-grow ml-4"></div>
               </div>
             </div>
@@ -190,7 +190,7 @@ export default function TimeDeals() {
               </div>
               <div className="absolute bottom-8 right-0 left-0 px-8  flex items-center flex-row-reverse sm:flex-row">
                 <div className="h-px bg-white flex-grow mr-4 ml-4 "></div>
-                <Button>View all</Button>
+                <Button>coming soon</Button>
               </div>
 
               {/* Image takes the full left side */}
