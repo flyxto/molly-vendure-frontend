@@ -19,6 +19,11 @@ const navigation = {
       href: '/terms-conditions',
       label: 'Terms & Conditions',
     },
+    {
+      page: 'Return Policy',
+      href: '/return-policy',
+      label: 'Return Policy',
+    },
   ],
 };
 
