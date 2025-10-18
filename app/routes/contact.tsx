@@ -22,7 +22,7 @@ import { Textarea } from '~/components/ui/textarea';
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Contact Us' },
+    { title: 'Contact Us - Molly Fashion Circle' },
     {
       name: 'description',
       content: "Get in touch with us. We'd love to hear from you!",
@@ -102,12 +102,14 @@ function AddressItem({
 
 // Address Block Component
 function AddressBlock({
+  shopName,
   branchNumber,
   addressLine1,
   addressLine2,
   addressLine3,
   tel,
 }: {
+  shopName: string;
   branchNumber: string;
   addressLine1: string;
   addressLine2: string;
@@ -124,9 +126,7 @@ function AddressBlock({
 
       {/* Address Block */}
       <div className="text-black">
-        <p className="font-semibold text-xl md:text-2xl">
-          Molly Fashion Circle,
-        </p>
+        <p className="font-semibold text-xl md:text-2xl">{shopName}</p>
         <p className="font-semibold text-xl md:text-2xl">{addressLine1}</p>
         <p className="font-semibold text-xl md:text-2xl">{addressLine2}</p>
         <p className="font-semibold text-xl md:text-2xl">
@@ -143,11 +143,13 @@ function AddressBlock({
 
 // Mobile Address Display Component
 function MobileAddressDisplay({
+  shopName,
   addressLine1,
   addressLine2,
   addressLine3,
   tel,
 }: {
+  shopName: string;
   addressLine1: string;
   addressLine2: string;
   addressLine3: string;
@@ -159,10 +161,10 @@ function MobileAddressDisplay({
         <MapPinIcon className="text-gray-400 w-6 h-6" />
       </div>
       <div className="text-center">
-        <p className="font-semibold text-xl">Molly Fashion Circle</p>
+        <p className="font-semibold text-xl">{shopName}</p>
         <p className="font-semibold text-xl">{addressLine1}</p>
         <p className="font-semibold text-xl">{addressLine2}</p>
-        <p className="font-semibold text-xl">{addressLine3}, Sri Lanka</p>
+        <p className="font-semibold text-xl">{addressLine3} Sri Lanka</p>
         <p className=" text-lg text-black mt-4">{tel}</p>
       </div>
     </div>
@@ -175,32 +177,35 @@ function LocationSection() {
     {
       id: 1,
       branchNumber: '01',
+      shopName: 'Molly Fashion Circle,',
       addressLine1: 'No.64,',
       addressLine2: 'Thissa Mawatha,',
       addressLine3: 'Kuliyapitiya,',
       tel: '037 20 52 202',
       mapUrl:
-        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31653.913197601283!2d80.02597502022358!3d7.467598744371462!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae32c5daa6a2c75%3A0x777639b5517a55f4!2sKuliyapitiya!5e0!3m2!1sen!2sus!4v1713384057387!5m2!1sen!2sus',
+        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.9803172949373!2d80.0415649!3d7.467424699999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2d90063d561cd%3A0x9d371bf7224ee222!2sMolly%20Fashion%20Circle%20Kuliyapitiya!5e0!3m2!1sen!2skh!4v1760774362010!5m2!1sen!2skh',
     },
     {
       id: 2,
       branchNumber: '02',
+      shopName: 'Molly Fashion Circle,',
       addressLine1: 'In front of Ananda College,',
       addressLine2: ' Colombo Road,',
       addressLine3: 'Chillaw,',
       tel: '037 20 52 996',
       mapUrl:
-        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63371.80549624506!2d79.82144362449093!3d6.921837070105396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae253d10f7a7003%3A0x320b2e4d32d3838d!2sColombo%2C%20Sri%20Lanka!5e0!3m2!1sen!2sus!4v1713384057387!5m2!1sen!2sus',
+        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.0387729596177!2d79.7979489!3d7.570752!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2c9161a391ea9%3A0x59fef498ba0c698f!2sMolly%20Fashion%20Circle%20Chilaw!5e0!3m2!1sen!2skh!4v1760774276064!5m2!1sen!2skh',
     },
     {
       id: 3,
       branchNumber: '03',
+      shopName: 'Molly Shopping Center,',
       addressLine1: 'No: 62/1,',
       addressLine2: ' Kandy Road,',
       addressLine3: 'Wattegama,',
       tel: '081 24 76 303',
       mapUrl:
-        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31686.098196129207!2d80.61021196810652!3d7.293790934787464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae366266498acd3%3A0x411a3818a1e03c35!2sKandy%2C%20Sri%20Lanka!5e0!3m2!1sen!2sus!4v1713384057387!5m2!1sen!2sus',
+        'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3957.029171275171!2d80.6789957!3d7.3506208!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae3678522807c83%3A0x15b9b4727a8ebc37!2sMolly%20Shopping%20Center!5e0!3m2!1sen!2skh!4v1760774460269!5m2!1sen!2skh',
     },
   ];
 
@@ -281,6 +286,7 @@ function LocationSection() {
 
             {/* Address Display */}
             <MobileAddressDisplay
+              shopName={activeBranchData?.shopName || ''}
               addressLine1={activeBranchData?.addressLine1 || ''}
               addressLine2={activeBranchData?.addressLine2 || ''}
               addressLine3={activeBranchData?.addressLine3 || ''}
@@ -315,10 +321,12 @@ function LocationSection() {
             {branches.map((branch) => (
               <div
                 key={branch.id}
-                className="cursor-pointer"
+                className="cursor-pointer hover:bg-gray-50 p-4 rounded-lg transition duration-300 ease-in-out"
                 onMouseEnter={() => setCurrentMapUrl(branch.mapUrl)}
+                onClick={() => setCurrentMapUrl(branch.mapUrl)}
               >
                 <AddressBlock
+                  shopName={branch.shopName}
                   branchNumber={branch.branchNumber}
                   addressLine1={branch.addressLine1}
                   addressLine2={branch.addressLine2}
@@ -382,7 +390,7 @@ export default function Contact() {
         className="absolute bottom-0 right-0 hidden lg:block "
       />
       {/* Contact Hero Section */}
-      <div className="mx-auto max-w-7xl container px-4 relative z-40">
+      <div className="mx-auto max-w-7xl container px-4 relative z-10">
         {/* Model image positioned at the top right */}
         <img
           src="/images/contact-us/contact-image.webp"

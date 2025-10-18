@@ -32,6 +32,7 @@ import { useChangeLanguage } from 'remix-i18next';
 import { useTranslation } from 'react-i18next';
 import { getI18NextServer } from '~/i18next.server';
 import { LoadingBar } from '~/components/LoadingBar';
+import SmoothScrollWrapper from './components/smooth-scroll/SmoothScrollWrapper';
 
 export const meta: MetaFunction = () => {
   return [{ title: APP_META_TITLE }, { description: APP_META_DESCRIPTION }];
@@ -137,32 +138,34 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Header
-          onCartIconClick={() => setOpen(!open)}
-          cartQuantity={activeOrder?.totalQuantity ?? 0}
-        />
-        <main className="">
-          <Outlet
-            context={{
-              activeOrderFetcher,
-              activeOrder,
-              adjustOrderLine,
-              removeItem,
-            }}
+        <SmoothScrollWrapper>
+          <Header
+            onCartIconClick={() => setOpen(!open)}
+            cartQuantity={activeOrder?.totalQuantity ?? 0}
           />
-        </main>
-        <CartTray
-          open={open}
-          onClose={setOpen}
-          activeOrder={activeOrder}
-          adjustOrderLine={adjustOrderLine}
-          removeItem={removeItem}
-        />
-        <ScrollRestoration />
-        <Scripts />
-        <Footer collections={collections}></Footer>
+          <main className="">
+            <Outlet
+              context={{
+                activeOrderFetcher,
+                activeOrder,
+                adjustOrderLine,
+                removeItem,
+              }}
+            />
+          </main>
+          <CartTray
+            open={open}
+            onClose={setOpen}
+            activeOrder={activeOrder}
+            adjustOrderLine={adjustOrderLine}
+            removeItem={removeItem}
+          />
+          <ScrollRestoration />
+          <Scripts />
+          <Footer collections={collections}></Footer>
 
-        {devMode && <LiveReload />}
+          {devMode && <LiveReload />}
+        </SmoothScrollWrapper>
       </body>
     </html>
   );
