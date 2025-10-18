@@ -390,7 +390,7 @@ export default function Contact() {
         className="absolute bottom-0 right-0 hidden lg:block "
       />
       {/* Contact Hero Section */}
-      <div className="mx-auto max-w-7xl container px-4 relative z-40">
+      <div className="mx-auto max-w-7xl container px-4 relative z-10">
         {/* Model image positioned at the top right */}
         <img
           src="/images/contact-us/contact-image.webp"
