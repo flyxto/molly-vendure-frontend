@@ -1,5 +1,8 @@
 import FacetFilterControls from '~/components/facet-filter/FacetFilterControls';
-import { ProductCard } from '~/components/products/ProductCard';
+import {
+  ProductCard,
+  ProductCardSkeleton,
+} from '~/components/products/ProductCard';
 import {
   translatePaginationFrom,
   translatePaginationTo,
@@ -10,6 +13,7 @@ import { useRef } from 'react';
 import { FacetFilterTracker } from '~/components/facet-filter/facet-filter-tracker';
 import { filteredSearchLoaderFromPagination } from '~/utils/filtered-search-loader';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@remix-run/react';
 
 export function FilterableProductGrid({
   result,
@@ -34,6 +38,8 @@ export function FilterableProductGrid({
   slug?: string;
 }) {
   const { t } = useTranslation();
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
   const facetValuesTracker = useRef(new FacetFilterTracker());
   facetValuesTracker.current.update(
     result,
@@ -48,8 +54,16 @@ export function FilterableProductGrid({
         mobileFiltersOpen={mobileFiltersOpen}
         setMobileFiltersOpen={setMobileFiltersOpen}
       />
-      {result.items.length > 0 ? (
-        <div className=" w-full mt-8">
+      {isLoading ? (
+        <div className="w-full mt-8">
+          <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-3 gap-x-4 w-full">
+            {Array.from({ length: appliedPaginationLimit }).map((_, index) => (
+              <ProductCardSkeleton key={index} collectionSlug={slug} />
+            ))}
+          </div>
+        </div>
+      ) : result.items.length > 0 ? (
+        <div className="w-full mt-8">
           <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-3 gap-x-4 w-full">
             {result.items.map((item) => (
               <ProductCard

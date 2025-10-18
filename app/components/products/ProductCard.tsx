@@ -113,3 +113,21 @@ export function ProductCard({
     </Link>
   );
 }
+
+export function ProductCardSkeleton({
+  collectionSlug,
+}: {
+  collectionSlug?: string;
+}) {
+  return (
+    <div className="flex flex-col pb-2">
+      <div
+        className={`relative bg-gray-400 rounded overflow-hidden w-full h-auto ${
+          collectionSlug === 'home-lifestyle' ? 'aspect-square' : 'aspect-[2/3]'
+        } mb-1 animate-pulse`}
+      />
+      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2 animate-pulse" />
+      <div className="h-6 bg-gray-200 rounded w-1/3 animate-pulse" />
+    </div>
+  );
+}

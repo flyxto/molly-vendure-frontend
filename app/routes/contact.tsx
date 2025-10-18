@@ -103,14 +103,16 @@ function AddressItem({
 // Address Block Component
 function AddressBlock({
   branchNumber,
-  no,
-  street,
-  town,
+  addressLine1,
+  addressLine2,
+  addressLine3,
+  tel,
 }: {
   branchNumber: string;
-  no: string;
-  street: string;
-  town: string;
+  addressLine1: string;
+  addressLine2: string;
+  addressLine3: string;
+  tel: string;
 }) {
   return (
     <div>
@@ -122,21 +124,18 @@ function AddressBlock({
 
       {/* Address Block */}
       <div className="text-black">
-        {/* Number and Street */}
-        <div className="flex flex-wrap">
-          <AddressItem text={no} dialogueText="Number" />
-          <AddressItem text={street} dialogueText="Street" />
-        </div>
-
-        {/* Town */}
-        <div className="flex flex-wrap mt-1">
-          <AddressItem text={town} dialogueText="Town" />
-        </div>
-
-        {/* Country*/}
-        <div className="flex flex-wrap mt-1">
-          <AddressItem text="Sri Lanka" dialogueText="Country" comma={false} />
-        </div>
+        <p className="font-semibold text-xl md:text-2xl">
+          Molly Fashion Circle,
+        </p>
+        <p className="font-semibold text-xl md:text-2xl">{addressLine1}</p>
+        <p className="font-semibold text-xl md:text-2xl">{addressLine2}</p>
+        <p className="font-semibold text-xl md:text-2xl">
+          {addressLine3} Sri Lanka
+        </p>
+        {/* <p className="font-semibold text-xl md:text-2xl"></p> */}
+        <p className="font-medium text-lg text-gray-400 md:text-xl mt-4">
+          {tel}
+        </p>
       </div>
     </div>
   );
@@ -144,13 +143,15 @@ function AddressBlock({
 
 // Mobile Address Display Component
 function MobileAddressDisplay({
-  no,
-  street,
-  town,
+  addressLine1,
+  addressLine2,
+  addressLine3,
+  tel,
 }: {
-  no: string;
-  street: string;
-  town: string;
+  addressLine1: string;
+  addressLine2: string;
+  addressLine3: string;
+  tel: string;
 }) {
   return (
     <div className="flex flex-col items-center justify-center py-4">
@@ -158,10 +159,11 @@ function MobileAddressDisplay({
         <MapPinIcon className="text-gray-400 w-6 h-6" />
       </div>
       <div className="text-center">
-        <p className="font-semibold text-xl">
-          {no}, {street},
-        </p>
-        <p className="font-semibold text-xl">{town}, Sri Lanka</p>
+        <p className="font-semibold text-xl">Molly Fashion Circle</p>
+        <p className="font-semibold text-xl">{addressLine1}</p>
+        <p className="font-semibold text-xl">{addressLine2}</p>
+        <p className="font-semibold text-xl">{addressLine3}, Sri Lanka</p>
+        <p className=" text-lg text-black mt-4">{tel}</p>
       </div>
     </div>
   );
@@ -173,27 +175,30 @@ function LocationSection() {
     {
       id: 1,
       branchNumber: '01',
-      no: 'No.64',
-      street: 'Thissa Mawatha',
-      town: 'Kuliyapitiya',
+      addressLine1: 'No.64,',
+      addressLine2: 'Thissa Mawatha,',
+      addressLine3: 'Kuliyapitiya,',
+      tel: '037 20 52 202',
       mapUrl:
         'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31653.913197601283!2d80.02597502022358!3d7.467598744371462!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae32c5daa6a2c75%3A0x777639b5517a55f4!2sKuliyapitiya!5e0!3m2!1sen!2sus!4v1713384057387!5m2!1sen!2sus',
     },
     {
       id: 2,
       branchNumber: '02',
-      no: 'No.64',
-      street: 'Thissa Mawatha',
-      town: 'Colombo',
+      addressLine1: 'In front of Ananda College,',
+      addressLine2: ' Colombo Road,',
+      addressLine3: 'Chillaw,',
+      tel: '037 20 52 996',
       mapUrl:
         'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63371.80549624506!2d79.82144362449093!3d6.921837070105396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae253d10f7a7003%3A0x320b2e4d32d3838d!2sColombo%2C%20Sri%20Lanka!5e0!3m2!1sen!2sus!4v1713384057387!5m2!1sen!2sus',
     },
     {
       id: 3,
       branchNumber: '03',
-      no: 'No.64',
-      street: 'Thissa Mawatha',
-      town: 'Kandy',
+      addressLine1: 'No: 62/1,',
+      addressLine2: ' Kandy Road,',
+      addressLine3: 'Wattegama,',
+      tel: '081 24 76 303',
       mapUrl:
         'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31686.098196129207!2d80.61021196810652!3d7.293790934787464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae366266498acd3%3A0x411a3818a1e03c35!2sKandy%2C%20Sri%20Lanka!5e0!3m2!1sen!2sus!4v1713384057387!5m2!1sen!2sus',
     },
@@ -234,7 +239,7 @@ function LocationSection() {
         alt="Form background shadow"
         width={250}
         height={300}
-        className="absolute bottom-50 left-0 right-0 mx-auto rotate-90 block lg:hidden z-0"
+        className="absolute bottom-30 translate-y-20 left-0 right-0 mx-auto rotate-90 block lg:hidden z-0"
       />
 
       {/* Mobile View */}
@@ -276,9 +281,10 @@ function LocationSection() {
 
             {/* Address Display */}
             <MobileAddressDisplay
-              no={activeBranchData?.no || ''}
-              street={activeBranchData?.street || ''}
-              town={activeBranchData?.town || ''}
+              addressLine1={activeBranchData?.addressLine1 || ''}
+              addressLine2={activeBranchData?.addressLine2 || ''}
+              addressLine3={activeBranchData?.addressLine3 || ''}
+              tel={activeBranchData?.tel || ''}
             />
 
             {/* Second Vertical Divider */}
@@ -314,9 +320,10 @@ function LocationSection() {
               >
                 <AddressBlock
                   branchNumber={branch.branchNumber}
-                  no={branch.no}
-                  street={branch.street}
-                  town={branch.town}
+                  addressLine1={branch.addressLine1}
+                  addressLine2={branch.addressLine2}
+                  addressLine3={branch.addressLine3}
+                  tel={branch.tel}
                 />
               </div>
             ))}
@@ -425,15 +432,15 @@ export default function Contact() {
                   <div className="uppercase text-xs text-[#A27D2A] mb-1">
                     PHONE
                   </div>
-                  <div className="text-lg">0912345678</div>
-                  <div className="text-lg">0917654321</div>
+                  <div className="text-lg">070 216 9780</div>
+                  {/* <div className="text-lg">0917654321</div> */}
                 </div>
                 {/* Vertical line */}
                 <div className="absolute left-4 -translate-x-10 top-7 h-32 border-l border-[#DDDDDD]"></div>
               </div>
 
               {/* Gap between phone and email */}
-              <div className="h-24"></div>
+              <div className="h-28"></div>
 
               {/* Email section */}
               <div className="flex relative">
@@ -444,17 +451,17 @@ export default function Contact() {
                   <div className="uppercase text-xs text-[#A27D2A] mb-1">
                     EMAIL
                   </div>
-                  <div className="text-lg">mollyfashioncircle@gmail.com</div>
+                  <div className="text-lg">hello@mollyfashioncircle.lk</div>
                 </div>
                 {/* Vertical line */}
-                <div className="absolute left-4 -translate-x-10 top-7 h-32 border-l border-[#DDDDDD]"></div>
+                {/* <div className="absolute left-4 -translate-x-10 top-7 h-32 border-l border-[#DDDDDD]"></div> */}
               </div>
 
               {/* Gap between email and fax */}
-              <div className="h-28"></div>
+              {/* <div className="h-28"></div> */}
 
               {/* Fax section */}
-              <div className="flex relative mt-1">
+              {/* <div className="flex relative mt-1">
                 <div className="absolute -left-8">
                   <FaFax className="text-[#A27D2A]" />
                 </div>
@@ -465,31 +472,31 @@ export default function Contact() {
                   <div className="text-lg">0912345678</div>
                   <div className="text-lg">0912345678</div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* contact infor mobile and tablet */}
-            <div className="flex flex-col md:flex-row justify-between h-[25rem] md:h-fit w-full mt-20 px-20 lg:hidden">
+            <div className="flex flex-col md:flex-row justify-between h-[10rem] md:h-fit w-full mt-20 px-20 lg:hidden">
               <div className="flex flex-col items-center">
                 <div className="uppercase font-medium text-[#A27D2A] mb-1">
                   PHONE
                 </div>
-                <div className="text-lg">0912345678</div>
-                <div className="text-lg">0917654321</div>
+                <div className="text-lg">070 216 9780</div>
+                {/* <div className="text-lg">0917654321</div> */}
               </div>
               <div className="flex flex-col items-center">
                 <div className="uppercase font-medium text-[#A27D2A] mb-1">
                   EMAIL
                 </div>
-                <div className="text-lg">mollyfashioncircle@gmail.com</div>
+                <div className="text-lg">hello@mollyfashioncircle.lk</div>
               </div>
-              <div className="flex flex-col items-center">
+              {/* <div className="flex flex-col items-center">
                 <div className="uppercase font-medium text-[#A27D2A] mb-1">
                   FAX
                 </div>
                 <div className="text-lg">0912345678</div>
                 <div className="text-lg">0912345678</div>
-              </div>
+              </div> */}
             </div>
 
             {/* Question section  */}

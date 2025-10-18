@@ -213,6 +213,7 @@ function ProductPageLoader() {
     </div>
   );
 }
+``;
 
 export default function ProductSlug() {
   const navigation = useNavigation();
