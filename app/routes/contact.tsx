@@ -22,7 +22,7 @@ import { Textarea } from '~/components/ui/textarea';
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Contact Us' },
+    { title: 'Contact Us - Molly Fashion Circle' },
     {
       name: 'description',
       content: "Get in touch with us. We'd love to hear from you!",

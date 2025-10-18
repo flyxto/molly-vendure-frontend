@@ -10,6 +10,18 @@ import TimeDeals from '~/components/home/TimeDeals';
 import LatestArrivals from '~/components/home/LatestArrivals';
 import CategorySection from '~/components/home/CategorySection';
 import Hero2 from '~/components/home/Hero2';
+import type { MetaFunction } from '@remix-run/node';
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: 'Molly Fashion Circle' },
+    {
+      name: 'description',
+      content:
+        'Molly Fashion Circle offers modern, trendy fashion with stylish collections for every occasion.',
+    },
+  ];
+};
 
 export async function loader({ request }: LoaderArgs) {
   const collections = await getCollections(request, { take: 20 });
