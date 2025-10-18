@@ -22,6 +22,15 @@ const navigation = {
   ],
 };
 
+// Hardcoded navigation links
+const footerLinks = [
+  { href: '/', label: 'HOME' },
+  { href: '/collections/home-lifestyle', label: 'HOME & LIFESTYLE' },
+  { href: '/collections/women', label: 'WOMEN' },
+  { href: '/collections/men', label: 'MEN' },
+  { href: '/contact', label: 'CONTACT US' },
+];
+
 export default function Footer({
   collections,
 }: {
@@ -124,26 +133,18 @@ export default function Footer({
             </div>
 
             <div className="w-[20%] border-l border-l-white pl-8 flex flex-col space-y-4">
-              <Link
-                to="/"
-                className="text-white hover:text-[#201b11] mt-4 uppercase text-sm"
-              >
-                Home
-              </Link>
-
-              {/* Collections */}
-              {collections.slice(0, 4).map((collection) => (
+              {/* Hardcoded Collection Links */}
+              {footerLinks.map((link) => (
                 <Link
-                  key={collection.id}
-                  to={'/collections/' + collection.slug}
-                  className="text-white hover:text-[#201b11] uppercase text-sm"
-                  prefetch="intent"
+                  key={link.href}
+                  to={link.href}
+                  className="text-white hover:text-[#201b11] mt-4 uppercase text-sm"
                 >
-                  {collection.name}
+                  {link.label}
                 </Link>
               ))}
 
-              {/* Store Links - Now showing all store links */}
+              {/* Store Links */}
               {navigation.store.map(({ page, href, label }) => (
                 <a
                   key={page}
@@ -174,22 +175,18 @@ export default function Footer({
 
           {/* Navigation Links */}
           <div className="w-full flex flex-col items-center space-y-3 mt-6 border-b border-white pb-6">
-            <Link to="/" className="text-white hover:text-[#201b11] uppercase">
-              Home
-            </Link>
-
-            {collections.slice(0, 4).map((collection) => (
+            {/* Hardcoded Collection Links */}
+            {footerLinks.map((link) => (
               <Link
-                key={collection.id}
-                to={'/collections/' + collection.slug}
+                key={link.href}
+                to={link.href}
                 className="text-white hover:text-[#201b11] uppercase"
-                prefetch="intent"
               >
-                {collection.name}
+                {link.label}
               </Link>
             ))}
 
-            {/* Store Links Only - Removed company links */}
+            {/* Store Links */}
             {navigation.store.map(({ page, href, label }) => (
               <a
                 key={page}
@@ -256,47 +253,12 @@ export default function Footer({
         {/* Payment methods for mobile */}
         <div className="md:hidden flex justify-center my-4">
           <img
-            src="/images/nav-and-footer/payment-types.webp
-            "
+            src="/images/nav-and-footer/payment-types.webp"
             alt="Payment methods accepted"
             width={200}
             height={80}
           />
         </div>
-
-        {/* Newsletter Subscription - keeping from original Vendure footer */}
-        {/* <div className="max-w-7xl mx-auto px-4 py-6 border-b border-white">
-          <div className="max-w-md mx-auto">
-            <h3 className="text-sm font-semibold text-white tracking-wider uppercase text-center mb-4">
-              Subscribe to our newsletter
-            </h3>
-            <p className="text-base text-white text-center mb-4 text-sm">
-              Get the latest updates on new products and upcoming sales
-            </p>
-            <form className="sm:flex sm:max-w-md mx-auto">
-              <label htmlFor="email-address" className="sr-only">
-                Email Address
-              </label>
-              <input
-                type="email"
-                name="email-address"
-                id="email-address"
-                autoComplete="email"
-                required
-                className="appearance-none min-w-0 w-full bg-white border border-gray-300 rounded-md py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#AC8537] focus:ring-white focus:border-white focus:placeholder-gray-400"
-                placeholder="Enter your email"
-              />
-              <div className="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-                <button
-                  type="submit"
-                  className="w-full bg-white text-[#AC8537] border border-transparent rounded-md py-2 px-4 flex items-center justify-center text-base font-medium hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#AC8537] focus:ring-white transition"
-                >
-                  Subscribe
-                </button>
-              </div>
-            </form>
-          </div>
-        </div> */}
 
         {/* Copyright & Links */}
         <div className="text-white py-4 px-4 flex flex-col md:flex-row md:justify-between text-center md:text-left text-xs max-w-7xl mx-auto">

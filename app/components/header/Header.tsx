@@ -32,7 +32,7 @@ export function Header({
     { href: '/collections/home-lifestyle', label: 'HOME & LIFESTYLE' },
     { href: '/collections/women', label: 'WOMEN' },
     { href: '/collections/men', label: 'MEN' },
-    { href: '/collections/accessories-all', label: 'ACCESSORIES' },
+    // { href: '/collections/accessories-all', label: 'ACCESSORIES' },
     { href: '/contact', label: 'CONTACT US' },
   ];
 
